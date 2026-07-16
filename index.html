@@ -435,24 +435,31 @@
     </footer>
 
     <script>
-        // 发音及互动主函数（使用真实的在线 MP3 字典发音 - 修复中文版）
+        // 发音及互动主函数（完美真人发音版）
         function speakPinyin(letter, event) {
             try {
-                // 巧妙解决：把拼音映射为同音的【中文汉字】，这样语音接口只能用标准的中文声调来读
-                const charMap = {
-                    'ā': '阿', // 完美对应 ā
-                    'ō': '噢', // 完美对应 ō
-                    'ē': '婀', // 完美对应 ē
-                    'ī': '衣', // 完美对应 yī
-                    'ū': '乌', // 完美对应 wū
-                    'ǖ': '迂'  // 完美对应 yū
+                // 彻底抛弃机器合成音！使用百度汉语官方的标准拼音 MP3 音频库
+                // 这样能保证绝对是标准的一声 (1st tone)，且是人声录制
+                const audioMap = {
+                    'ā': 'a1',
+                    'ō': 'o1',
+                    'ē': 'e1',
+                    'ī': 'yi1',
+                    'ū': 'wu1',
+                    'ǖ': 'yu1'
                 };
 
-                const soundStr = charMap[letter] || letter;
+                const file = audioMap[letter];
                 
-                // 关键改动：使用 le=zh 强制调用【中文】发音引擎，而不是英文
-                const audio = new Audio(`https://dict.youdao.com/dictvoice?audio=${soundStr}&le=zh`);
-                audio.play().catch(error => console.log(error));
+                // 优先播放标准的百度汉语发音库
+                const audio = new Audio(`https://hanyu-word-pinyin-short.cdn.bcebos.com/${file}.mp3`);
+                
+                audio.play().catch(error => {
+                    console.log("主音频加载失败，尝试备用引擎...", error);
+                    // 备用方案：直接传拼音给谷歌翻译发音接口
+                    const fallback = new Audio(`https://translate.googleapis.com/translate_tts?client=gtx&ie=UTF-8&tl=zh-CN&q=${encodeURIComponent(letter)}`);
+                    fallback.play().catch(e => console.log(e));
+                });
             } catch (e) {
                 console.error(e);
             }

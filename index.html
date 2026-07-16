@@ -436,18 +436,27 @@
 
     <script>
         // 发音及互动主函数
-        function speakPinyin(letter, event) {
-            // 1. 调用系统浏览器语音合成发音 (Chinese Mandarin)
-            if ('speechSynthesis' in window) {
-                // 先取消当前正在播放的语音，防止连点时声音重叠延迟
-                window.speechSynthesis.cancel();
-                
-                const utterance = new SpeechSynthesisUtterance(letter);
-                utterance.lang = 'zh-CN';
-                utterance.rate = 0.8; // 稍微放慢一点点，方便小孩子听清
-                utterance.pitch = 1.2; // 调高一点音调，听起来更欢快、适合儿童
-                window.speechSynthesis.speak(utterance);
-            }
+        // 发音映射表：告诉浏览器遇到带音调的字符时，应该发什么音
+const pinyinSoundMap = {
+    'ā': 'a', 'ō': 'o', 'ē': 'e', 'ī': 'i', 'ū': 'u', 'ǖ': 'u'
+};
+
+// 发音及互动主函数
+function speakPinyin(letter, event) {
+    // 1. 调用系统浏览器语音合成发音
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        
+        // 关键改动：使用映射表转换，找不到对应的才使用原字符
+        const sound = pinyinSoundMap[letter] || letter;
+        
+        const utterance = new SpeechSynthesisUtterance(sound);
+        utterance.lang = 'zh-CN';
+        utterance.rate = 0.8; 
+        utterance.pitch = 1.2; 
+        window.speechSynthesis.speak(utterance);
+    }
+}
 
             // 2. 触发舞台人物欢呼动画
             makeCheer();

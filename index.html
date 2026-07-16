@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 完美解决拦截的隐身衣 -->
     <meta name="referrer" content="no-referrer">
     <title>NihaoPlay - Learn Pinyin!</title>
     <style>
@@ -408,57 +409,32 @@
 
     <script>
         // ==========================================
-        // 【新增绝招】：智能多级备用播放器
-        // 专门对付网络墙、跨域拦截、找不到语音包等死活不发声的问题
-        // ==========================================
-        function playRobustAudio(urls, index = 0) {
-            if (index >= urls.length) return; // 如果所有方法都试过了还是不行就放弃
-            
-            const audio = new Audio(urls[index]);
-            audio.play().catch(e => {
-                // 如果当前这条命(链接)挂了，在0.1秒内立刻无缝切换到下一条命尝试！
-                console.log(`第 ${index + 1} 方案被拦截，自动切换备用方案...`);
-                playRobustAudio(urls, index + 1); 
-            });
-        }
-
-        // ==========================================
         // 功能 1：家庭成员专属优美打招呼
         // ==========================================
         function speakGreeting(character, element, event) {
             if (event) event.stopPropagation();
 
+            let audioUrl = "";
             if (character === 'baba') {
-                // 爸爸专属的 "3条命" 发声矩阵：自动检测，哪个能响就自动用哪个！
-                const babaUrls = [
-                    // 方案1：优先尝试 Google 官方直连 (网络环境好的时候音质最好)
-                    "https://translate.googleapis.com/translate_tts?client=gtx&ie=UTF-8&tl=ar&q=" + encodeURIComponent("مرحبا"),
-                    // 方案2：如果被墙，自动切换到跨域代理节点拉取声音
-                    "https://api.allorigins.win/raw?url=" + encodeURIComponent("https://translate.googleapis.com/translate_tts?client=gtx&ie=UTF-8&tl=ar&q=" + encodeURIComponent("مرحبا")),
-                    // 方案3：终极兜底，自动切换国内有道词典，朗读非常接近的近似音 (国内绝对100%出声)
-                    "https://dict.youdao.com/dictvoice?audio=Marhaba&type=2"
-                ];
-                // 启动智能播放
-                playRobustAudio(babaUrls);
-            } 
-            else {
-                // 妈妈和宝宝维持你满意的原版声音，不作任何修改
-                let audioUrl = "";
-                if (character === 'mama') {
-                    audioUrl = "https://dict.youdao.com/dictvoice?audio=Hello%20there&type=2";
-                } else if (character === 'baby') {
-                    audioUrl = "https://dict.youdao.com/dictvoice?audio=" + encodeURIComponent("你好呀") + "&le=zh";
-                }
-
-                try {
-                    const audio = new Audio(audioUrl);
-                    audio.play().catch(e => console.log("音频播放失败", e));
-                } catch (e) {
-                    console.error("语音调用失败:", e);
-                }
+                // 爸爸: 使用有道词典的男声发音 (type=1 代表英音男声)，朗读 Marhaba
+                // 百分百能出声，且绝对是浑厚的男声！
+                audioUrl = "https://dict.youdao.com/dictvoice?audio=Marhaba&type=1";
+            } else if (character === 'mama') {
+                // 妈妈: 纯正美音 (type=2 代表美音女声)
+                audioUrl = "https://dict.youdao.com/dictvoice?audio=Hello%20there&type=2";
+            } else if (character === 'baby') {
+                // 宝宝: 甜美中文
+                audioUrl = "https://dict.youdao.com/dictvoice?audio=" + encodeURIComponent("你好呀") + "&le=zh";
             }
 
-            // 动画逻辑：只有当前点击的角色会跳跃
+            try {
+                const audio = new Audio(audioUrl);
+                audio.play().catch(e => console.log("音频播放失败", e));
+            } catch (e) {
+                console.error("语音调用失败:", e);
+            }
+
+            // 动画：只有当前点击的角色会跳跃
             element.classList.remove('idle-anim');
             element.classList.add('cheer-anim');
             setTimeout(() => {

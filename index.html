@@ -510,7 +510,7 @@
 
     <script>
         // ==========================================
-        // 功能 1：家庭成员专属优美打招呼 (保留防缓存方案)
+        // 功能 1：家庭成员专属优美打招呼
         // ==========================================
         function speakGreeting(character, element, event) {
             if (event) event.stopPropagation();
@@ -541,46 +541,56 @@
         }
 
         // ==========================================
-        // 功能 2：全套拼音完美发音映射 (双重兜底技术)
+        // 功能 2：全套拼音【强制纯正中文】发音引擎
         // ==========================================
         function speakPinyin(letter, event) {
             if (event) event.stopPropagation();
 
-            // 史上最全的拼音到标准发音(呼读音)的映射字典
-            const pinyinAudioMap = {
-                // 单韵母
-                'ā': 'a1', 'ō': 'o1', 'ē': 'e1', 'ī': 'yi1', 'ū': 'wu1', 'ǖ': 'yu1',
-                // 声母 (教科书标准呼读音)
-                'b': 'bo1', 'p': 'po1', 'm': 'mo1', 'f': 'fo1',
-                'd': 'de1', 't': 'te1', 'n': 'ne1', 'l': 'le1',
-                'g': 'ge1', 'k': 'ke1', 'h': 'he1',
-                'j': 'ji1', 'q': 'qi1', 'x': 'xi1',
-                'zh': 'zhi1', 'ch': 'chi1', 'sh': 'shi1', 'r': 'ri1',
-                'z': 'zi1', 'c': 'ci1', 's': 'si1',
-                'y': 'yi1', 'w': 'wu1',
-                // 复韵母
-                'ai': 'ai1', 'ei': 'ei1', 'ui': 'wei1', 'ao': 'ao1', 'ou': 'ou1', 
-                'iu': 'you1', 'ie': 'ye1', 'üe': 'yue1', 'er': 'er2',
-                // 前鼻韵母
-                'an': 'an1', 'en': 'en1', 'in': 'yin1', 'un': 'wen1', 'ün': 'yun1',
-                // 后鼻韵母
-                'ang': 'ang1', 'eng': 'eng1', 'ing': 'ying1', 'ong': 'weng1'
+            // 1. 保留你最满意的 6 个完美单韵母 (直接读取原先的纯正拼音音频库)
+            const perfectSinglesMap = {
+                'ā': 'a1', 'ō': 'o1', 'ē': 'e1', 'ī': 'yi1', 'ū': 'wu1', 'ǖ': 'yu1'
             };
 
-            const file = pinyinAudioMap[letter];
+            // 2. 【核心修复】将所有新增字母严格绑定到标准中文发音的汉字上！
+            // 这彻底杜绝了接口把 "ui" 读成 "UI界面"、把 "ai" 读成 "人工智能" 的错误情况。
+            const chineseAnchorMap = {
+                // 声母 (教科书呼读音标准)
+                'b': '玻', 'p': '坡', 'm': '摸', 'f': '佛',
+                'd': '德', 't': '特', 'n': '呢', 'l': '勒',
+                'g': '哥', 'k': '科', 'h': '喝',
+                'j': '机', 'q': '七', 'x': '西',
+                'zh': '知', 'ch': '吃', 'sh': '诗', 'r': '日',
+                'z': '资', 'c': '疵', 's': '丝',
+                'y': '衣', 'w': '乌',
+                // 复韵母
+                'ai': '哀', 'ei': '诶', 'ui': '威', 'ao': '凹', 'ou': '欧', 
+                'iu': '优', 'ie': '耶', 'üe': '约', 'er': '儿',
+                // 鼻韵母
+                'an': '安', 'en': '恩', 'in': '音', 'un': '温', 'ün': '晕',
+                'ang': '昂', 'eng': '鞥', 'ing': '英', 'ong': '翁'
+            };
+
+            let audioUrl = "";
 
             try {
-                // 第一梯队：优先使用完美的百度CDN高清发音库
-                const audio = new Audio(`https://hanyu-word-pinyin-short.cdn.bcebos.com/${file}.mp3`);
-                
-                audio.play().catch(e => {
-                    console.log("主音频拉取失败，启用有道备用发音...", e);
-                    // 第二梯队 (极致兜底)：如果百度音频遇到网络波动，无缝切换到有道API发音
-                    // 用正则表达式剥离数字声调 (例如 bo1 变 bo) 传给词典引擎
-                    const fallbackStr = file.replace(/[0-9]/g, ''); 
-                    const fallbackAudio = new Audio(`https://dict.youdao.com/dictvoice?audio=${fallbackStr}&type=2&le=zh`);
-                    fallbackAudio.play().catch(err => console.error("备用音频也失败了", err));
-                });
+                // 判断是原本的单韵母，还是新增的拼音
+                if (perfectSinglesMap[letter]) {
+                    // 读取原先完美的百度 CDN 音频
+                    audioUrl = `https://hanyu-word-pinyin-short.cdn.bcebos.com/${perfectSinglesMap[letter]}.mp3`;
+                } else if (chineseAnchorMap[letter]) {
+                    // 将严格映射好的“汉字”传给有道，强制读出完美的中文发音
+                    let anchorChar = chineseAnchorMap[letter];
+                    audioUrl = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(anchorChar)}&le=zh`;
+                }
+
+                // 播放声音
+                if (audioUrl) {
+                    const audio = new Audio(audioUrl);
+                    audio.play().catch(e => {
+                        console.log("网络音频播放失败，启用设备内置中文发音兜底...", e);
+                        fallbackToLocalSpeech(chineseAnchorMap[letter] || letter);
+                    });
+                }
                 
             } catch (e) {
                 console.error(e);
@@ -588,8 +598,20 @@
 
             makeCheer(); // 触发全家欢呼动画
 
+            // 气泡特效
             if (event && event.clientX && event.clientY) {
                 createBubble(letter, event.clientX, event.clientY);
+            }
+        }
+
+        // 网络不好时的终极兜底方案：调用手机/电脑内置中文发音
+        function fallbackToLocalSpeech(text) {
+            try {
+                let msg = new SpeechSynthesisUtterance(text);
+                msg.lang = 'zh-CN';
+                window.speechSynthesis.speak(msg);
+            } catch (e) {
+                console.log("内置语音引擎调用失败", e);
             }
         }
 
@@ -614,7 +636,7 @@
             const bubble = document.createElement('div');
             bubble.classList.add('bubble');
             
-            // 如果气泡里包含 span (例如 ā 的情况)，只提取纯文本
+            // 提取纯文本放进气泡
             if(text.includes('ā') || text.includes('ō') || text.includes('ē') || text.includes('ī') || text.includes('ū') || text.includes('ǖ')){
                bubble.innerText = text; 
             } else {

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer">
-    <title>NihaoPlay - Learn Pinyin!</title>
+    <title>NihaoPlay - Learn Full Pinyin!</title>
     <style>
         :root {
             --bg-color: #f7f9fc;
@@ -254,24 +254,47 @@
             letter-spacing: 1px;
         }
 
-        /* 拼音黑板交互区 */
+        /* ==================================
+           拼音黑板交互区 (全新大尺寸排版)
+           ================================== */
         .board-container {
             width: 100%;
-            max-width: 750px;
+            max-width: 900px;
             background: #8d6e63;
-            padding: 15px;
+            padding: 15px 25px 30px 25px;
             border-radius: 20px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.15), inset 0 -5px 0px rgba(0,0,0,0.2);
             border: 8px solid #a1887f;
+            margin-bottom: 30px;
+        }
+
+        .category-wrapper {
+            margin-bottom: 25px;
+        }
+        .category-wrapper:last-child {
+            margin-bottom: 0;
+        }
+
+        .category-title {
+            background: rgba(0, 0, 0, 0.15);
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 12px;
+            margin: 15px 0 12px 0;
+            font-size: 1.3rem;
+            display: inline-block;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+            border: 2px dashed rgba(255,255,255,0.3);
         }
 
         .board {
             background: var(--board-color);
             border-radius: 12px;
-            padding: 25px;
+            padding: 20px;
+            /* 自适应网格，根据屏幕宽度自动排布按钮 */
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
+            gap: 15px;
             border: 3px dashed rgba(255,255,255,0.4);
         }
 
@@ -280,8 +303,8 @@
             background: #ffffff;
             border: 3px solid #333;
             border-radius: 16px;
-            padding: 20px 10px;
-            font-size: 2.8rem;
+            padding: 15px 5px;
+            font-size: 2.2rem;
             font-weight: bold;
             color: var(--text-color);
             cursor: pointer;
@@ -292,6 +315,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
+            min-height: 85px;
         }
 
         .pinyin-btn:hover {
@@ -305,9 +330,9 @@
             box-shadow: 0 0px 0px #333;
         }
 
-        /* 标注样式 */
+        /* 标注样式 (仅用于有声调的单韵母) */
         .pinyin-btn span.base-letter {
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: #718096;
             margin-top: 5px;
             font-weight: bold;
@@ -326,7 +351,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: bold;
             pointer-events: none;
             z-index: 100;
@@ -340,9 +365,11 @@
         }
 
         /* 底部版权 */
-        <footer>
-            &copy; 2026 nihaoplay.com - All Rights Reserved.
-        </footer>
+        footer {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #a0aec0;
+        }
     </style>
 </head>
 <body>
@@ -391,15 +418,90 @@
         </div>
     </div>
 
+    <!-- 超大拼音黑板 -->
     <div class="board-container">
-        <div class="board">
-            <button class="pinyin-btn" onclick="speakPinyin('ā', event)">ā<span class="base-letter">a</span></button>
-            <button class="pinyin-btn" onclick="speakPinyin('ō', event)">ō<span class="base-letter">o</span></button>
-            <button class="pinyin-btn" onclick="speakPinyin('ē', event)">ē<span class="base-letter">e</span></button>
-            <button class="pinyin-btn" onclick="speakPinyin('ī', event)">ī<span class="base-letter">i</span></button>
-            <button class="pinyin-btn" onclick="speakPinyin('ū', event)">ū<span class="base-letter">u</span></button>
-            <button class="pinyin-btn" onclick="speakPinyin('ǖ', event)">ǖ<span class="base-letter">ü</span></button>
+        
+        <!-- ================= 第1部分：单韵母 ================= -->
+        <div class="category-wrapper">
+            <div class="category-title">🎈 单韵母 (Single Finals)</div>
+            <div class="board">
+                <button class="pinyin-btn" onclick="speakPinyin('ā', event)">ā<span class="base-letter">a</span></button>
+                <button class="pinyin-btn" onclick="speakPinyin('ō', event)">ō<span class="base-letter">o</span></button>
+                <button class="pinyin-btn" onclick="speakPinyin('ē', event)">ē<span class="base-letter">e</span></button>
+                <button class="pinyin-btn" onclick="speakPinyin('ī', event)">ī<span class="base-letter">i</span></button>
+                <button class="pinyin-btn" onclick="speakPinyin('ū', event)">ū<span class="base-letter">u</span></button>
+                <button class="pinyin-btn" onclick="speakPinyin('ǖ', event)">ǖ<span class="base-letter">ü</span></button>
+            </div>
         </div>
+
+        <!-- ================= 第2部分：声母 ================= -->
+        <div class="category-wrapper">
+            <div class="category-title">🚂 声母 (Initials)</div>
+            <div class="board">
+                <button class="pinyin-btn" onclick="speakPinyin('b', event)">b</button>
+                <button class="pinyin-btn" onclick="speakPinyin('p', event)">p</button>
+                <button class="pinyin-btn" onclick="speakPinyin('m', event)">m</button>
+                <button class="pinyin-btn" onclick="speakPinyin('f', event)">f</button>
+                
+                <button class="pinyin-btn" onclick="speakPinyin('d', event)">d</button>
+                <button class="pinyin-btn" onclick="speakPinyin('t', event)">t</button>
+                <button class="pinyin-btn" onclick="speakPinyin('n', event)">n</button>
+                <button class="pinyin-btn" onclick="speakPinyin('l', event)">l</button>
+                
+                <button class="pinyin-btn" onclick="speakPinyin('g', event)">g</button>
+                <button class="pinyin-btn" onclick="speakPinyin('k', event)">k</button>
+                <button class="pinyin-btn" onclick="speakPinyin('h', event)">h</button>
+                
+                <button class="pinyin-btn" onclick="speakPinyin('j', event)">j</button>
+                <button class="pinyin-btn" onclick="speakPinyin('q', event)">q</button>
+                <button class="pinyin-btn" onclick="speakPinyin('x', event)">x</button>
+                
+                <button class="pinyin-btn" onclick="speakPinyin('zh', event)">zh</button>
+                <button class="pinyin-btn" onclick="speakPinyin('ch', event)">ch</button>
+                <button class="pinyin-btn" onclick="speakPinyin('sh', event)">sh</button>
+                <button class="pinyin-btn" onclick="speakPinyin('r', event)">r</button>
+                
+                <button class="pinyin-btn" onclick="speakPinyin('z', event)">z</button>
+                <button class="pinyin-btn" onclick="speakPinyin('c', event)">c</button>
+                <button class="pinyin-btn" onclick="speakPinyin('s', event)">s</button>
+                
+                <button class="pinyin-btn" onclick="speakPinyin('y', event)">y</button>
+                <button class="pinyin-btn" onclick="speakPinyin('w', event)">w</button>
+            </div>
+        </div>
+
+        <!-- ================= 第3部分：复韵母 ================= -->
+        <div class="category-wrapper">
+            <div class="category-title">🧩 复韵母 (Compound Finals)</div>
+            <div class="board">
+                <button class="pinyin-btn" onclick="speakPinyin('ai', event)">ai</button>
+                <button class="pinyin-btn" onclick="speakPinyin('ei', event)">ei</button>
+                <button class="pinyin-btn" onclick="speakPinyin('ui', event)">ui</button>
+                <button class="pinyin-btn" onclick="speakPinyin('ao', event)">ao</button>
+                <button class="pinyin-btn" onclick="speakPinyin('ou', event)">ou</button>
+                <button class="pinyin-btn" onclick="speakPinyin('iu', event)">iu</button>
+                <button class="pinyin-btn" onclick="speakPinyin('ie', event)">ie</button>
+                <button class="pinyin-btn" onclick="speakPinyin('üe', event)">üe</button>
+                <button class="pinyin-btn" onclick="speakPinyin('er', event)">er</button>
+            </div>
+        </div>
+
+        <!-- ================= 第4部分：鼻韵母 ================= -->
+        <div class="category-wrapper">
+            <div class="category-title">🐘 鼻韵母 (Nasal Finals)</div>
+            <div class="board">
+                <button class="pinyin-btn" onclick="speakPinyin('an', event)">an</button>
+                <button class="pinyin-btn" onclick="speakPinyin('en', event)">en</button>
+                <button class="pinyin-btn" onclick="speakPinyin('in', event)">in</button>
+                <button class="pinyin-btn" onclick="speakPinyin('un', event)">un</button>
+                <button class="pinyin-btn" onclick="speakPinyin('ün', event)">ün</button>
+                <button class="pinyin-btn" onclick="speakPinyin('ang', event)">ang</button>
+                <button class="pinyin-btn" onclick="speakPinyin('eng', event)">eng</button>
+                <button class="pinyin-btn" onclick="speakPinyin('ing', event)">ing</button>
+                <button class="pinyin-btn" onclick="speakPinyin('ong', event)">ong</button>
+            </div>
+        </div>
+
     </div>
 
     <footer>
@@ -408,21 +510,17 @@
 
     <script>
         // ==========================================
-        // 功能 1：家庭成员专属优美打招呼
+        // 功能 1：家庭成员专属优美打招呼 (保留防缓存方案)
         // ==========================================
         function speakGreeting(character, element, event) {
             if (event) event.stopPropagation();
 
             let audioUrl = "";
             if (character === 'baba') {
-                // 爸爸: 直接读取本地男声 MP3 文件！
-                // 【核心修复】：添加时间戳强行穿透浏览器缓存，保证100%读取你刚上传的最新文件！
                 audioUrl = "baba.mp3?t=" + new Date().getTime();
             } else if (character === 'mama') {
-                // 妈妈: 纯正美音
                 audioUrl = "https://dict.youdao.com/dictvoice?audio=Hello%20there&type=2";
             } else if (character === 'baby') {
-                // 宝宝: 甜美中文
                 audioUrl = "https://dict.youdao.com/dictvoice?audio=" + encodeURIComponent("你好呀") + "&le=zh";
             }
 
@@ -433,7 +531,7 @@
                 console.error("语音调用失败:", e);
             }
 
-            // 动画：只有当前点击的角色会跳跃
+            // 动画
             element.classList.remove('idle-anim');
             element.classList.add('cheer-anim');
             setTimeout(() => {
@@ -443,30 +541,52 @@
         }
 
         // ==========================================
-        // 功能 2：拼音完美发音 (保持你最满意的版本不变)
+        // 功能 2：全套拼音完美发音映射 (双重兜底技术)
         // ==========================================
         function speakPinyin(letter, event) {
             if (event) event.stopPropagation();
 
+            // 史上最全的拼音到标准发音(呼读音)的映射字典
+            const pinyinAudioMap = {
+                // 单韵母
+                'ā': 'a1', 'ō': 'o1', 'ē': 'e1', 'ī': 'yi1', 'ū': 'wu1', 'ǖ': 'yu1',
+                // 声母 (教科书标准呼读音)
+                'b': 'bo1', 'p': 'po1', 'm': 'mo1', 'f': 'fo1',
+                'd': 'de1', 't': 'te1', 'n': 'ne1', 'l': 'le1',
+                'g': 'ge1', 'k': 'ke1', 'h': 'he1',
+                'j': 'ji1', 'q': 'qi1', 'x': 'xi1',
+                'zh': 'zhi1', 'ch': 'chi1', 'sh': 'shi1', 'r': 'ri1',
+                'z': 'zi1', 'c': 'ci1', 's': 'si1',
+                'y': 'yi1', 'w': 'wu1',
+                // 复韵母
+                'ai': 'ai1', 'ei': 'ei1', 'ui': 'wei1', 'ao': 'ao1', 'ou': 'ou1', 
+                'iu': 'you1', 'ie': 'ye1', 'üe': 'yue1', 'er': 'er2',
+                // 前鼻韵母
+                'an': 'an1', 'en': 'en1', 'in': 'yin1', 'un': 'wen1', 'ün': 'yun1',
+                // 后鼻韵母
+                'ang': 'ang1', 'eng': 'eng1', 'ing': 'ying1', 'ong': 'weng1'
+            };
+
+            const file = pinyinAudioMap[letter];
+
             try {
-                const pinyinAudioMap = {
-                    'ā': 'a1',
-                    'ō': 'o1',
-                    'ē': 'e1',
-                    'ī': 'yi1',
-                    'ū': 'wu1',
-                    'ǖ': 'yu1'
-                };
-                
-                const file = pinyinAudioMap[letter];
+                // 第一梯队：优先使用完美的百度CDN高清发音库
                 const audio = new Audio(`https://hanyu-word-pinyin-short.cdn.bcebos.com/${file}.mp3`);
-                audio.play().catch(e => console.log("音频播放失败", e));
+                
+                audio.play().catch(e => {
+                    console.log("主音频拉取失败，启用有道备用发音...", e);
+                    // 第二梯队 (极致兜底)：如果百度音频遇到网络波动，无缝切换到有道API发音
+                    // 用正则表达式剥离数字声调 (例如 bo1 变 bo) 传给词典引擎
+                    const fallbackStr = file.replace(/[0-9]/g, ''); 
+                    const fallbackAudio = new Audio(`https://dict.youdao.com/dictvoice?audio=${fallbackStr}&type=2&le=zh`);
+                    fallbackAudio.play().catch(err => console.error("备用音频也失败了", err));
+                });
                 
             } catch (e) {
                 console.error(e);
             }
 
-            makeCheer(); // 触发全员欢呼
+            makeCheer(); // 触发全家欢呼动画
 
             if (event && event.clientX && event.clientY) {
                 createBubble(letter, event.clientX, event.clientY);
@@ -493,14 +613,22 @@
 
             const bubble = document.createElement('div');
             bubble.classList.add('bubble');
-            bubble.innerText = text;
+            
+            // 如果气泡里包含 span (例如 ā 的情况)，只提取纯文本
+            if(text.includes('ā') || text.includes('ō') || text.includes('ē') || text.includes('ī') || text.includes('ū') || text.includes('ǖ')){
+               bubble.innerText = text; 
+            } else {
+               bubble.innerText = text;
+            }
             
             bubble.style.left = `${x}px`;
             bubble.style.top = `${y}px`;
             bubble.style.borderColor = randomColor;
             bubble.style.color = randomColor;
             
-            const size = 60 + Math.random() * 20;
+            // 根据字母长短微调气泡大小
+            const baseSize = text.length > 2 ? 80 : 60;
+            const size = baseSize + Math.random() * 20;
             bubble.style.width = `${size}px`;
             bubble.style.height = `${size}px`;
 

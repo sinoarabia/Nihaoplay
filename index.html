@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- 完美解决拦截的隐身衣 -->
     <meta name="referrer" content="no-referrer">
     <title>NihaoPlay - Learn Pinyin!</title>
     <style>
@@ -416,11 +415,11 @@
 
             let audioUrl = "";
             if (character === 'baba') {
-                // 爸爸: 使用有道词典的男声发音 (type=1 代表英音男声)，朗读 Marhaba
-                // 百分百能出声，且绝对是浑厚的男声！
-                audioUrl = "https://dict.youdao.com/dictvoice?audio=Marhaba&type=1";
+                // 爸爸: 直接读取本地男声 MP3 文件！
+                // 【核心修复】：添加时间戳强行穿透浏览器缓存，保证100%读取你刚上传的最新文件！
+                audioUrl = "baba.mp3?t=" + new Date().getTime();
             } else if (character === 'mama') {
-                // 妈妈: 纯正美音 (type=2 代表美音女声)
+                // 妈妈: 纯正美音
                 audioUrl = "https://dict.youdao.com/dictvoice?audio=Hello%20there&type=2";
             } else if (character === 'baby') {
                 // 宝宝: 甜美中文

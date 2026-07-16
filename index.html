@@ -6,640 +6,113 @@
     <meta name="referrer" content="no-referrer">
     <title>NihaoPlay - Learn Full Pinyin!</title>
     <style>
-        :root {
-            --bg-color: #f7f9fc;
-            --primary-color: #ff6b6b;
-            --board-color: #4ecdc4;
-            --text-color: #2d3748;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Microsoft YaHei', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            min-height: 100vh;
-            overflow-x: hidden;
-            padding: 20px;
-        }
-
-        /* 顶部标题栏 */
-        header {
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            text-shadow: 2px 2px 0px #fff, 4px 4px 0px rgba(0,0,0,0.05);
-            letter-spacing: 2px;
-        }
-
-        p.subtitle {
-            font-size: 1.1rem;
-            color: #718096;
-            margin-top: 5px;
-        }
-
-        /* 动画人物区域 */
-        .stage {
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            gap: 40px;
-            width: 100%;
-            max-width: 600px;
-            height: 220px;
-            margin: 20px 0;
-            position: relative;
-        }
-
-        /* 通用角色样式 */
-        .character {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .character:hover {
-            transform: scale(1.05);
-        }
-
-        /* 基础呼吸与等待动画 */
-        @keyframes idle {
-            0%, 100% { transform: translateY(0) scaleY(1); }
-            50% { transform: translateY(-8px) scaleY(1.02); }
-        }
-
-        /* 欢呼跳跃动画 */
-        @keyframes cheer {
-            0%, 100% { transform: translateY(0) scale(1); }
-            30% { transform: translateY(-45px) scale(0.9, 1.1); }
-            50% { transform: translateY(-50px) rotate(10deg); }
-            70% { transform: translateY(-50px) rotate(-10deg); }
-            85% { transform: translateY(-10px) scale(1.05, 0.95); }
-        }
-
-        .idle-anim {
-            animation: idle 3s ease-in-out infinite;
-        }
-
-        .cheer-anim {
-            animation: cheer 0.8s ease-in-out !important;
-        }
-
-        /* 1号角色: 爸爸 */
-        #boy { animation-delay: 0.2s; }
-        .boy-head {
-            width: 70px;
-            height: 70px;
-            background: #ffe0b2;
-            border-radius: 50%;
-            position: relative;
-            border: 3px solid #333;
-        }
-        .boy-cap {
-            position: absolute;
-            top: -12px;
-            left: 5px;
-            width: 60px;
-            height: 25px;
-            background: #29b6f6;
-            border-radius: 40px 40px 0 0;
-            border: 3px solid #333;
-        }
-        .boy-cap-brim {
-            position: absolute;
-            top: 5px;
-            left: 45px;
-            width: 25px;
-            height: 8px;
-            background: #ffca28;
-            border-radius: 0 10px 10px 0;
-            border: 3px solid #333;
-        }
-        .face-details {
-            position: relative;
-            top: 25px;
-            display: flex;
-            justify-content: space-around;
-            padding: 0 10px;
-        }
-        .eye {
-            width: 10px;
-            height: 10px;
-            background: #333;
-            border-radius: 50%;
-        }
-        .smile {
-            width: 24px;
-            height: 12px;
-            border: 3px solid #333;
-            border-top: none;
-            border-radius: 0 0 20px 20px;
-            margin: 12px auto 0;
-        }
-        .boy-body {
-            width: 55px;
-            height: 60px;
-            background: #29b6f6;
-            border-radius: 15px 15px 5px 5px;
-            border: 3px solid #333;
-            margin-top: -3px;
-        }
-
-        /* 2号角色: 宝宝 */
-        #bao { animation-delay: 0s; }
-        .bao-head {
-            width: 85px;
-            height: 80px;
-            background: #ffffff;
-            border-radius: 50% 50% 45% 45%;
-            position: relative;
-            border: 4px solid #333;
-            box-shadow: inset -5px -5px 0px rgba(0,0,0,0.05);
-        }
-        .bao-top {
-            position: absolute;
-            top: -14px;
-            left: 32px;
-            width: 20px;
-            height: 20px;
-            background: #ffffff;
-            border-radius: 50% 50% 0 0;
-            border: 3px solid #333;
-            border-bottom: none;
-            transform: rotate(45deg);
-        }
-        .bao-blush {
-            position: absolute;
-            top: 40px;
-            width: 14px;
-            height: 8px;
-            background: #ff8a80;
-            border-radius: 50%;
-            opacity: 0.7;
-        }
-        .blush-left { left: 8px; }
-        .blush-right { right: 8px; }
-        .bao-smile {
-            width: 20px;
-            height: 10px;
-            border: 3.5px solid #333;
-            border-top: none;
-            border-radius: 0 0 15px 15px;
-            margin: 30px auto 0;
-        }
-        .bao-body {
-            width: 45px;
-            height: 25px;
-            background: #ffffff;
-            border-radius: 10px 10px 20px 20px;
-            border: 4px solid #333;
-            margin-top: -5px;
-        }
-
-        /* 3号角色: 妈妈 */
-        #girl { animation-delay: 0.4s; }
-        .girl-head {
-            width: 70px;
-            height: 70px;
-            background: #ffe0b2;
-            border-radius: 50%;
-            position: relative;
-            border: 3px solid #333;
-        }
-        .hair-bun {
-            position: absolute;
-            width: 28px;
-            height: 28px;
-            background: #ec407a;
-            border-radius: 50%;
-            border: 3px solid #333;
-            top: -8px;
-        }
-        .bun-left { left: -8px; }
-        .bun-right { right: -8px; }
-        .girl-body {
-            width: 55px;
-            height: 60px;
-            background: #ec407a;
-            border-radius: 15px 15px 5px 5px;
-            border: 3px solid #333;
-            margin-top: -3px;
-        }
-
-        /* 名字标签 */
-        .char-name {
-            background: #333;
-            color: #fff;
-            padding: 2px 10px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            margin-top: 8px;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-
-        /* ==================================
-           拼音黑板交互区 (全新大尺寸排版)
-           ================================== */
-        .board-container {
-            width: 100%;
-            max-width: 900px;
-            background: #8d6e63;
-            padding: 15px 25px 30px 25px;
-            border-radius: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15), inset 0 -5px 0px rgba(0,0,0,0.2);
-            border: 8px solid #a1887f;
-            margin-bottom: 30px;
-        }
-
-        .category-wrapper {
-            margin-bottom: 25px;
-        }
-        .category-wrapper:last-child {
-            margin-bottom: 0;
-        }
-
-        .category-title {
-            background: rgba(0, 0, 0, 0.15);
-            color: #fff;
-            padding: 8px 20px;
-            border-radius: 12px;
-            margin: 15px 0 12px 0;
-            font-size: 1.3rem;
-            display: inline-block;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
-            border: 2px dashed rgba(255,255,255,0.3);
-        }
-
-        .board {
-            background: var(--board-color);
-            border-radius: 12px;
-            padding: 20px;
-            /* 自适应网格，根据屏幕宽度自动排布按钮 */
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
-            gap: 15px;
-            border: 3px dashed rgba(255,255,255,0.4);
-        }
-
-        /* 拼音卡片按钮 */
-        .pinyin-btn {
-            background: #ffffff;
-            border: 3px solid #333;
-            border-radius: 16px;
-            padding: 15px 5px;
-            font-size: 2.2rem;
-            font-weight: bold;
-            color: var(--text-color);
-            cursor: pointer;
-            transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 6px 0px #333;
-            position: relative;
-            user-select: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 85px;
-        }
-
-        .pinyin-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 0px #333;
-            background: #fff9db;
-        }
-
-        .pinyin-btn:active {
-            transform: translateY(6px);
-            box-shadow: 0 0px 0px #333;
-        }
-
-        /* 标注样式 (仅用于有声调的单韵母) */
-        .pinyin-btn span.base-letter {
-            font-size: 1rem;
-            color: #718096;
-            margin-top: 5px;
-            font-weight: bold;
-            font-family: Arial, sans-serif;
-            background-color: rgba(0,0,0,0.05);
-            padding: 2px 12px;
-            border-radius: 10px;
-        }
-
-        /* 动态产生的彩色漂浮气泡 */
-        .bubble {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.9);
-            border: 3px solid #333;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            font-weight: bold;
-            pointer-events: none;
-            z-index: 100;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            animation: floatUp 1.2s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
-        }
-
-        @keyframes floatUp {
-            0% { transform: translate(-50%, 0) scale(0.5); opacity: 1; }
-            100% { transform: translate(-50%, -150px) scale(1.2); opacity: 0; }
-        }
-
-        /* 底部版权 */
-        footer {
-            margin-top: 10px;
-            font-size: 0.9rem;
-            color: #a0aec0;
-        }
+        :root { --bg-color: #f7f9fc; --primary-color: #ff6b6b; --board-color: #4ecdc4; --text-color: #2d3748; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Comic Sans MS', 'Chalkboard SE', 'Microsoft YaHei', sans-serif; background-color: var(--bg-color); color: var(--text-color); display: flex; flex-direction: column; align-items: center; justify-content: space-between; min-height: 100vh; overflow-x: hidden; padding: 20px; }
+        header { text-align: center; margin-bottom: 10px; }
+        h1 { font-size: 2.5rem; color: var(--primary-color); text-shadow: 2px 2px 0px #fff, 4px 4px 0px rgba(0,0,0,0.05); letter-spacing: 2px; }
+        p.subtitle { font-size: 1.1rem; color: #718096; margin-top: 5px; }
+        .stage { display: flex; justify-content: center; align-items: flex-end; gap: 40px; width: 100%; max-width: 600px; height: 220px; margin: 20px 0; position: relative; }
+        .character { display: flex; flex-direction: column; align-items: center; position: relative; cursor: pointer; transition: transform 0.2s; }
+        .character:hover { transform: scale(1.05); }
+        @keyframes idle { 0%, 100% { transform: translateY(0) scaleY(1); } 50% { transform: translateY(-8px) scaleY(1.02); } }
+        @keyframes cheer { 0%, 100% { transform: translateY(0) scale(1); } 30% { transform: translateY(-45px) scale(0.9, 1.1); } 50% { transform: translateY(-50px) rotate(10deg); } 70% { transform: translateY(-50px) rotate(-10deg); } 85% { transform: translateY(-10px) scale(1.05, 0.95); } }
+        .idle-anim { animation: idle 3s ease-in-out infinite; }
+        .cheer-anim { animation: cheer 0.8s ease-in-out !important; }
+        .boy-head { width: 70px; height: 70px; background: #ffe0b2; border-radius: 50%; position: relative; border: 3px solid #333; }
+        .boy-cap { position: absolute; top: -12px; left: 5px; width: 60px; height: 25px; background: #29b6f6; border-radius: 40px 40px 0 0; border: 3px solid #333; }
+        .boy-cap-brim { position: absolute; top: 5px; left: 45px; width: 25px; height: 8px; background: #ffca28; border-radius: 0 10px 10px 0; border: 3px solid #333; }
+        .face-details { position: relative; top: 25px; display: flex; justify-content: space-around; padding: 0 10px; }
+        .eye { width: 10px; height: 10px; background: #333; border-radius: 50%; }
+        .smile { width: 24px; height: 12px; border: 3px solid #333; border-top: none; border-radius: 0 0 20px 20px; margin: 12px auto 0; }
+        .boy-body { width: 55px; height: 60px; background: #29b6f6; border-radius: 15px 15px 5px 5px; border: 3px solid #333; margin-top: -3px; }
+        .bao-head { width: 85px; height: 80px; background: #ffffff; border-radius: 50% 50% 45% 45%; position: relative; border: 4px solid #333; box-shadow: inset -5px -5px 0px rgba(0,0,0,0.05); }
+        .bao-top { position: absolute; top: -14px; left: 32px; width: 20px; height: 20px; background: #ffffff; border-radius: 50% 50% 0 0; border: 3px solid #333; border-bottom: none; transform: rotate(45deg); }
+        .bao-blush { position: absolute; top: 40px; width: 14px; height: 8px; background: #ff8a80; border-radius: 50%; opacity: 0.7; }
+        .blush-left { left: 8px; } .blush-right { right: 8px; }
+        .bao-smile { width: 20px; height: 10px; border: 3.5px solid #333; border-top: none; border-radius: 0 0 15px 15px; margin: 30px auto 0; }
+        .bao-body { width: 45px; height: 25px; background: #ffffff; border-radius: 10px 10px 20px 20px; border: 4px solid #333; margin-top: -5px; }
+        .girl-head { width: 70px; height: 70px; background: #ffe0b2; border-radius: 50%; position: relative; border: 3px solid #333; }
+        .hair-bun { position: absolute; width: 28px; height: 28px; background: #ec407a; border-radius: 50%; border: 3px solid #333; top: -8px; }
+        .bun-left { left: -8px; } .bun-right { right: -8px; }
+        .girl-body { width: 55px; height: 60px; background: #ec407a; border-radius: 15px 15px 5px 5px; border: 3px solid #333; margin-top: -3px; }
+        .char-name { background: #333; color: #fff; padding: 2px 10px; border-radius: 20px; font-size: 0.85rem; margin-top: 8px; font-weight: bold; letter-spacing: 1px; }
+        .board-container { width: 100%; max-width: 900px; background: #8d6e63; padding: 15px 25px 30px 25px; border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.15), inset 0 -5px 0px rgba(0,0,0,0.2); border: 8px solid #a1887f; margin-bottom: 30px; }
+        .category-wrapper { margin-bottom: 25px; }
+        .category-title { background: rgba(0, 0, 0, 0.15); color: #fff; padding: 8px 20px; border-radius: 12px; margin: 15px 0 12px 0; font-size: 1.3rem; display: inline-block; border: 2px dashed rgba(255,255,255,0.3); }
+        .board { background: var(--board-color); border-radius: 12px; padding: 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)); gap: 15px; border: 3px dashed rgba(255,255,255,0.4); }
+        .pinyin-btn { background: #ffffff; border: 3px solid #333; border-radius: 16px; padding: 15px 5px; font-size: 2.2rem; font-weight: bold; color: var(--text-color); cursor: pointer; transition: all 0.15s; box-shadow: 0 6px 0px #333; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 85px; }
+        .pinyin-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 0px #333; background: #fff9db; }
+        .pinyin-btn:active { transform: translateY(6px); box-shadow: 0 0px 0px #333; }
+        .pinyin-btn span.base-letter { font-size: 1rem; color: #718096; margin-top: 5px; font-weight: bold; font-family: Arial, sans-serif; background-color: rgba(0,0,0,0.05); padding: 2px 12px; border-radius: 10px; }
+        .bubble { position: absolute; background: rgba(255, 255, 255, 0.9); border: 3px solid #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: bold; pointer-events: none; z-index: 100; box-shadow: 0 4px 10px rgba(0,0,0,0.1); animation: floatUp 1.2s cubic-bezier(0.1, 0.8, 0.3, 1) forwards; }
+        @keyframes floatUp { 0% { transform: translate(-50%, 0) scale(0.5); opacity: 1; } 100% { transform: translate(-50%, -150px) scale(1.2); opacity: 0; } }
+        footer { margin-top: 10px; font-size: 0.9rem; color: #a0aec0; }
     </style>
 </head>
 <body>
-
-    <header>
-        <h1>NihaoPlay!</h1>
-        <p class="subtitle">Click the letters to play & learn Chinese Pinyin!</p>
-    </header>
-
+    <header><h1>NihaoPlay!</h1><p class="subtitle">Click the letters to play & learn Chinese Pinyin!</p></header>
     <div class="stage">
-        <!-- 爸爸 -->
         <div class="character idle-anim" id="boy" onclick="speakGreeting('baba', this, event)">
-            <div class="boy-head">
-                <div class="boy-cap"></div>
-                <div class="boy-cap-brim"></div>
-                <div class="face-details"><div class="eye"></div><div class="eye"></div></div>
-                <div class="smile"></div>
-            </div>
-            <div class="boy-body"></div>
-            <div class="char-name">爸爸 Baba</div>
+            <div class="boy-head"><div class="boy-cap"></div><div class="boy-cap-brim"></div><div class="face-details"><div class="eye"></div><div class="eye"></div></div><div class="smile"></div></div>
+            <div class="boy-body"></div><div class="char-name">爸爸 Baba</div>
         </div>
-
-        <!-- 宝宝 -->
         <div class="character idle-anim" id="bao" onclick="speakGreeting('baby', this, event)">
-            <div class="bao-head">
-                <div class="bao-top"></div>
-                <div class="bao-blush blush-left"></div>
-                <div class="bao-blush blush-right"></div>
-                <div class="face-details"><div class="eye"></div><div class="eye"></div></div>
-                <div class="bao-smile"></div>
-            </div>
-            <div class="bao-body"></div>
-            <div class="char-name">宝宝 Baby</div>
+            <div class="bao-head"><div class="bao-top"></div><div class="bao-blush blush-left"></div><div class="bao-blush blush-right"></div><div class="face-details"><div class="eye"></div><div class="eye"></div></div><div class="bao-smile"></div></div>
+            <div class="bao-body"></div><div class="char-name">宝宝 Baby</div>
         </div>
-
-        <!-- 妈妈 -->
         <div class="character idle-anim" id="girl" onclick="speakGreeting('mama', this, event)">
-            <div class="girl-head">
-                <div class="hair-bun bun-left"></div>
-                <div class="hair-bun bun-right"></div>
-                <div class="face-details"><div class="eye"></div><div class="eye"></div></div>
-                <div class="smile"></div>
-            </div>
-            <div class="girl-body"></div>
-            <div class="char-name">妈妈 Mama</div>
+            <div class="girl-head"><div class="hair-bun bun-left"></div><div class="hair-bun bun-right"></div><div class="face-details"><div class="eye"></div><div class="eye"></div></div><div class="smile"></div></div>
+            <div class="girl-body"></div><div class="char-name">妈妈 Mama</div>
         </div>
     </div>
-
-    <!-- 超大拼音黑板 -->
     <div class="board-container">
-        
-        <!-- ================= 第1部分：单韵母 ================= -->
-        <div class="category-wrapper">
-            <div class="category-title">🎈 单韵母 (Single Finals)</div>
-            <div class="board">
-                <button class="pinyin-btn" onclick="speakPinyin('ā', event)">ā<span class="base-letter">a</span></button>
-                <button class="pinyin-btn" onclick="speakPinyin('ō', event)">ō<span class="base-letter">o</span></button>
-                <button class="pinyin-btn" onclick="speakPinyin('ē', event)">ē<span class="base-letter">e</span></button>
-                <button class="pinyin-btn" onclick="speakPinyin('ī', event)">ī<span class="base-letter">i</span></button>
-                <button class="pinyin-btn" onclick="speakPinyin('ū', event)">ū<span class="base-letter">u</span></button>
-                <button class="pinyin-btn" onclick="speakPinyin('ǖ', event)">ǖ<span class="base-letter">ü</span></button>
-            </div>
-        </div>
-
-        <!-- ================= 第2部分：声母 ================= -->
-        <div class="category-wrapper">
-            <div class="category-title">🚂 声母 (Initials)</div>
-            <div class="board">
-                <button class="pinyin-btn" onclick="speakPinyin('b', event)">b</button>
-                <button class="pinyin-btn" onclick="speakPinyin('p', event)">p</button>
-                <button class="pinyin-btn" onclick="speakPinyin('m', event)">m</button>
-                <button class="pinyin-btn" onclick="speakPinyin('f', event)">f</button>
-                
-                <button class="pinyin-btn" onclick="speakPinyin('d', event)">d</button>
-                <button class="pinyin-btn" onclick="speakPinyin('t', event)">t</button>
-                <button class="pinyin-btn" onclick="speakPinyin('n', event)">n</button>
-                <button class="pinyin-btn" onclick="speakPinyin('l', event)">l</button>
-                
-                <button class="pinyin-btn" onclick="speakPinyin('g', event)">g</button>
-                <button class="pinyin-btn" onclick="speakPinyin('k', event)">k</button>
-                <button class="pinyin-btn" onclick="speakPinyin('h', event)">h</button>
-                
-                <button class="pinyin-btn" onclick="speakPinyin('j', event)">j</button>
-                <button class="pinyin-btn" onclick="speakPinyin('q', event)">q</button>
-                <button class="pinyin-btn" onclick="speakPinyin('x', event)">x</button>
-                
-                <button class="pinyin-btn" onclick="speakPinyin('zh', event)">zh</button>
-                <button class="pinyin-btn" onclick="speakPinyin('ch', event)">ch</button>
-                <button class="pinyin-btn" onclick="speakPinyin('sh', event)">sh</button>
-                <button class="pinyin-btn" onclick="speakPinyin('r', event)">r</button>
-                
-                <button class="pinyin-btn" onclick="speakPinyin('z', event)">z</button>
-                <button class="pinyin-btn" onclick="speakPinyin('c', event)">c</button>
-                <button class="pinyin-btn" onclick="speakPinyin('s', event)">s</button>
-                
-                <button class="pinyin-btn" onclick="speakPinyin('y', event)">y</button>
-                <button class="pinyin-btn" onclick="speakPinyin('w', event)">w</button>
-            </div>
-        </div>
-
-        <!-- ================= 第3部分：复韵母 ================= -->
-        <div class="category-wrapper">
-            <div class="category-title">🧩 复韵母 (Compound Finals)</div>
-            <div class="board">
-                <button class="pinyin-btn" onclick="speakPinyin('ai', event)">ai</button>
-                <button class="pinyin-btn" onclick="speakPinyin('ei', event)">ei</button>
-                <button class="pinyin-btn" onclick="speakPinyin('ui', event)">ui</button>
-                <button class="pinyin-btn" onclick="speakPinyin('ao', event)">ao</button>
-                <button class="pinyin-btn" onclick="speakPinyin('ou', event)">ou</button>
-                <button class="pinyin-btn" onclick="speakPinyin('iu', event)">iu</button>
-                <button class="pinyin-btn" onclick="speakPinyin('ie', event)">ie</button>
-                <button class="pinyin-btn" onclick="speakPinyin('üe', event)">üe</button>
-                <button class="pinyin-btn" onclick="speakPinyin('er', event)">er</button>
-            </div>
-        </div>
-
-        <!-- ================= 第4部分：鼻韵母 ================= -->
-        <div class="category-wrapper">
-            <div class="category-title">🐘 鼻韵母 (Nasal Finals)</div>
-            <div class="board">
-                <button class="pinyin-btn" onclick="speakPinyin('an', event)">an</button>
-                <button class="pinyin-btn" onclick="speakPinyin('en', event)">en</button>
-                <button class="pinyin-btn" onclick="speakPinyin('in', event)">in</button>
-                <button class="pinyin-btn" onclick="speakPinyin('un', event)">un</button>
-                <button class="pinyin-btn" onclick="speakPinyin('ün', event)">ün</button>
-                <button class="pinyin-btn" onclick="speakPinyin('ang', event)">ang</button>
-                <button class="pinyin-btn" onclick="speakPinyin('eng', event)">eng</button>
-                <button class="pinyin-btn" onclick="speakPinyin('ing', event)">ing</button>
-                <button class="pinyin-btn" onclick="speakPinyin('ong', event)">ong</button>
-            </div>
-        </div>
-
+        <div class="category-wrapper"><div class="category-title">🎈 单韵母</div><div class="board">
+            <button class="pinyin-btn" onclick="speakPinyin('ā', event)">ā<span class="base-letter">a</span></button><button class="pinyin-btn" onclick="speakPinyin('ō', event)">ō<span class="base-letter">o</span></button><button class="pinyin-btn" onclick="speakPinyin('ē', event)">ē<span class="base-letter">e</span></button><button class="pinyin-btn" onclick="speakPinyin('ī', event)">ī<span class="base-letter">i</span></button><button class="pinyin-btn" onclick="speakPinyin('ū', event)">ū<span class="base-letter">u</span></button><button class="pinyin-btn" onclick="speakPinyin('ǖ', event)">ǖ<span class="base-letter">ü</span></button>
+        </div></div>
+        <div class="category-wrapper"><div class="category-title">🚂 声母</div><div class="board">
+            <button class="pinyin-btn" onclick="speakPinyin('b', event)">b</button><button class="pinyin-btn" onclick="speakPinyin('p', event)">p</button><button class="pinyin-btn" onclick="speakPinyin('m', event)">m</button><button class="pinyin-btn" onclick="speakPinyin('f', event)">f</button><button class="pinyin-btn" onclick="speakPinyin('d', event)">d</button><button class="pinyin-btn" onclick="speakPinyin('t', event)">t</button><button class="pinyin-btn" onclick="speakPinyin('n', event)">n</button><button class="pinyin-btn" onclick="speakPinyin('l', event)">l</button><button class="pinyin-btn" onclick="speakPinyin('g', event)">g</button><button class="pinyin-btn" onclick="speakPinyin('k', event)">k</button><button class="pinyin-btn" onclick="speakPinyin('h', event)">h</button><button class="pinyin-btn" onclick="speakPinyin('j', event)">j</button><button class="pinyin-btn" onclick="speakPinyin('q', event)">q</button><button class="pinyin-btn" onclick="speakPinyin('x', event)">x</button><button class="pinyin-btn" onclick="speakPinyin('zh', event)">zh</button><button class="pinyin-btn" onclick="speakPinyin('ch', event)">ch</button><button class="pinyin-btn" onclick="speakPinyin('sh', event)">sh</button><button class="pinyin-btn" onclick="speakPinyin('r', event)">r</button><button class="pinyin-btn" onclick="speakPinyin('z', event)">z</button><button class="pinyin-btn" onclick="speakPinyin('c', event)">c</button><button class="pinyin-btn" onclick="speakPinyin('s', event)">s</button><button class="pinyin-btn" onclick="speakPinyin('y', event)">y</button><button class="pinyin-btn" onclick="speakPinyin('w', event)">w</button>
+        </div></div>
+        <div class="category-wrapper"><div class="category-title">🧩 复韵母</div><div class="board">
+            <button class="pinyin-btn" onclick="speakPinyin('ai', event)">ai</button><button class="pinyin-btn" onclick="speakPinyin('ei', event)">ei</button><button class="pinyin-btn" onclick="speakPinyin('ui', event)">ui</button><button class="pinyin-btn" onclick="speakPinyin('ao', event)">ao</button><button class="pinyin-btn" onclick="speakPinyin('ou', event)">ou</button><button class="pinyin-btn" onclick="speakPinyin('iu', event)">iu</button><button class="pinyin-btn" onclick="speakPinyin('ie', event)">ie</button><button class="pinyin-btn" onclick="speakPinyin('üe', event)">üe</button><button class="pinyin-btn" onclick="speakPinyin('er', event)">er</button>
+        </div></div>
+        <div class="category-wrapper"><div class="category-title">🐘 鼻韵母</div><div class="board">
+            <button class="pinyin-btn" onclick="speakPinyin('an', event)">an</button><button class="pinyin-btn" onclick="speakPinyin('en', event)">en</button><button class="pinyin-btn" onclick="speakPinyin('in', event)">in</button><button class="pinyin-btn" onclick="speakPinyin('un', event)">un</button><button class="pinyin-btn" onclick="speakPinyin('ün', event)">ün</button><button class="pinyin-btn" onclick="speakPinyin('ang', event)">ang</button><button class="pinyin-btn" onclick="speakPinyin('eng', event)">eng</button><button class="pinyin-btn" onclick="speakPinyin('ing', event)">ing</button><button class="pinyin-btn" onclick="speakPinyin('ong', event)">ong</button>
+        </div></div>
     </div>
-
-    <footer>
-        &copy; 2026 nihaoplay.com - All Rights Reserved.
-    </footer>
-
+    <footer>&copy; 2026 nihaoplay.com - All Rights Reserved.</footer>
     <script>
-        // ==========================================
-        // 功能 1：家庭成员专属优美打招呼
-        // ==========================================
         function speakGreeting(character, element, event) {
             if (event) event.stopPropagation();
-
             let audioUrl = "";
-            if (character === 'baba') {
-                audioUrl = "baba.mp3?t=" + new Date().getTime();
-            } else if (character === 'mama') {
-                audioUrl = "https://dict.youdao.com/dictvoice?audio=Hello%20there&type=2";
-            } else if (character === 'baby') {
-                audioUrl = "https://dict.youdao.com/dictvoice?audio=" + encodeURIComponent("你好呀") + "&le=zh";
-            }
-
-            try {
-                const audio = new Audio(audioUrl);
-                audio.play().catch(e => console.log("音频播放失败", e));
-            } catch (e) {
-                console.error("语音调用失败:", e);
-            }
-
-            // 动画
-            element.classList.remove('idle-anim');
-            element.classList.add('cheer-anim');
-            setTimeout(() => {
-                element.classList.remove('cheer-anim');
-                element.classList.add('idle-anim');
-            }, 800);
+            if (character === 'baba') { audioUrl = "audio/baba.mp3?t=" + new Date().getTime(); } 
+            else if (character === 'mama') { audioUrl = "https://dict.youdao.com/dictvoice?audio=Hello%20there&type=2"; } 
+            else if (character === 'baby') { audioUrl = "https://dict.youdao.com/dictvoice?audio=" + encodeURIComponent("你好呀") + "&le=zh"; }
+            new Audio(audioUrl).play().catch(e => console.log("音频播放失败", e));
+            element.classList.remove('idle-anim'); element.classList.add('cheer-anim');
+            setTimeout(() => { element.classList.remove('cheer-anim'); element.classList.add('idle-anim'); }, 800);
         }
-
-        // ==========================================
-        // 功能 2：全套教科书级拼音发音引擎 (强制第一声)
-        // ==========================================
         function speakPinyin(letter, event) {
             if (event) event.stopPropagation();
-
-            // 彻底废除所有可能出错的接口转换。
-            // 每一个拼音都严格锁定到它对应的第一声 (呼读音) mp3 文件！
             const pinyinAudioMap = {
-                // 单韵母
-                'ā': ['a1'], 'ō': ['o1'], 'ē': ['e1'], 'ī': ['yi1'], 'ū': ['wu1'], 'ǖ': ['yu1'],
-                
-                // 声母 (教科书级呼读音，全部强制第一声)
-                'b': ['bo1'], 'p': ['po1'], 'm': ['mo1'], 'f': ['fo1', 'fo2'], 
-                'd': ['de1'], 't': ['te1'], 'n': ['ne1'], 'l': ['le1'],
-                'g': ['ge1'], 'k': ['ke1'], 'h': ['he1'],
-                'j': ['ji1'], 'q': ['qi1'], 'x': ['xi1'],
-                'zh': ['zhi1'], 'ch': ['chi1'], 'sh': ['shi1'], 'r': ['ri4', 'ri1'], 
-                'z': ['zi1'], 'c': ['ci1'], 's': ['si1'],
-                'y': ['yi1'], 'w': ['wu1'],
-                
-                // 复韵母
-                'ai': ['ai1'], 'ei': ['ei1'], 'ui': ['wei1'], 'ao': ['ao1'], 'ou': ['ou1'], 
-                'iu': ['you1'], 'ie': ['ye1'], 'üe': ['yue1'], 'er': ['er2'],
-                
-                // 鼻韵母
-                'an': ['an1'], 'en': ['en1'], 'in': ['yin1'], 'un': ['wen1'], 'ün': ['yun1'],
-                'ang': ['ang1'], 'eng': ['eng1'], 'ing': ['ying1'], 'ong': ['weng1']
+                'ā': 'a1', 'ō': 'o1', 'ē': 'e1', 'ī': 'yi1', 'ū': 'wu1', 'ǖ': 'yu1',
+                'b': 'bo1', 'p': 'po1', 'm': 'mo1', 'f': 'fo1', 'd': 'de1', 't': 'te1', 'n': 'ne1', 'l': 'le1',
+                'g': 'ge1', 'k': 'ke1', 'h': 'he1', 'j': 'ji1', 'q': 'qi1', 'x': 'xi1',
+                'zh': 'zhi1', 'ch': 'chi1', 'sh': 'shi1', 'r': 'ri1', 'z': 'zi1', 'c': 'ci1', 's': 'si1',
+                'y': 'yi1', 'w': 'wu1', 'ai': 'ai1', 'ei': 'ei1', 'ui': 'wei1', 'ao': 'ao1', 'ou': 'ou1', 
+                'iu': 'you1', 'ie': 'ye1', 'üe': 'yue1', 'er': 'er2', 'an': 'an1', 'en': 'en1', 'in': 'yin1', 
+                'un': 'wen1', 'ün': 'yun1', 'ang': 'ang1', 'eng': 'eng1', 'ing': 'ying1', 'ong': 'weng1'
             };
-
-            const files = pinyinAudioMap[letter];
-            if (!files) return;
-
-            // 智能顺序播放：优先尝试完美的第1声，如果网络节点不存在（触发catch）则无缝切换备用音调
-            let urlIndex = 0;
-            function playNext() {
-                if (urlIndex >= files.length) return;
-                const audioUrl = `https://hanyu-word-pinyin-short.cdn.bcebos.com/${files[urlIndex]}.mp3`;
-                const audio = new Audio(audioUrl);
-                
-                audio.play().catch(e => {
-                    console.log(`[${files[urlIndex]}] 音频拉取失败，尝试备用发音...`);
-                    urlIndex++;
-                    playNext();
-                });
-            }
-            
-            playNext();
-            makeCheer(); 
-
-            // 气泡特效
-            if (event && event.clientX && event.clientY) {
-                createBubble(letter, event.clientX, event.clientY);
-            }
+            const file = pinyinAudioMap[letter];
+            if (file) { new Audio(`audio/${file}.mp3`).play().catch(e => console.log("本地音频读取失败", e)); }
+            makeCheer(); if (event && event.clientX && event.clientY) createBubble(letter, event.clientX, event.clientY);
         }
-
-        // 全家欢呼动画控制
-        function makeCheer() {
-            const characters = document.querySelectorAll('.character');
-            characters.forEach(char => {
-                char.classList.remove('idle-anim');
-                char.classList.add('cheer-anim');
-                setTimeout(() => {
-                    char.classList.remove('cheer-anim');
-                    char.classList.add('idle-anim');
-                }, 800);
-            });
-        }
-
-        // 彩色气泡动画控制
+        function makeCheer() { document.querySelectorAll('.character').forEach(char => { char.classList.remove('idle-anim'); char.classList.add('cheer-anim'); setTimeout(() => { char.classList.remove('cheer-anim'); char.classList.add('idle-anim'); }, 800); }); }
         function createBubble(text, x, y) {
             const colors = ['#ff6b6b', '#4ecdc4', '#ffe0b2', '#ec407a', '#29b6f6', '#ab47bc'];
-            const randomColor = colors[Math.floor(Math.random() * colors.length)];
-
-            const bubble = document.createElement('div');
-            bubble.classList.add('bubble');
-            
-            // 提取纯文本放进气泡
-            if(text.includes('ā') || text.includes('ō') || text.includes('ē') || text.includes('ī') || text.includes('ū') || text.includes('ǖ')){
-               bubble.innerText = text; 
-            } else {
-               bubble.innerText = text;
-            }
-            
-            bubble.style.left = `${x}px`;
-            bubble.style.top = `${y}px`;
-            bubble.style.borderColor = randomColor;
-            bubble.style.color = randomColor;
-            
-            // 根据字母长短微调气泡大小
-            const baseSize = text.length > 2 ? 80 : 60;
-            const size = baseSize + Math.random() * 20;
-            bubble.style.width = `${size}px`;
-            bubble.style.height = `${size}px`;
-
-            document.body.appendChild(bubble);
-
-            bubble.addEventListener('animationend', () => {
-                bubble.remove();
-            });
+            const bubble = document.createElement('div'); bubble.classList.add('bubble'); bubble.innerText = text;
+            bubble.style.left = `${x}px`; bubble.style.top = `${y}px`; bubble.style.borderColor = colors[Math.floor(Math.random() * colors.length)];
+            document.body.appendChild(bubble); bubble.addEventListener('animationend', () => bubble.remove());
         }
     </script>
 </body>

@@ -435,23 +435,23 @@
     </footer>
 
     <script>
-        // 发音及互动主函数（使用真实的在线 MP3 字典发音）
+        // 发音及互动主函数（使用真实的在线 MP3 字典发音 - 修复中文版）
         function speakPinyin(letter, event) {
             try {
-                // 1. 拼音到有道词典/百度发音 MP3 的映射表
-                const audioMap = {
-                    'ā': 'a',
-                    'ō': 'o',
-                    'ē': 'e',
-                    'ī': 'yi',
-                    'ū': 'wu',
-                    'ǖ': 'yu' 
+                // 巧妙解决：把拼音映射为同音的【中文汉字】，这样语音接口只能用标准的中文声调来读
+                const charMap = {
+                    'ā': '阿', // 完美对应 ā
+                    'ō': '噢', // 完美对应 ō
+                    'ē': '婀', // 完美对应 ē
+                    'ī': '衣', // 完美对应 yī
+                    'ū': '乌', // 完美对应 wū
+                    'ǖ': '迂'  // 完美对应 yū
                 };
 
-                const soundStr = audioMap[letter] || letter;
+                const soundStr = charMap[letter] || letter;
                 
-                // 动态创建一个 audio 标签来播放发音
-                const audio = new Audio(`https://dict.youdao.com/dictvoice?audio=${soundStr}&type=2`);
+                // 关键改动：使用 le=zh 强制调用【中文】发音引擎，而不是英文
+                const audio = new Audio(`https://dict.youdao.com/dictvoice?audio=${soundStr}&le=zh`);
                 audio.play().catch(error => console.log(error));
             } catch (e) {
                 console.error(e);

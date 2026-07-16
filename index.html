@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NihaoPlay - Learn Pinyin!</title>
+    <title>NihaoPlay - Learn Pinyin & Languages!</title>
     <style>
         :root {
             --bg-color: #f7f9fc;
@@ -100,7 +100,7 @@
             animation: cheer 0.8s ease-out-in !important;
         }
 
-        /* 1号角色: 乐乐 */
+        /* 1号角色: 爸爸 (原小男孩) */
         #boy { animation-delay: 0.2s; }
         .boy-head {
             width: 70px;
@@ -160,7 +160,7 @@
             margin-top: -3px;
         }
 
-        /* 2号核心角色: Bao */
+        /* 2号角色: 宝宝 (原Bao) */
         #bao { animation-delay: 0s; }
         .bao-head {
             width: 85px;
@@ -211,7 +211,7 @@
             margin-top: -5px;
         }
 
-        /* 3号角色: 妙妙 */
+        /* 3号角色: 妈妈 (原小女孩) */
         #girl { animation-delay: 0.4s; }
         .girl-head {
             width: 70px;
@@ -247,9 +247,10 @@
             color: #fff;
             padding: 2px 10px;
             border-radius: 20px;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             margin-top: 8px;
             font-weight: bold;
+            letter-spacing: 1px;
         }
 
         /* 拼音黑板交互区 */
@@ -353,7 +354,8 @@
     </header>
 
     <div class="stage">
-        <div class="character idle-anim" id="boy" onclick="makeCheer()">
+        <!-- 爸爸：说阿拉伯语 (ar) -->
+        <div class="character idle-anim" id="boy" onclick="speakGreeting('ar', 'مَرْحَبًا', this)">
             <div class="boy-head">
                 <div class="boy-cap"></div>
                 <div class="boy-cap-brim"></div>
@@ -361,10 +363,11 @@
                 <div class="smile"></div>
             </div>
             <div class="boy-body"></div>
-            <div class="char-name">Lele</div>
+            <div class="char-name">爸爸 Baba</div>
         </div>
 
-        <div class="character idle-anim" id="bao" onclick="makeCheer()">
+        <!-- 宝宝：说中文 (zh-CN) -->
+        <div class="character idle-anim" id="bao" onclick="speakGreeting('zh-CN', '你好呀', this)">
             <div class="bao-head">
                 <div class="bao-top"></div>
                 <div class="bao-blush blush-left"></div>
@@ -373,10 +376,11 @@
                 <div class="bao-smile"></div>
             </div>
             <div class="bao-body"></div>
-            <div class="char-name">Bao</div>
+            <div class="char-name">宝宝 Baby</div>
         </div>
 
-        <div class="character idle-anim" id="girl" onclick="makeCheer()">
+        <!-- 妈妈：说英语 (en) -->
+        <div class="character idle-anim" id="girl" onclick="speakGreeting('en', 'Hello there', this)">
             <div class="girl-head">
                 <div class="hair-bun bun-left"></div>
                 <div class="hair-bun bun-right"></div>
@@ -384,37 +388,18 @@
                 <div class="smile"></div>
             </div>
             <div class="girl-body"></div>
-            <div class="char-name">Miaomiao</div>
+            <div class="char-name">妈妈 Mama</div>
         </div>
     </div>
 
     <div class="board-container">
         <div class="board">
-            <!-- 替换成了标准拼音基础字母标注 -->
-            <button class="pinyin-btn" onclick="speakPinyin('ā', event)">
-                ā
-                <span class="base-letter">a</span>
-            </button>
-            <button class="pinyin-btn" onclick="speakPinyin('ō', event)">
-                ō
-                <span class="base-letter">o</span>
-            </button>
-            <button class="pinyin-btn" onclick="speakPinyin('ē', event)">
-                ē
-                <span class="base-letter">e</span>
-            </button>
-            <button class="pinyin-btn" onclick="speakPinyin('ī', event)">
-                ī
-                <span class="base-letter">i</span>
-            </button>
-            <button class="pinyin-btn" onclick="speakPinyin('ū', event)">
-                ū
-                <span class="base-letter">u</span>
-            </button>
-            <button class="pinyin-btn" onclick="speakPinyin('ǖ', event)">
-                ǖ
-                <span class="base-letter">ü</span>
-            </button>
+            <button class="pinyin-btn" onclick="speakPinyin('ā', event)">ā<span class="base-letter">a</span></button>
+            <button class="pinyin-btn" onclick="speakPinyin('ō', event)">ō<span class="base-letter">o</span></button>
+            <button class="pinyin-btn" onclick="speakPinyin('ē', event)">ē<span class="base-letter">e</span></button>
+            <button class="pinyin-btn" onclick="speakPinyin('ī', event)">ī<span class="base-letter">i</span></button>
+            <button class="pinyin-btn" onclick="speakPinyin('ū', event)">ū<span class="base-letter">u</span></button>
+            <button class="pinyin-btn" onclick="speakPinyin('ǖ', event)">ǖ<span class="base-letter">ü</span></button>
         </div>
     </div>
 
@@ -423,16 +408,37 @@
     </footer>
 
     <script>
-        // 发音及互动主函数（终极修复：标准发音 + 完美支持ē）
+        // 角色专属打招呼功能
+        function speakGreeting(lang, text, element) {
+            try {
+                // 使用 Google TTS 多语言接口，支持 ar(阿拉伯语), zh-CN(中文), en(英文)
+                const audio = new Audio(`https://translate.googleapis.com/translate_tts?client=gtx&ie=UTF-8&tl=${lang}&q=${encodeURIComponent(text)}`);
+                audio.play().catch(e => console.log("播放失败，请检查网络或浏览器自动播放限制:", e));
+            } catch (e) {
+                console.error(e);
+            }
+
+            // 让当前被点击的角色独自跳跃，而不是全员跳跃
+            element.classList.remove('idle-anim');
+            element.classList.add('cheer-anim');
+
+            setTimeout(() => {
+                element.classList.remove('cheer-anim');
+                element.classList.add('idle-anim');
+            }, 800);
+            
+            // 阻止事件冒泡，防止多重触发
+            if(window.event) {
+                window.event.stopPropagation();
+            }
+        }
+
+        // 拼音发音主函数
         function speakPinyin(letter, event) {
             try {
-                // 采用专门优化过带调拼音的顶级 TTS 接口
-                // 这个接口能直接精准朗读 ā、ō、ē 等拼音字符，不需要借用汉字
                 const audio = new Audio(`https://translate.googleapis.com/translate_tts?client=gtx&ie=UTF-8&tl=zh-CN&q=${encodeURIComponent(letter)}`);
-                
                 audio.play().catch(error => {
                     console.log("主音频加载失败，启动国内备用接口...", error);
-                    // 备用接口：防网络波动
                     const fallbackMap = { 'ā':'阿', 'ō':'喔', 'ē':'婀', 'ī':'衣', 'ū':'乌', 'ǖ':'迂' };
                     const fallback = new Audio(`https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(fallbackMap[letter] || letter)}&le=zh`);
                     fallback.play().catch(e => console.log(e));
@@ -448,7 +454,7 @@
             }
         }
 
-        // 欢呼动画
+        // 拼音点击时的全员欢呼动画
         function makeCheer() {
             const characters = document.querySelectorAll('.character');
             characters.forEach(char => {

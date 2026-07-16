@@ -541,77 +541,58 @@
         }
 
         // ==========================================
-        // 功能 2：全套拼音【强制纯正中文】发音引擎
+        // 功能 2：全套教科书级拼音发音引擎 (强制第一声)
         // ==========================================
         function speakPinyin(letter, event) {
             if (event) event.stopPropagation();
 
-            // 1. 保留你最满意的 6 个完美单韵母 (直接读取原先的纯正拼音音频库)
-            const perfectSinglesMap = {
-                'ā': 'a1', 'ō': 'o1', 'ē': 'e1', 'ī': 'yi1', 'ū': 'wu1', 'ǖ': 'yu1'
-            };
-
-            // 2. 【核心修复】将所有新增字母严格绑定到标准中文发音的汉字上！
-            // 这彻底杜绝了接口把 "ui" 读成 "UI界面"、把 "ai" 读成 "人工智能" 的错误情况。
-            const chineseAnchorMap = {
-                // 声母 (教科书呼读音标准)
-                'b': '玻', 'p': '坡', 'm': '摸', 'f': '佛',
-                'd': '德', 't': '特', 'n': '呢', 'l': '勒',
-                'g': '哥', 'k': '科', 'h': '喝',
-                'j': '机', 'q': '七', 'x': '西',
-                'zh': '知', 'ch': '吃', 'sh': '诗', 'r': '日',
-                'z': '资', 'c': '疵', 's': '丝',
-                'y': '衣', 'w': '乌',
-                // 复韵母
-                'ai': '哀', 'ei': '诶', 'ui': '威', 'ao': '凹', 'ou': '欧', 
-                'iu': '优', 'ie': '耶', 'üe': '约', 'er': '儿',
-                // 鼻韵母
-                'an': '安', 'en': '恩', 'in': '音', 'un': '温', 'ün': '晕',
-                'ang': '昂', 'eng': '鞥', 'ing': '英', 'ong': '翁'
-            };
-
-            let audioUrl = "";
-
-            try {
-                // 判断是原本的单韵母，还是新增的拼音
-                if (perfectSinglesMap[letter]) {
-                    // 读取原先完美的百度 CDN 音频
-                    audioUrl = `https://hanyu-word-pinyin-short.cdn.bcebos.com/${perfectSinglesMap[letter]}.mp3`;
-                } else if (chineseAnchorMap[letter]) {
-                    // 将严格映射好的“汉字”传给有道，强制读出完美的中文发音
-                    let anchorChar = chineseAnchorMap[letter];
-                    audioUrl = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(anchorChar)}&le=zh`;
-                }
-
-                // 播放声音
-                if (audioUrl) {
-                    const audio = new Audio(audioUrl);
-                    audio.play().catch(e => {
-                        console.log("网络音频播放失败，启用设备内置中文发音兜底...", e);
-                        fallbackToLocalSpeech(chineseAnchorMap[letter] || letter);
-                    });
-                }
+            // 彻底废除所有可能出错的接口转换。
+            // 每一个拼音都严格锁定到它对应的第一声 (呼读音) mp3 文件！
+            const pinyinAudioMap = {
+                // 单韵母
+                'ā': ['a1'], 'ō': ['o1'], 'ē': ['e1'], 'ī': ['yi1'], 'ū': ['wu1'], 'ǖ': ['yu1'],
                 
-            } catch (e) {
-                console.error(e);
-            }
+                // 声母 (教科书级呼读音，全部强制第一声)
+                'b': ['bo1'], 'p': ['po1'], 'm': ['mo1'], 'f': ['fo1', 'fo2'], 
+                'd': ['de1'], 't': ['te1'], 'n': ['ne1'], 'l': ['le1'],
+                'g': ['ge1'], 'k': ['ke1'], 'h': ['he1'],
+                'j': ['ji1'], 'q': ['qi1'], 'x': ['xi1'],
+                'zh': ['zhi1'], 'ch': ['chi1'], 'sh': ['shi1'], 'r': ['ri4', 'ri1'], 
+                'z': ['zi1'], 'c': ['ci1'], 's': ['si1'],
+                'y': ['yi1'], 'w': ['wu1'],
+                
+                // 复韵母
+                'ai': ['ai1'], 'ei': ['ei1'], 'ui': ['wei1'], 'ao': ['ao1'], 'ou': ['ou1'], 
+                'iu': ['you1'], 'ie': ['ye1'], 'üe': ['yue1'], 'er': ['er2'],
+                
+                // 鼻韵母
+                'an': ['an1'], 'en': ['en1'], 'in': ['yin1'], 'un': ['wen1'], 'ün': ['yun1'],
+                'ang': ['ang1'], 'eng': ['eng1'], 'ing': ['ying1'], 'ong': ['weng1']
+            };
 
-            makeCheer(); // 触发全家欢呼动画
+            const files = pinyinAudioMap[letter];
+            if (!files) return;
+
+            // 智能顺序播放：优先尝试完美的第1声，如果网络节点不存在（触发catch）则无缝切换备用音调
+            let urlIndex = 0;
+            function playNext() {
+                if (urlIndex >= files.length) return;
+                const audioUrl = `https://hanyu-word-pinyin-short.cdn.bcebos.com/${files[urlIndex]}.mp3`;
+                const audio = new Audio(audioUrl);
+                
+                audio.play().catch(e => {
+                    console.log(`[${files[urlIndex]}] 音频拉取失败，尝试备用发音...`);
+                    urlIndex++;
+                    playNext();
+                });
+            }
+            
+            playNext();
+            makeCheer(); 
 
             // 气泡特效
             if (event && event.clientX && event.clientY) {
                 createBubble(letter, event.clientX, event.clientY);
-            }
-        }
-
-        // 网络不好时的终极兜底方案：调用手机/电脑内置中文发音
-        function fallbackToLocalSpeech(text) {
-            try {
-                let msg = new SpeechSynthesisUtterance(text);
-                msg.lang = 'zh-CN';
-                window.speechSynthesis.speak(msg);
-            } catch (e) {
-                console.log("内置语音引擎调用失败", e);
             }
         }
 

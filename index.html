@@ -409,30 +409,62 @@
 
     <script>
         // ==========================================
-        // 功能 1：家庭成员专属优美打招呼
-        // 使用高质量在线语音接口，取代干瘪的系统合成音
+        // 核心修复 1：家庭成员专属优美打招呼 (防网络拦截强化版)
         // ==========================================
         function speakGreeting(character, element, event) {
             if (event) event.stopPropagation();
 
-            let audioUrl = "";
+            let audioUrls = [];
+
             if (character === 'baba') {
-                // 爸爸: 阿拉伯语 "مَرْحَبًا" (Marhaba)
-                audioUrl = "https://translate.googleapis.com/translate_tts?client=gtx&ie=UTF-8&tl=ar&q=" + encodeURIComponent("مَرْحَبًا");
+                // 爸爸: 阿拉伯语 "مرحبا" (Marhaba)
+                // 加入多个可用接口的【自动重试列表】，防止单个接口被网络屏蔽
+                const arText = encodeURIComponent("مرحبا");
+                audioUrls = [
+                    `https://dict.youdao.com/dictvoice?audio=${arText}&le=ar`, // 有道阿拉伯语
+                    `https://fanyi.sogou.com/reventondc/synthesis?text=${arText}&speed=1&lang=ar&from=translateweb&speaker=6`, // 搜狗阿拉伯语
+                    `https://fanyi.baidu.com/gettts?lan=ara&text=${arText}&spd=3&source=web`, // 百度阿拉伯语
+                    `https://translate.google.com/translate_tts?ie=UTF-8&tl=ar&client=tw-ob&q=${arText}` // 谷歌直连版备用
+                ];
             } else if (character === 'mama') {
-                // 妈妈: 英语 "Hello there" - 采用优美自然的美音女声
-                audioUrl = "https://dict.youdao.com/dictvoice?audio=Hello%20there&type=2";
+                // 妈妈: 英语 "Hello there" (有道完美美音，你已确认很好)
+                audioUrls = ["https://dict.youdao.com/dictvoice?audio=Hello%20there&type=2"];
             } else if (character === 'baby') {
-                // 宝宝: 中文 "你好呀" - 采用甜美可爱的中文女声
-                audioUrl = "https://dict.youdao.com/dictvoice?audio=" + encodeURIComponent("你好呀") + "&le=zh";
+                // 宝宝: 中文 "你好呀" (有道甜美童音，你已确认很好)
+                audioUrls = ["https://dict.youdao.com/dictvoice?audio=" + encodeURIComponent("你好呀") + "&le=zh"];
             }
 
-            try {
-                const audio = new Audio(audioUrl);
-                audio.play().catch(e => console.log("音频播放失败", e));
-            } catch (e) {
-                console.error("语音调用失败:", e);
+            // 智能自动切换逻辑：如果第一个音频加载失败（报错或被墙），立刻播放下一个
+            let currentIdx = 0;
+            function playNext() {
+                if (currentIdx >= audioUrls.length) return; // 全部失败则停止
+                
+                const audio = new Audio(audioUrls[currentIdx]);
+                let hasFailed = false; // 防止重复触发错误
+
+                const tryNext = () => {
+                    if (!hasFailed) {
+                        hasFailed = true;
+                        currentIdx++;
+                        playNext();
+                    }
+                };
+
+                // 捕获播放异常（如跨域或拦截）
+                audio.play().catch(e => {
+                    console.log(`接口 ${currentIdx} 播放受阻，无缝切换下一个...`);
+                    tryNext();
+                });
+
+                // 捕获网络加载异常（如404或请求被墙）
+                audio.onerror = () => {
+                    console.log(`接口 ${currentIdx} 加载失败，无缝切换下一个...`);
+                    tryNext();
+                };
             }
+            
+            // 启动播放
+            playNext();
 
             // 动画：只有当前点击的角色会跳跃
             element.classList.remove('idle-anim');
@@ -444,13 +476,13 @@
         }
 
         // ==========================================
-        // 功能 2：拼音完美发音 (保持你最满意的版本)
-        // 使用百度官方拼音 MP3 库，标准纯正第一声
+        // 核心修复 2：拼音发音 (完全保留你满意的官方发音版)
         // ==========================================
         function speakPinyin(letter, event) {
             if (event) event.stopPropagation();
 
             try {
+                // 采用最完美的百度汉语官方拼音 MP3 库
                 const pinyinAudioMap = {
                     'ā': 'a1',
                     'ō': 'o1',

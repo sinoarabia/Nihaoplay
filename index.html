@@ -304,7 +304,7 @@
             box-shadow: 0 0px 0px #333;
         }
 
-        /* 修正后的标注样式 */
+        /* 标注样式 */
         .pinyin-btn span.base-letter {
             font-size: 1.2rem;
             color: #718096;
@@ -354,8 +354,8 @@
     </header>
 
     <div class="stage">
-        <!-- 爸爸说阿拉伯语 -->
-        <div class="character idle-anim" id="boy" onclick="speakGreeting('ar-SA', 'مَرْحَبًا', this, event)">
+        <!-- 爸爸 -->
+        <div class="character idle-anim" id="boy" onclick="speakGreeting('baba', this, event)">
             <div class="boy-head">
                 <div class="boy-cap"></div>
                 <div class="boy-cap-brim"></div>
@@ -366,8 +366,8 @@
             <div class="char-name">爸爸 Baba</div>
         </div>
 
-        <!-- 宝宝说中文 -->
-        <div class="character idle-anim" id="bao" onclick="speakGreeting('zh-CN', '你好呀', this, event)">
+        <!-- 宝宝 -->
+        <div class="character idle-anim" id="bao" onclick="speakGreeting('baby', this, event)">
             <div class="bao-head">
                 <div class="bao-top"></div>
                 <div class="bao-blush blush-left"></div>
@@ -379,8 +379,8 @@
             <div class="char-name">宝宝 Baby</div>
         </div>
 
-        <!-- 妈妈说英语 -->
-        <div class="character idle-anim" id="girl" onclick="speakGreeting('en-US', 'Hello there', this, event)">
+        <!-- 妈妈 -->
+        <div class="character idle-anim" id="girl" onclick="speakGreeting('mama', this, event)">
             <div class="girl-head">
                 <div class="hair-bun bun-left"></div>
                 <div class="hair-bun bun-right"></div>
@@ -409,25 +409,32 @@
 
     <script>
         // ==========================================
-        // 核心修复 1：家庭成员打招呼使用“浏览器原生发音”
-        // 完全不依赖外网，点击 100% 有声音，无延迟
+        // 功能 1：家庭成员专属优美打招呼
+        // 使用高质量在线语音接口，取代干瘪的系统合成音
         // ==========================================
-        function speakGreeting(lang, text, element, event) {
-            if (event) event.stopPropagation(); // 拦截点击穿透
+        function speakGreeting(character, element, event) {
+            if (event) event.stopPropagation();
 
-            try {
-                if ('speechSynthesis' in window) {
-                    window.speechSynthesis.cancel(); // 停止上一个声音
-                    const utterance = new SpeechSynthesisUtterance(text);
-                    utterance.lang = lang;
-                    utterance.rate = 0.9; // 稍微放慢一点，听着更清晰
-                    window.speechSynthesis.speak(utterance);
-                }
-            } catch (e) {
-                console.error("原生语音调用失败:", e);
+            let audioUrl = "";
+            if (character === 'baba') {
+                // 爸爸: 阿拉伯语 "مَرْحَبًا" (Marhaba)
+                audioUrl = "https://translate.googleapis.com/translate_tts?client=gtx&ie=UTF-8&tl=ar&q=" + encodeURIComponent("مَرْحَبًا");
+            } else if (character === 'mama') {
+                // 妈妈: 英语 "Hello there" - 采用优美自然的美音女声
+                audioUrl = "https://dict.youdao.com/dictvoice?audio=Hello%20there&type=2";
+            } else if (character === 'baby') {
+                // 宝宝: 中文 "你好呀" - 采用甜美可爱的中文女声
+                audioUrl = "https://dict.youdao.com/dictvoice?audio=" + encodeURIComponent("你好呀") + "&le=zh";
             }
 
-            // 让当前点击的角色独自跳跃
+            try {
+                const audio = new Audio(audioUrl);
+                audio.play().catch(e => console.log("音频播放失败", e));
+            } catch (e) {
+                console.error("语音调用失败:", e);
+            }
+
+            // 动画：只有当前点击的角色会跳跃
             element.classList.remove('idle-anim');
             element.classList.add('cheer-anim');
             setTimeout(() => {
@@ -437,14 +444,13 @@
         }
 
         // ==========================================
-        // 核心修复 2：拼音发音使用“官方拼音 MP3”
-        // 直接读取国内最标准的原声录音，完美第一声
+        // 功能 2：拼音完美发音 (保持你最满意的版本)
+        // 使用百度官方拼音 MP3 库，标准纯正第一声
         // ==========================================
         function speakPinyin(letter, event) {
             if (event) event.stopPropagation();
 
             try {
-                // 这是百度汉语官方 CDN 的标准音标录音映射，发音绝对纯正无误差！
                 const pinyinAudioMap = {
                     'ā': 'a1',
                     'ō': 'o1',
@@ -455,7 +461,6 @@
                 };
                 
                 const file = pinyinAudioMap[letter];
-                // 使用国内节点，不会被网络屏蔽
                 const audio = new Audio(`https://hanyu-word-pinyin-short.cdn.bcebos.com/${file}.mp3`);
                 audio.play().catch(e => console.log("音频播放失败", e));
                 
@@ -463,7 +468,7 @@
                 console.error(e);
             }
 
-            makeCheer(); // 全员欢呼动画
+            makeCheer(); // 触发全员欢呼
 
             if (event && event.clientX && event.clientY) {
                 createBubble(letter, event.clientX, event.clientY);

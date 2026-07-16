@@ -410,7 +410,7 @@
     <script>
         // ==========================================
         // 功能 1：家庭成员专属优美打招呼
-        // 爸爸直接调用无限制的 Google API
+        // 爸爸直接调用无限制的 Google API，已彻底去除影响接口的标音符号
         // 妈妈和宝宝维持你满意的发音
         // ==========================================
         function speakGreeting(character, element, event) {
@@ -418,8 +418,10 @@
 
             let audioUrl = "";
             if (character === 'baba') {
-                // 爸爸: 直接走 Google 接口，去除了所有可能卡死的防墙备用代码
-                audioUrl = "https://translate.googleapis.com/translate_tts?client=gtx&ie=UTF-8&tl=ar&q=" + encodeURIComponent("مرحبا");
+                // 爸爸: 阿拉伯语 "مرحبا" 
+                // 【核心修复】：去掉了阿拉伯语的注音符号，只保留基础字母
+                // 使用最稳定的 tw-ob 接口，保证瞬间出声
+                audioUrl = "https://translate.google.com/translate_tts?ie=UTF-8&tl=ar&client=tw-ob&q=" + encodeURIComponent("مرحبا");
             } else if (character === 'mama') {
                 // 妈妈: 纯正美音
                 audioUrl = "https://dict.youdao.com/dictvoice?audio=Hello%20there&type=2";

@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 👇 新增的神奇隐身衣：完美解决 Google 语音拦截问题 👇 -->
+    <meta name="referrer" content="no-referrer">
     <title>NihaoPlay - Learn Pinyin!</title>
     <style>
         :root {
@@ -339,11 +341,9 @@
         }
 
         /* 底部版权 */
-        footer {
-            margin-top: 25px;
-            font-size: 0.9rem;
-            color: #a0aec0;
-        }
+        <footer>
+            &copy; 2026 nihaoplay.com - All Rights Reserved.
+        </footer>
     </style>
 </head>
 <body>
@@ -410,17 +410,14 @@
     <script>
         // ==========================================
         // 功能 1：家庭成员专属优美打招呼
-        // 爸爸直接调用无限制的 Google API，已彻底去除影响接口的标音符号
-        // 妈妈和宝宝维持你满意的发音
         // ==========================================
         function speakGreeting(character, element, event) {
             if (event) event.stopPropagation();
 
             let audioUrl = "";
             if (character === 'baba') {
-            // 爸爸: 阿拉伯语 "مرحبا" 
-            // 【完美修复】：使用 googleapis 域名和 client=gtx，彻底解决跨域和 403 拦截问题
-            audioUrl = "https://translate.googleapis.com/translate_tts?client=gtx&ie=UTF-8&tl=ar&q=" + encodeURIComponent("مرحبا");
+                // 爸爸: 阿拉伯语 "مرحبا" 
+                audioUrl = "https://translate.google.com/translate_tts?ie=UTF-8&tl=ar&client=tw-ob&q=" + encodeURIComponent("مرحبا");
             } else if (character === 'mama') {
                 // 妈妈: 纯正美音
                 audioUrl = "https://dict.youdao.com/dictvoice?audio=Hello%20there&type=2";

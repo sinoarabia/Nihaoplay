@@ -418,10 +418,9 @@
 
             let audioUrl = "";
             if (character === 'baba') {
-                // 爸爸: 阿拉伯语 "مرحبا" 
-                // 【核心修复】：去掉了阿拉伯语的注音符号，只保留基础字母
-                // 使用最稳定的 tw-ob 接口，保证瞬间出声
-                audioUrl = "https://translate.google.com/translate_tts?ie=UTF-8&tl=ar&client=tw-ob&q=" + encodeURIComponent("مرحبا");
+             // 爸爸: 阿拉伯语 "مرحبا" 
+            // 【完美修复】：使用 googleapis 域名和 client=gtx，彻底解决跨域和 403 拦截问题
+            audioUrl = "https://translate.googleapis.com/translate_tts?client=gtx&ie=UTF-8&tl=ar&q=" + encodeURIComponent("مرحبا");
             } else if (character === 'mama') {
                 // 妈妈: 纯正美音
                 audioUrl = "https://dict.youdao.com/dictvoice?audio=Hello%20there&type=2";

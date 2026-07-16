@@ -100,7 +100,7 @@
             animation: cheer 0.8s ease-out-in !important;
         }
 
-        /* 1号角色: 乐乐 (小男孩) */
+        /* 1号角色: 乐乐 */
         #boy { animation-delay: 0.2s; }
         .boy-head {
             width: 70px;
@@ -160,7 +160,7 @@
             margin-top: -3px;
         }
 
-        /* 2号核心IP角色: Bao (魔法小精灵) */
+        /* 2号核心角色: Bao */
         #bao { animation-delay: 0s; }
         .bao-head {
             width: 85px;
@@ -171,7 +171,6 @@
             border: 4px solid #333;
             box-shadow: inset -5px -5px 0px rgba(0,0,0,0.05);
         }
-        /* 包子顶部的褶子 */
         .bao-top {
             position: absolute;
             top: -14px;
@@ -212,7 +211,7 @@
             margin-top: -5px;
         }
 
-        /* 3号角色: 妙妙 (小女孩) */
+        /* 3号角色: 妙妙 */
         #girl { animation-delay: 0.4s; }
         .girl-head {
             width: 70px;
@@ -304,11 +303,16 @@
             box-shadow: 0 0px 0px #333;
         }
 
-        .pinyin-btn span.english {
-            font-size: 0.9rem;
-            color: #a0aec0;
+        /* 修正后的标注样式 */
+        .pinyin-btn span.base-letter {
+            font-size: 1.2rem;
+            color: #718096;
             margin-top: 5px;
-            font-weight: normal;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+            background-color: rgba(0,0,0,0.05);
+            padding: 2px 12px;
+            border-radius: 10px;
         }
 
         /* 动态产生的彩色漂浮气泡 */
@@ -329,14 +333,8 @@
         }
 
         @keyframes floatUp {
-            0% {
-                transform: translate(-50%, 0) scale(0.5);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(-50%, -150px) scale(1.2);
-                opacity: 0;
-            }
+            0% { transform: translate(-50%, 0) scale(0.5); opacity: 1; }
+            100% { transform: translate(-50%, -150px) scale(1.2); opacity: 0; }
         }
 
         /* 底部版权 */
@@ -354,16 +352,12 @@
         <p class="subtitle">Click the letters to play & learn Chinese Pinyin!</p>
     </header>
 
-    <!-- 舞台区：动画儿童与Bao -->
     <div class="stage">
         <div class="character idle-anim" id="boy" onclick="makeCheer()">
             <div class="boy-head">
                 <div class="boy-cap"></div>
                 <div class="boy-cap-brim"></div>
-                <div class="face-details">
-                    <div class="eye"></div>
-                    <div class="eye"></div>
-                </div>
+                <div class="face-details"><div class="eye"></div><div class="eye"></div></div>
                 <div class="smile"></div>
             </div>
             <div class="boy-body"></div>
@@ -375,10 +369,7 @@
                 <div class="bao-top"></div>
                 <div class="bao-blush blush-left"></div>
                 <div class="bao-blush blush-right"></div>
-                <div class="face-details">
-                    <div class="eye"></div>
-                    <div class="eye"></div>
-                </div>
+                <div class="face-details"><div class="eye"></div><div class="eye"></div></div>
                 <div class="bao-smile"></div>
             </div>
             <div class="bao-body"></div>
@@ -389,10 +380,7 @@
             <div class="girl-head">
                 <div class="hair-bun bun-left"></div>
                 <div class="hair-bun bun-right"></div>
-                <div class="face-details">
-                    <div class="eye"></div>
-                    <div class="eye"></div>
-                </div>
+                <div class="face-details"><div class="eye"></div><div class="eye"></div></div>
                 <div class="smile"></div>
             </div>
             <div class="girl-body"></div>
@@ -400,32 +388,32 @@
         </div>
     </div>
 
-    <!-- 拼音交互黑板 -->
     <div class="board-container">
         <div class="board">
+            <!-- 替换成了标准拼音基础字母标注 -->
             <button class="pinyin-btn" onclick="speakPinyin('ā', event)">
                 ā
-                <span class="english">ah</span>
+                <span class="base-letter">a</span>
             </button>
             <button class="pinyin-btn" onclick="speakPinyin('ō', event)">
                 ō
-                <span class="english">oh</span>
+                <span class="base-letter">o</span>
             </button>
             <button class="pinyin-btn" onclick="speakPinyin('ē', event)">
                 ē
-                <span class="english">uh</span>
+                <span class="base-letter">e</span>
             </button>
             <button class="pinyin-btn" onclick="speakPinyin('ī', event)">
                 ī
-                <span class="english">ee</span>
+                <span class="base-letter">i</span>
             </button>
             <button class="pinyin-btn" onclick="speakPinyin('ū', event)">
                 ū
-                <span class="english">oo</span>
+                <span class="base-letter">u</span>
             </button>
             <button class="pinyin-btn" onclick="speakPinyin('ǖ', event)">
                 ǖ
-                <span class="english">yu</span>
+                <span class="base-letter">ü</span>
             </button>
         </div>
     </div>
@@ -435,51 +423,37 @@
     </footer>
 
     <script>
-        // 发音及互动主函数（完美真人发音版）
+        // 发音及互动主函数（终极修复：标准发音 + 完美支持ē）
         function speakPinyin(letter, event) {
             try {
-                // 彻底抛弃机器合成音！使用百度汉语官方的标准拼音 MP3 音频库
-                // 这样能保证绝对是标准的一声 (1st tone)，且是人声录制
-                const audioMap = {
-                    'ā': 'a1',
-                    'ō': 'o1',
-                    'ē': 'e1',
-                    'ī': 'yi1',
-                    'ū': 'wu1',
-                    'ǖ': 'yu1'
-                };
-
-                const file = audioMap[letter];
-                
-                // 优先播放标准的百度汉语发音库
-                const audio = new Audio(`https://hanyu-word-pinyin-short.cdn.bcebos.com/${file}.mp3`);
+                // 采用专门优化过带调拼音的顶级 TTS 接口
+                // 这个接口能直接精准朗读 ā、ō、ē 等拼音字符，不需要借用汉字
+                const audio = new Audio(`https://translate.googleapis.com/translate_tts?client=gtx&ie=UTF-8&tl=zh-CN&q=${encodeURIComponent(letter)}`);
                 
                 audio.play().catch(error => {
-                    console.log("主音频加载失败，尝试备用引擎...", error);
-                    // 备用方案：直接传拼音给谷歌翻译发音接口
-                    const fallback = new Audio(`https://translate.googleapis.com/translate_tts?client=gtx&ie=UTF-8&tl=zh-CN&q=${encodeURIComponent(letter)}`);
+                    console.log("主音频加载失败，启动国内备用接口...", error);
+                    // 备用接口：防网络波动
+                    const fallbackMap = { 'ā':'阿', 'ō':'喔', 'ē':'婀', 'ī':'衣', 'ū':'乌', 'ǖ':'迂' };
+                    const fallback = new Audio(`https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(fallbackMap[letter] || letter)}&le=zh`);
                     fallback.play().catch(e => console.log(e));
                 });
             } catch (e) {
                 console.error(e);
             }
 
-            // 2. 触发舞台人物欢呼动画
             makeCheer();
 
-            // 3. 在鼠标点击位置生成彩色漂浮拼音气泡
             if (event) {
                 createBubble(letter, event.clientX, event.clientY);
             }
         }
 
-        // 控制所有人一起跳跃欢呼
+        // 欢呼动画
         function makeCheer() {
             const characters = document.querySelectorAll('.character');
             characters.forEach(char => {
                 char.classList.remove('idle-anim');
                 char.classList.add('cheer-anim');
-
                 setTimeout(() => {
                     char.classList.remove('cheer-anim');
                     char.classList.add('idle-anim');
@@ -487,7 +461,7 @@
             });
         }
 
-        // 生成彩色气泡的算法
+        // 彩色气泡
         function createBubble(text, x, y) {
             const colors = ['#ff6b6b', '#4ecdc4', '#ffe0b2', '#ec407a', '#29b6f6', '#ab47bc'];
             const randomColor = colors[Math.floor(Math.random() * colors.length)];

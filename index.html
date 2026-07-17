@@ -53,7 +53,7 @@
         @keyframes floatUp { 0% { transform: translate(-50%, 0) scale(0.5); opacity: 1; } 100% { transform: translate(-50%, -150px) scale(1.2); opacity: 0; } }
         footer { margin-top: 10px; font-size: 0.9rem; color: #a0aec0; }
 
-        /* --- 新增：导航区域 (左右按钮与中间人物) --- */
+        /* --- 导航区域 (左右按钮与中间人物) --- */
         .middle-section {
             display: flex;
             align-items: center;
@@ -91,52 +91,20 @@
             transform: translateY(6px);
             box-shadow: 0 0px 0px #333;
         }
-        .side-nav-btn i {
-            font-size: 2.2rem;
-        }
+        .side-nav-btn i { font-size: 2.2rem; }
+        
         /* 当前页面(拼音)的高亮状态 */
-        .side-nav-btn.active-nav {
-            background: #fff9db;
-            color: var(--primary-color);
-            border-color: var(--primary-color);
-            box-shadow: 0 6px 0px var(--primary-color);
-        }
-        .side-nav-btn.active-nav i {
-            color: var(--primary-color);
-        }
-        .side-nav-btn.active-nav:hover {
-            box-shadow: 0 8px 0px var(--primary-color);
-        }
-        .side-nav-btn.active-nav:active {
-            box-shadow: 0 0px 0px var(--primary-color);
-        }
-        /* 右侧儿歌按钮的图标颜色 */
-        .side-nav-btn:not(.active-nav) i {
-            color: #4ecdc4; 
-        }
+        .side-nav-btn.active-nav { background: #fff9db; color: var(--primary-color); border-color: var(--primary-color); box-shadow: 0 6px 0px var(--primary-color); }
+        .side-nav-btn.active-nav i { color: var(--primary-color); }
+        .side-nav-btn.active-nav:hover { box-shadow: 0 8px 0px var(--primary-color); }
+        .side-nav-btn.active-nav:active { box-shadow: 0 0px 0px var(--primary-color); }
+        .side-nav-btn:not(.active-nav) i { color: #4ecdc4; }
 
-        /* 手机端响应式排版 (按钮自动换到下方) */
-        @media (max-width: 850px) {
-            .middle-section {
-                flex-wrap: wrap;
-                gap: 20px;
-            }
-            .stage {
-                order: -1; /* 保证人物在手机上显示在最上面 */
-                margin-bottom: 10px;
-            }
-            .side-nav-btn {
-                flex-direction: row;
-                min-width: auto;
-                padding: 10px 20px;
-                font-size: 1.1rem;
-            }
-            .side-nav-btn i {
-                font-size: 1.5rem;
-            }
-        }
+        /* ✨ 新增：底部加载提示框高级排版 ✨ */
+        .browser-tip { background: white; border: 2px dashed #bae6fd; border-radius: 16px; padding: 15px 20px; margin: 20px auto 15px; max-width: 900px; width: 90%; box-shadow: 0 8px 15px rgba(0,0,0,0.03); display: flex; flex-direction: column; gap: 8px; }
+        .tip-line { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.85rem; color: #64748b; font-weight: 500; }
 
-        /* --- 以下为 WhatsApp 气泡悬浮窗及炫彩样式 --- */
+        /* --- WhatsApp 气泡悬浮窗及炫彩样式 --- */
         .whatsapp-float-container {
             position: fixed;
             bottom: 20px;
@@ -187,7 +155,6 @@
             transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
             transform-origin: bottom right; 
             box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-            
             background-clip: padding-box;
             border: 4px solid transparent;
             background-image: linear-gradient(white, white), linear-gradient(45deg, #ff6b6b, #ffca28, #4ecdc4, #29b6f6, #ab47bc);
@@ -196,10 +163,14 @@
             animation: borderGradient 4s ease infinite;
         }
 
-        .whatsapp-float-container:hover .whatsapp-text {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0) scale(1);
+        /* 电脑端才使用 hover 显示气泡 */
+        @media (min-width: 851px) {
+            .whatsapp-float-container:hover .whatsapp-text { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+        }
+        
+        /* 手机端使用 JS 添加的类名来强制显示气泡 */
+        .whatsapp-text.show-mobile-bubble {
+            opacity: 1 !important; visibility: visible !important; transform: translateY(0) scale(1) !important;
         }
         
         @keyframes borderGradient {
@@ -208,34 +179,21 @@
             100% { background-position: 0% 0%, 0% 50%; }
         }
 
-        .colorful-text-ar {
-            background: linear-gradient(45deg, #0082c8, #00c6ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 14px;
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-            text-align: center;
-        }
-        .colorful-text-zh {
-            background: linear-gradient(45deg, #ff6b6b, #ab47bc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 16px;
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-            text-align: center;
-        }
-        .colorful-text-en {
-            background: linear-gradient(45deg, #f12711, #f5af19);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 12px;
-            font-weight: bold;
-            display: block;
-            text-align: center;
+        .colorful-text-ar { background: linear-gradient(45deg, #0082c8, #00c6ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 14px; font-weight: bold; display: block; margin-bottom: 5px; text-align: center; }
+        .colorful-text-zh { background: linear-gradient(45deg, #ff6b6b, #ab47bc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 16px; font-weight: bold; display: block; margin-bottom: 5px; text-align: center; }
+        .colorful-text-en { background: linear-gradient(45deg, #f12711, #f5af19); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 12px; font-weight: bold; display: block; text-align: center; }
+
+        /* ✨ 手机端响应式排版 (合并导航和 WhatsApp 优化) ✨ */
+        @media (max-width: 850px) {
+            .middle-section { flex-wrap: wrap; gap: 20px; }
+            .stage { order: -1; margin-bottom: 10px; }
+            .side-nav-btn { flex-direction: row; min-width: auto; padding: 10px 20px; font-size: 1.1rem; }
+            .side-nav-btn i { font-size: 1.5rem; }
+            
+            /* WhatsApp 防遮挡和换行处理 */
+            .whatsapp-button { width: 50px; height: 50px; font-size: 28px; box-shadow: 0 2px 6px rgba(37, 211, 102, 0.4); }
+            .whatsapp-float-container { bottom: 15px; right: 15px; }
+            .whatsapp-text { bottom: 65px; padding: 12px 15px; white-space: normal; width: 85vw; max-width: 320px; right: 0; line-height: 1.5; }
         }
     </style>
 </head>
@@ -244,7 +202,6 @@
     
     <!-- 导航与人物区域组合 -->
     <div class="middle-section">
-        
         <!-- 左侧：拼音按钮 (当前页面高亮) -->
         <a href="index.html" class="side-nav-btn active-nav">
             <i class="fas fa-language"></i>
@@ -272,9 +229,9 @@
             <i class="fas fa-music"></i>
             <span>Song of CN/EN</span>
         </a>
-
     </div>
 
+    <!-- 拼音棋盘核心区域 (完全保留你的数据) -->
     <div class="board-container">
         <div class="category-wrapper"><div class="category-title">🎈 单韵母</div><div class="board">
             <button class="pinyin-btn" onclick="speakPinyin('ā', event)">ā<span class="base-letter">a</span></button><button class="pinyin-btn" onclick="speakPinyin('ō', event)">ō<span class="base-letter">o</span></button><button class="pinyin-btn" onclick="speakPinyin('ē', event)">ē<span class="base-letter">e</span></button><button class="pinyin-btn" onclick="speakPinyin('ī', event)">ī<span class="base-letter">i</span></button><button class="pinyin-btn" onclick="speakPinyin('ū', event)">ū<span class="base-letter">u</span></button><button class="pinyin-btn" onclick="speakPinyin('ǖ', event)">ǖ<span class="base-letter">ü</span></button>
@@ -290,25 +247,23 @@
         </div></div>
     </div>
     
-    <!-- 底部浏览器加载提示 (低调小字) -->
-    <div style="text-align: center; font-size: 11px; color: #a0aec0; margin-bottom: 5px; line-height: 1.4;">
-        如果网页加载缓慢，请点击右上角 "..." 选择 "在浏览器中打开"<br>
-        If the page loads slowly, please click "..." in the top right corner and choose "Open in Browser"<br>
-        <span dir="rtl" style="display: block; font-family: 'Arial', sans-serif;">إذا كانت الصفحة بطيئة، يرجى النقر على "..." في الزاوية العلوية واختيار "فتح في المتصفح"</span>
+    <!-- ✨ 优化后的高级多语言底部提示框 ✨ -->
+    <div class="browser-tip">
+        <div class="tip-line"><i class="fas fa-info-circle" style="color: #ff6b6b; font-size: 1.1rem;"></i> 如果网页加载缓慢，请点击右上角 "..." 选择 "在浏览器中打开"</div>
+        <div class="tip-line"><i class="fas fa-globe" style="color: #4ecdc4; font-size: 1.1rem;"></i> If the page loads slowly, please click "..." in the top right corner and choose "Open in Browser"</div>
+        <div class="tip-line" dir="rtl"><i class="fas fa-mobile-alt" style="color: #29b6f6; font-size: 1.1rem;"></i> إذا كانت الصفحة بطيئة، يرجى النقر على "..." في الزاوية العلوية واختيار "فتح في المتصفح"</div>
     </div>
 
     <footer>&copy; 2026 nihaoplay.com - All Rights Reserved.</footer>
 
-    <!-- --- 以下为 WhatsApp 炫彩悬浮气泡容器 --- -->
+    <!-- ✨ WhatsApp 炫彩悬浮气泡容器 (加入手机端防误触事件) ✨ -->
     <div class="whatsapp-float-container">
-        <!-- 带有隐藏弹出气泡的结构 -->
         <div class="whatsapp-text">
             <span dir="rtl" class="colorful-text-ar">اضغط هنا لبدء مكالمة فيديو مباشرة وجهاً لوجه لتعلم المحادثة الصينية بسرعة</span>
             <span class="colorful-text-zh">点击我开始真人视频一对一快速学会中文对话</span>
             <span class="colorful-text-en">Click here to start a 1-on-1 live video chat to quickly learn Chinese conversation</span>
         </div>
-        <!-- 你的真实 WhatsApp 手机号 -->
-        <a href="https://wa.me/962771128288" target="_blank" class="whatsapp-button">
+        <a href="https://wa.me/962771128288" target="_blank" class="whatsapp-button" onclick="handleWhatsAppClick(event)">
             <i class="fab fa-whatsapp"></i>
         </a>
     </div>
@@ -349,12 +304,35 @@
         }
 
         function makeCheer() { document.querySelectorAll('.character').forEach(char => { char.classList.remove('idle-anim'); char.classList.add('cheer-anim'); setTimeout(() => { char.classList.remove('cheer-anim'); char.classList.add('idle-anim'); }, 800); }); }
+        
         function createBubble(text, x, y) {
             const colors = ['#ff6b6b', '#4ecdc4', '#ffe0b2', '#ec407a', '#29b6f6', '#ab47bc'];
             const bubble = document.createElement('div'); bubble.classList.add('bubble'); bubble.innerText = text;
             bubble.style.left = `${x}px`; bubble.style.top = `${y}px`; bubble.style.borderColor = colors[Math.floor(Math.random() * colors.length)];
             document.body.appendChild(bubble); bubble.addEventListener('animationend', () => bubble.remove());
         }
+
+        // ✨ 手机端专属：WhatsApp 防误触与弹窗控制逻辑 ✨
+        function handleWhatsAppClick(event) {
+            if (window.innerWidth <= 850) {
+                const textBubble = document.querySelector('.whatsapp-text');
+                if (!textBubble.classList.contains('show-mobile-bubble')) {
+                    event.preventDefault(); 
+                    textBubble.classList.add('show-mobile-bubble'); 
+                }
+            }
+        }
+
+        // ✨ 手机端专属：全局点击侦测（点击空白处自动收起气泡） ✨
+        document.addEventListener('click', function(e) {
+            if (window.innerWidth <= 850) {
+                const container = document.querySelector('.whatsapp-float-container');
+                const textBubble = document.querySelector('.whatsapp-text');
+                if (container && textBubble && !container.contains(e.target) && textBubble.classList.contains('show-mobile-bubble')) {
+                    textBubble.classList.remove('show-mobile-bubble');
+                }
+            }
+        });
     </script>
 </body>
 </html>

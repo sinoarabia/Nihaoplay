@@ -96,7 +96,6 @@
             border-color: #7dd3fc;
         }
         
-        /* 右上角的语言小标签 */
         .lang-badge {
             position: absolute;
             top: 20px;
@@ -117,10 +116,9 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            padding-right: 60px; /* 给右边标签留位置 */
+            padding-right: 60px;
         }
         
-        /* 播放时旋转的音符图标 */
         .song-icon {
             font-size: 1.5rem;
             color: #38bdf8;
@@ -141,141 +139,68 @@
         }
 
         /* =========================================
-           ✨ 新新宝宝 - 专属水盆动画特效 ✨
+           ✨ 新新宝宝 - 图片荡秋千动画特效 ✨
            ========================================= */
-        .xinxin-baby {
+        .xinxin-swing {
             position: absolute;
             right: 15px;
-            bottom: 12px; /* 坐在虚线上的完美位置 */
+            bottom: 5px; 
             cursor: pointer;
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition: transform 0.2s;
             z-index: 10;
+            /* 设定秋千的摆动支点在最上方中心 */
+            transform-origin: top center;
+            /* CSS 荡秋千动画 */
+            animation: swinging 4s ease-in-out infinite;
+            transition: filter 0.2s;
         }
-        .xinxin-baby:hover {
-            transform: scale(1.08);
+        .xinxin-swing:hover {
+            filter: brightness(1.1); /* 鼠标移上去轻微提亮 */
         }
-        
-        /* 胖乎乎的头 */
-        .xx-head {
-            width: 48px;
-            height: 44px;
-            background: #ffffff;
-            border-radius: 50% 50% 45% 45%;
-            border: 3px solid #333;
-            position: relative;
-            z-index: 2;
+
+        /* 定义左右摇摆的秋千效果 */
+        @keyframes swinging {
+            0% { transform: rotate(8deg); }
+            50% { transform: rotate(-8deg); }
+            100% { transform: rotate(8deg); }
         }
-        /* 头顶的一撮呆毛 */
-        .xx-hair {
-            position: absolute;
-            top: -10px;
-            left: 17px;
-            width: 12px;
-            height: 12px;
-            background: #ffffff;
-            border-radius: 50% 50% 0 0;
-            border: 3px solid #333;
-            border-bottom: none;
-            transform: rotate(15deg);
+
+        /* 控制你上传的图片大小和圆角 */
+        .swing-img {
+            width: 80px; /* 如果觉得太大或太小，修改这里的数值 */
+            height: auto;
+            border-radius: 50%; /* 变成漂亮的圆形画框 */
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            border: 3px solid #fff;
+            object-fit: cover;
+            aspect-ratio: 1/1; /* 保证它是正圆形 */
+            background-color: white;
         }
-        /* 可爱的脸蛋 */
-        .xx-face {
-            display: flex;
-            justify-content: space-around;
-            padding: 0 10px;
-            margin-top: 16px;
-        }
-        .xx-eye {
-            width: 6px;
-            height: 6px;
-            background: #333;
-            border-radius: 50%;
-        }
-        .xx-smile {
-            width: 14px;
-            height: 6px;
-            border: 2.5px solid #333;
-            border-top: none;
-            border-radius: 0 0 10px 10px;
-            margin: 4px auto 0;
-        }
-        
-        /* 蓝色水波/水盆 */
-        .xx-water {
-            width: 65px;
-            height: 25px;
-            background: #38bdf8;
-            border-radius: 10px 10px 30px 30px;
-            border: 3px solid #333;
-            margin-top: -14px; /* 让身体浸泡在水里 */
-            position: relative;
-            z-index: 3;
-            box-shadow: inset 0 -4px 0 rgba(0,0,0,0.1);
-        }
+
         /* 名字标签 */
         .xx-name {
             background: #ff6b6b;
             color: white;
             font-size: 0.7rem;
-            padding: 2px 8px;
+            padding: 2px 10px;
             border-radius: 12px;
-            margin-top: -2px;
+            margin-top: -10px; /* 稍微向上提，盖在图片底部 */
             font-weight: bold;
-            border: 2px solid #333;
+            border: 2px solid #fff;
             z-index: 4;
             position: relative;
-            box-shadow: 0 2px 0 #333;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        /* 溅起的水滴 */
-        .xx-drop {
-            width: 10px;
-            height: 14px;
-            background: #7dd3fc;
-            border-radius: 50%;
-            position: absolute;
-            top: -5px;
-            opacity: 0;
-            border: 2px solid #0284c7;
+        /* 点击播放时，激动跳跃的特效 */
+        @keyframes excitedJump {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) translateY(-10px) rotate(5deg); }
         }
-        .drop-left { left: 5px; }
-        .drop-right { right: 5px; }
-
-        /* --- 动画控制 --- */
-        /* 1. 平时的水中呼吸动画 */
-        @keyframes bobbing {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-        .idle-water .xx-head {
-            animation: bobbing 2.5s infinite ease-in-out;
-        }
-
-        /* 2. 点击时的跳跃溅水动画 */
-        @keyframes splashAnim {
-            0%, 100% { transform: translateY(0) scale(1); }
-            30% { transform: translateY(-20px) scale(0.9, 1.1); }
-            50% { transform: translateY(-25px) scale(1.05, 0.95); }
-        }
-        @keyframes dropFly {
-            0% { transform: translateY(0) scale(0.5); opacity: 1; }
-            100% { transform: translate(-10px, -25px) scale(1.2); opacity: 0; }
-        }
-        @keyframes dropFlyRight {
-            0% { transform: translateY(0) scale(0.5); opacity: 1; }
-            100% { transform: translate(10px, -25px) scale(1.2); opacity: 0; }
-        }
-        .splashing-water .xx-head {
-            animation: splashAnim 0.6s ease-in-out;
-        }
-        .splashing-water .drop-left {
-            animation: dropFly 0.6s ease-out forwards;
-        }
-        .splashing-water .drop-right {
-            animation: dropFlyRight 0.6s ease-out 0.1s forwards;
+        .excited-swing {
+            animation: excitedJump 0.5s ease-in-out !important;
         }
         
         footer { margin-top: 10px; font-size: 0.9rem; color: #a0aec0; }
@@ -303,7 +228,7 @@
     
     <!-- 导航与人物区域组合 -->
     <div class="middle-section">
-        <!-- 左侧：拼音按钮 (点击回主页) -->
+        <!-- 左侧：拼音按钮 -->
         <a href="index.html" class="side-nav-btn">
             <i class="fas fa-language"></i>
             <span>Chinese PinYin</span>
@@ -325,7 +250,7 @@
             </div>
         </div>
 
-        <!-- 右侧：儿歌按钮 (高亮显示) -->
+        <!-- 右侧：儿歌按钮 -->
         <a href="songs.html" class="side-nav-btn active-nav">
             <i class="fas fa-music"></i>
             <span>Song of CN/EN</span>
@@ -336,28 +261,18 @@
     <div class="songs-container">
         
         <!-- =================== 中文儿歌标题区 =================== -->
-        <!-- 注意：将这里的 h2 设为相对定位 (relative)，好让新新宝宝坐在这里 -->
         <h2 style="position: relative; color: #0284c7; margin: 10px 0 25px 0; border-bottom: 2px dashed #bae6fd; padding-bottom: 10px;">
             ⭐ 中文儿歌 (Chinese Songs)
             
-            <!-- ✨ 动态：新新宝宝玩水 ✨ -->
-            <div class="xinxin-baby idle-water" onclick="playXinXin(this, event)" title="点击播放: 新新宝宝">
-                <div class="xx-head">
-                    <div class="xx-hair"></div>
-                    <div class="xx-face">
-                        <div class="xx-eye"></div><div class="xx-eye"></div>
-                    </div>
-                    <div class="xx-smile"></div>
-                </div>
-                <div class="xx-water">
-                    <div class="xx-drop drop-left"></div>
-                    <div class="xx-drop drop-right"></div>
-                </div>
+            <!-- ✨ 动态图片版：新新宝宝荡秋千 ✨ -->
+            <div class="xinxin-swing" onclick="playXinXin(this, event)" title="点击播放: 新新宝宝">
+                <!-- 注意：这里的 src 是你刚上传到 GitHub 的图片名字 -->
+                <img src="xinxin.png" alt="新新宝宝" class="swing-img">
                 <div class="xx-name">新新</div>
             </div>
         </h2>
 
-        <!-- 卡片代码开始 -->
+        <!-- 卡片 1 -->
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
             <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 找朋友</div>
@@ -806,33 +721,31 @@
             setTimeout(() => { element.classList.remove('cheer-anim'); element.classList.add('idle-anim'); }, 800);
         }
 
-        // ✨ 专属：新新宝宝玩水点击逻辑 ✨
+        // ✨ 专属：新新宝宝点击播放语音特效 ✨
         function playXinXin(element, event) {
             if (event) event.stopPropagation();
 
-            // 1. 暂停底下正在播放的所有儿歌 (防止吵架)
+            // 1. 暂停底下的儿歌，防止声音重叠
             const allAudios = document.querySelectorAll('audio');
             allAudios.forEach(audio => {
                 audio.pause();
-                spinIcon(audio, false); // 顺便把转动的光盘停下来
+                spinIcon(audio, false); 
             });
 
-            // 2. 播放新新宝宝的专属音频
+            // 2. 播放专属语音（确保你传了 新新宝宝.mp3）
             let xxAudio = new Audio('audio/song/新新宝宝.mp3');
-            xxAudio.play().catch(e => console.log("新新宝宝音频播放失败，请检查文件是否在 audio/song/ 文件夹中", e));
+            xxAudio.play().catch(e => console.log("音频播放失败", e));
 
-            // 3. 触发激动的溅水花动画
-            element.classList.remove('idle-water');
-            element.classList.add('splashing-water');
+            // 3. 触发激动的弹跳动画
+            element.classList.add('excited-swing');
             
-            // 动画结束后恢复平时的水中浮动
+            // 动画结束后恢复平时的荡秋千
             setTimeout(() => {
-                element.classList.remove('splashing-water');
-                element.classList.add('idle-water');
-            }, 600);
+                element.classList.remove('excited-swing');
+            }, 500);
         }
 
-        // 唱片机图标旋转逻辑：播放时转动，暂停时停止
+        // 唱片机图标旋转逻辑
         function spinIcon(audioElement, isPlaying) {
             const icon = audioElement.parentElement.querySelector('.song-icon');
             if (icon) {
@@ -844,7 +757,7 @@
             }
         }
 
-        // 全局排他播放控制：一首歌播放时，自动暂停其他歌曲
+        // 全局排他播放控制
         document.addEventListener('play', function(e) {
             if (e.target.tagName === 'AUDIO') {
                 const allAudios = document.querySelectorAll('audio');

@@ -650,7 +650,6 @@
 
         // 唱片机图标旋转逻辑：播放时转动，暂停时停止
         function spinIcon(audioElement, isPlaying) {
-            // 找到当前音频播放器所在的卡片里那个光盘图标
             const icon = audioElement.parentElement.querySelector('.song-icon');
             if (icon) {
                 if (isPlaying) {
@@ -660,6 +659,18 @@
                 }
             }
         }
+
+        // 全局排他播放控制：一首歌播放时，自动暂停其他歌曲
+        document.addEventListener('play', function(e) {
+            if (e.target.tagName === 'AUDIO') {
+                const allAudios = document.querySelectorAll('audio');
+                allAudios.forEach(audio => {
+                    if (audio !== e.target) {
+                        audio.pause();
+                    }
+                });
+            }
+        }, true);
     </script>
 </body>
 </html>

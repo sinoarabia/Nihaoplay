@@ -147,8 +147,8 @@
         .rotating { animation: spin 3s linear infinite; color: #f59e0b !important; /* 播放时碟片变金黄色 */ }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        audio { width: 100%; outline: none; margin-top: 10px; height: 40px; }
-        audio::-webkit-media-controls-panel { background-color: #f8fafc; }
+        /* ✨ 彻底隐藏原生播放器和进度条，保持页面清爽 ✨ */
+        audio { display: none; }
 
         /* 新新宝宝图片秋千动画 */
         .xinxin-swing { position: absolute; right: 0px; bottom: 5px; cursor: pointer; display: flex; flex-direction: column; align-items: center; z-index: 10; transform-origin: top center; animation: swinging 4s ease-in-out infinite; transition: filter 0.2s; }
@@ -246,7 +246,7 @@
             </div>
         </h2>
 
-        <!-- ✨ 改变了：为每一个 song-title 加入了 onclick 事件 ✨ -->
+        <!-- ✨移除了所有 audio 的 controls 属性，界面更干净 ✨ -->
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
             <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
@@ -257,7 +257,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/找朋友.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -273,7 +273,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/小兔子乖乖.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -289,7 +289,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/数鸭子.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -305,7 +305,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/小星星.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -321,7 +321,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/我的好妈妈.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -337,7 +337,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/礼貌歌.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -353,7 +353,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/打电话.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -369,7 +369,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/虫儿飞.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -385,7 +385,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/蜗牛与黄鹂鸟.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -401,7 +401,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/采蘑菇的小姑娘.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -417,7 +417,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/粉刷匠.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -433,7 +433,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/娃哈哈.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -449,7 +449,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/种太阳.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -465,7 +465,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/小燕子.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -481,7 +481,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/世上只有妈妈好.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -497,7 +497,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/小小少年郎.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -513,7 +513,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/泥娃娃.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -529,7 +529,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/刷牙歌.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -545,7 +545,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/丢手绢.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -561,7 +561,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/摇篮曲.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -587,7 +587,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Twinkle Twinkle Little Star.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -603,7 +603,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/The ABC Song.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -619,7 +619,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/The Wheels on the Bus.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -635,7 +635,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Old MacDonald Had A Farm.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -651,7 +651,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Head, Shoulders, Knees and Toes.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -667,7 +667,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/If You’re Happy and You Know It.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -683,7 +683,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/BINGO.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -699,7 +699,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Itsy Bitsy Spider.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -715,7 +715,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Row, Row, Row Your Boat.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -731,7 +731,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Five Little Monkeys Jumping on the Bed.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -747,7 +747,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Finger Family.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -763,7 +763,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Rain, Rain, Go Away.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -779,7 +779,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/You Are My Sunshine.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -795,7 +795,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Hickory Dickory Dock.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -811,7 +811,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Mary Had a Little Lamb.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -827,7 +827,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Ten Little Numbers.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -843,7 +843,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/The Ants Go Marching.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -859,7 +859,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/London Bridge is Falling Down.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -875,7 +875,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Hush, Little Baby.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>
@@ -891,7 +891,7 @@
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio controls preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
+            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Please and Thank You.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
             </audio>

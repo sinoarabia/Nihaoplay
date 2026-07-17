@@ -127,14 +127,6 @@
     </style>
 </head>
 <body>
-    <!-- Instagram 浏览器提示条 开始 -->
-    <div style="background-color: #fff3cd; color: #856404; text-align: center; padding: 12px 10px; font-size: 14px; border-bottom: 1px solid #ffeeba; margin-bottom: 10px; line-height: 1.5;">
-        如果网页加载缓慢，请点击右上角 "..." 选择 <strong>"在浏览器中打开"</strong><br>
-        If the page loads slowly, please click "..." in the top right corner and choose <strong>"Open in Browser"</strong><br>
-        <span dir="rtl" style="display: block; font-family: 'Arial', sans-serif; margin-top: 5px;">إذا كانت الصفحة بطيئة، يرجى النقر على "..." في الزاوية العلوية واختيار <strong>"فتح في المتصفح"</strong></span>
-    </div>
-    <!-- Instagram 浏览器提示条 结束 -->
-
     <header><h1>NihaoPlay!</h1><p class="subtitle">Click the letters to play & learn Chinese Pinyin!</p></header>
     <div class="stage">
         <div class="character idle-anim" id="boy" onclick="speakGreeting('baba', this, event)">
@@ -164,6 +156,14 @@
             <button class="pinyin-btn" onclick="speakPinyin('an', event)">an</button><button class="pinyin-btn" onclick="speakPinyin('en', event)">en</button><button class="pinyin-btn" onclick="speakPinyin('in', event)">in</button><button class="pinyin-btn" onclick="speakPinyin('un', event)">un</button><button class="pinyin-btn" onclick="speakPinyin('ün', event)">ün</button><button class="pinyin-btn" onclick="speakPinyin('ang', event)">ang</button><button class="pinyin-btn" onclick="speakPinyin('eng', event)">eng</button><button class="pinyin-btn" onclick="speakPinyin('ing', event)">ing</button><button class="pinyin-btn" onclick="speakPinyin('ong', event)">ong</button>
         </div></div>
     </div>
+    
+    <!-- 底部浏览器加载提示 (低调小字) -->
+    <div style="text-align: center; font-size: 11px; color: #a0aec0; margin-bottom: 5px; line-height: 1.4;">
+        如果网页加载缓慢，请点击右上角 "..." 选择 "在浏览器中打开"<br>
+        If the page loads slowly, please click "..." in the top right corner and choose "Open in Browser"<br>
+        <span dir="rtl" style="display: block; font-family: 'Arial', sans-serif;">إذا كانت الصفحة بطيئة، يرجى النقر على "..." في الزاوية العلوية واختيار "فتح في المتصفح"</span>
+    </div>
+
     <footer>&copy; 2026 nihaoplay.com - All Rights Reserved.</footer>
 
     <!-- --- 以下为新增的 WhatsApp 炫彩悬浮按钮容器 --- -->

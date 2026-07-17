@@ -109,22 +109,22 @@
         .badge-cn { background-color: #fee2e2; color: #ef4444; }
         .badge-en { background-color: #dcfce7; color: #22c55e; }
 
-        /* ✨ 重点优化：双语标题上下分行排版 ✨ */
+        /* ✨ 双语标题上下分行排版 ✨ */
         .song-title { 
             display: flex; 
-            align-items: center; /* 保证左侧的光盘图标和右侧两行文字居中对齐 */
+            align-items: center; 
             gap: 15px; 
-            padding-right: 70px; /* 给右上角的语言标签留出空间 */
+            padding-right: 70px; 
             margin-bottom: 12px;
         }
         .song-icon { 
             font-size: 1.8rem; 
             color: #38bdf8; 
-            flex-shrink: 0; /* 防止屏幕太窄时光盘图标被挤扁 */
+            flex-shrink: 0; 
         }
         .title-text {
             display: flex;
-            flex-direction: column; /* 魔法指令：强制里面两行文字上下排列 */
+            flex-direction: column; 
             justify-content: center;
         }
         .main-title {
@@ -135,7 +135,7 @@
         }
         .sub-title {
             font-size: 0.95rem;
-            color: #64748b; /* 高级的高级灰，区分主副标题 */
+            color: #64748b; 
             font-weight: 500;
             margin-top: 4px;
         }
@@ -175,6 +175,7 @@
         .whatsapp-button:hover { transform: scale(1.1); }
         @keyframes pulseGlow { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); } 70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
 
+        /* 电脑端默认样式 (强制不换行) */
         .whatsapp-text { background: white; padding: 12px 16px; border-radius: 15px; font-family: Arial, sans-serif; white-space: nowrap; position: absolute; bottom: 75px; right: 0; opacity: 0; visibility: hidden; transform: translateY(10px) scale(0.9); transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); transform-origin: bottom right; box-shadow: 0 8px 20px rgba(0,0,0,0.15); background-clip: padding-box; border: 4px solid transparent; background-image: linear-gradient(white, white), linear-gradient(45deg, #ff6b6b, #ffca28, #4ecdc4, #29b6f6, #ab47bc); background-origin: border-box; background-size: 100% 100%, 300% 300%; animation: borderGradient 4s ease infinite; }
         
         /* 电脑端才使用 hover 显示气泡 */
@@ -191,7 +192,9 @@
         .colorful-text-zh { background: linear-gradient(45deg, #ff6b6b, #ab47bc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 16px; font-weight: bold; display: block; margin-bottom: 5px; text-align: center; }
         .colorful-text-en { background: linear-gradient(45deg, #f12711, #f5af19); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 12px; font-weight: bold; display: block; text-align: center; }
 
-        /* 手机端排版缩放 */
+        /* ==============================================================
+           ✨ 手机端超级专属排版优化 ✨
+           ============================================================== */
         @media (max-width: 850px) {
             .middle-section { flex-wrap: wrap; gap: 20px; }
             .stage { order: -1; margin-bottom: 10px; }
@@ -204,9 +207,18 @@
             .xinxin-swing { bottom: 0px; right: 0px; }
             .xx-name { font-size: 0.65rem; padding: 2px 8px; margin-top: -6px; }
             
-            .whatsapp-button { width: 45px; height: 45px; font-size: 24px; box-shadow: 0 2px 6px rgba(37, 211, 102, 0.4); }
-            .whatsapp-float-container { bottom: 15px; right: 10px; }
-            .whatsapp-text { bottom: 55px; padding: 8px 10px; transform: translateY(10px) scale(0.85); }
+            /* ✨ 彻底解决手机端 WhatsApp 遮挡和文字截断问题 ✨ */
+            .whatsapp-button { width: 50px; height: 50px; font-size: 28px; box-shadow: 0 2px 6px rgba(37, 211, 102, 0.4); }
+            .whatsapp-float-container { bottom: 15px; right: 15px; }
+            .whatsapp-text { 
+                bottom: 65px; 
+                padding: 12px 15px; 
+                white-space: normal; /* 允许文字自然换行，解决显示不全的问题 */
+                width: 85vw; /* 宽度适应手机屏幕 */
+                max-width: 320px; /* 最大宽度限制，不会撑满整个屏幕 */
+                right: 0;
+                line-height: 1.5; /* 增加一点行高，看起来不拥挤 */
+            }
         }
     </style>
 </head>
@@ -256,7 +268,6 @@
             </div>
         </h2>
 
-        <!-- 卡片内容应用新排版 -->
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
             <div class="song-title">
@@ -925,6 +936,7 @@
     </div>
 
     <script>
+        // 中间人物点击发音逻辑
         function speakGreeting(character, element, event) {
             if (event) event.stopPropagation();
             let audioUrl = "";
@@ -943,6 +955,7 @@
             setTimeout(() => { element.classList.remove('cheer-anim'); element.classList.add('idle-anim'); }, 800);
         }
 
+        // ✨ 专属：新新宝宝点击播放语音特效 ✨
         function playXinXin(element, event) {
             if (event) event.stopPropagation();
 
@@ -961,6 +974,7 @@
             }, 500);
         }
 
+        // 唱片机图标旋转逻辑
         function spinIcon(audioElement, isPlaying) {
             const icon = audioElement.parentElement.querySelector('.song-icon');
             if (icon) {
@@ -972,6 +986,7 @@
             }
         }
 
+        // 全局排他播放控制
         document.addEventListener('play', function(e) {
             if (e.target.tagName === 'AUDIO') {
                 const allAudios = document.querySelectorAll('audio');
@@ -983,18 +998,29 @@
             }
         }, true);
 
+        // ✨ 手机端专属：WhatsApp 防误触与弹窗控制逻辑 ✨
         function handleWhatsAppClick(event) {
             if (window.innerWidth <= 850) {
                 const textBubble = document.querySelector('.whatsapp-text');
                 if (!textBubble.classList.contains('show-mobile-bubble')) {
                     event.preventDefault(); 
                     textBubble.classList.add('show-mobile-bubble'); 
-                    setTimeout(() => {
-                        textBubble.classList.remove('show-mobile-bubble');
-                    }, 5000);
                 }
             }
         }
+
+        // ✨ 手机端专属：全局点击侦测（点击空白处自动收起气泡） ✨
+        document.addEventListener('click', function(e) {
+            if (window.innerWidth <= 850) {
+                const container = document.querySelector('.whatsapp-float-container');
+                const textBubble = document.querySelector('.whatsapp-text');
+                
+                // 如果点击的位置不在 WhatsApp 区域内，且气泡正在显示，就把它收回去
+                if (!container.contains(e.target) && textBubble.classList.contains('show-mobile-bubble')) {
+                    textBubble.classList.remove('show-mobile-bubble');
+                }
+            }
+        });
     </script>
 </body>
 </html>

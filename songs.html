@@ -66,14 +66,13 @@
             width: 100%; 
             max-width: 900px; 
             background: #e0f2fe; 
-            padding: 30px 25px 40px 25px; /* 底部加点内边距，方便滚动 */
+            padding: 30px 25px 40px 25px; 
             border-radius: 20px; 
             box-shadow: 0 10px 20px rgba(0,0,0,0.08), inset 0 -5px 0px rgba(0,0,0,0.05); 
             border: 8px solid #bae6fd; 
             margin-bottom: 30px; 
         }
         
-        /* ✨ 优化标题排版：居左对齐，强制预留右侧秋千位 ✨ */
         .section-title {
             position: relative;
             margin: 10px 0 25px 0;
@@ -85,7 +84,7 @@
         .cn-title {
             color: #0284c7;
             border-bottom: 2px dashed #bae6fd;
-            padding-right: 95px; /* 最核心的魔法：给右侧强制留出空白，文字遇到这里自动换行 */
+            padding-right: 95px; 
         }
         .en-title {
             color: #059669;
@@ -110,12 +109,41 @@
         .badge-cn { background-color: #fee2e2; color: #ef4444; }
         .badge-en { background-color: #dcfce7; color: #22c55e; }
 
-        .song-title { font-size: 1.3rem; color: #0f172a; margin-bottom: 8px; font-weight: bold; display: flex; align-items: center; gap: 12px; padding-right: 70px; }
-        .song-icon { font-size: 1.5rem; color: #38bdf8; }
+        /* ✨ 重点优化：双语标题上下分行排版 ✨ */
+        .song-title { 
+            display: flex; 
+            align-items: center; /* 保证左侧的光盘图标和右侧两行文字居中对齐 */
+            gap: 15px; 
+            padding-right: 70px; /* 给右上角的语言标签留出空间 */
+            margin-bottom: 12px;
+        }
+        .song-icon { 
+            font-size: 1.8rem; 
+            color: #38bdf8; 
+            flex-shrink: 0; /* 防止屏幕太窄时光盘图标被挤扁 */
+        }
+        .title-text {
+            display: flex;
+            flex-direction: column; /* 魔法指令：强制里面两行文字上下排列 */
+            justify-content: center;
+        }
+        .main-title {
+            font-size: 1.25rem;
+            color: #0f172a;
+            font-weight: bold;
+            line-height: 1.3;
+        }
+        .sub-title {
+            font-size: 0.95rem;
+            color: #64748b; /* 高级的高级灰，区分主副标题 */
+            font-weight: 500;
+            margin-top: 4px;
+        }
+
         .rotating { animation: spin 3s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        audio { width: 100%; outline: none; margin-top: 15px; height: 40px; }
+        audio { width: 100%; outline: none; margin-top: 10px; height: 40px; }
         audio::-webkit-media-controls-panel { background-color: #f8fafc; }
 
         /* ✨ 新新宝宝图片秋千动画 ✨ */
@@ -135,16 +163,7 @@
         .xinxin-swing:hover { filter: brightness(1.1); }
         @keyframes swinging { 0% { transform: rotate(8deg); } 50% { transform: rotate(-8deg); } 100% { transform: rotate(8deg); } }
         
-        .swing-img {
-            width: 80px; 
-            height: auto;
-            border-radius: 50%; 
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-            border: 3px solid #fff;
-            object-fit: cover;
-            aspect-ratio: 1/1; 
-            background-color: white;
-        }
+        .swing-img { width: 80px; height: auto; border-radius: 50%; box-shadow: 0 6px 12px rgba(0,0,0,0.15); border: 3px solid #fff; object-fit: cover; aspect-ratio: 1/1; background-color: white; }
         .xx-name { background: #ff6b6b; color: white; font-size: 0.7rem; padding: 2px 10px; border-radius: 12px; margin-top: -10px; font-weight: bold; border: 2px solid #fff; z-index: 4; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         
         @keyframes excitedJump { 0%, 100% { transform: scale(1) rotate(0deg); } 50% { transform: scale(1.1) translateY(-10px) rotate(5deg); } }
@@ -157,31 +176,34 @@
         @keyframes pulseGlow { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); } 70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
 
         .whatsapp-text { background: white; padding: 12px 16px; border-radius: 15px; font-family: Arial, sans-serif; white-space: nowrap; position: absolute; bottom: 75px; right: 0; opacity: 0; visibility: hidden; transform: translateY(10px) scale(0.9); transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); transform-origin: bottom right; box-shadow: 0 8px 20px rgba(0,0,0,0.15); background-clip: padding-box; border: 4px solid transparent; background-image: linear-gradient(white, white), linear-gradient(45deg, #ff6b6b, #ffca28, #4ecdc4, #29b6f6, #ab47bc); background-origin: border-box; background-size: 100% 100%, 300% 300%; animation: borderGradient 4s ease infinite; }
-        .whatsapp-float-container:hover .whatsapp-text { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
-        @keyframes borderGradient { 0% { background-position: 0% 0%, 0% 50%; } 50% { background-position: 0% 0%, 100% 50%; } 100% { background-position: 0% 0%, 0% 50%; } }
+        
+        /* 电脑端才使用 hover 显示气泡 */
+        @media (min-width: 851px) {
+            .whatsapp-float-container:hover .whatsapp-text { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+        }
+        
+        /* 手机端使用 JS 添加的类名来强制显示气泡 */
+        .whatsapp-text.show-mobile-bubble {
+            opacity: 1 !important; visibility: visible !important; transform: translateY(0) scale(1) !important;
+        }
 
         .colorful-text-ar { background: linear-gradient(45deg, #0082c8, #00c6ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 14px; font-weight: bold; display: block; margin-bottom: 5px; text-align: center; }
         .colorful-text-zh { background: linear-gradient(45deg, #ff6b6b, #ab47bc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 16px; font-weight: bold; display: block; margin-bottom: 5px; text-align: center; }
         .colorful-text-en { background: linear-gradient(45deg, #f12711, #f5af19); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 12px; font-weight: bold; display: block; text-align: center; }
 
-        /* ==============================================================
-           ✨ 手机端超级专属排版优化 (Media Query) ✨
-           解决文字遮挡秋千、WhatsApp图标遮挡卡片的问题
-           ============================================================== */
+        /* 手机端排版缩放 */
         @media (max-width: 850px) {
             .middle-section { flex-wrap: wrap; gap: 20px; }
             .stage { order: -1; margin-bottom: 10px; }
             .side-nav-btn { flex-direction: row; min-width: auto; padding: 10px 20px; font-size: 1.1rem; }
             .side-nav-btn i { font-size: 1.5rem; }
             
-            /* 1. 解决秋千排版：在手机上把图片等比缩小，标题文字稍微缩小 */
             .section-title { font-size: 1.25rem !important; }
-            .cn-title { padding-right: 75px !important; } /* 缩小强制占位空间 */
-            .swing-img { width: 60px; border-width: 2px; } /* 图片缩小到 60px */
+            .cn-title { padding-right: 75px !important; } 
+            .swing-img { width: 60px; border-width: 2px; } 
             .xinxin-swing { bottom: 0px; right: 0px; }
             .xx-name { font-size: 0.65rem; padding: 2px 8px; margin-top: -6px; }
             
-            /* 2. 解决 WhatsApp 遮挡卡片：在手机上把图标缩小，移到角落 */
             .whatsapp-button { width: 45px; height: 45px; font-size: 24px; box-shadow: 0 2px 6px rgba(37, 211, 102, 0.4); }
             .whatsapp-float-container { bottom: 15px; right: 10px; }
             .whatsapp-text { bottom: 55px; padding: 8px 10px; transform: translateY(10px) scale(0.85); }
@@ -194,7 +216,6 @@
         <p class="subtitle">Sing along & learn Chinese!</p>
     </header>
     
-    <!-- 导航与人物区域组合 -->
     <div class="middle-section">
         <a href="index.html" class="side-nav-btn">
             <i class="fas fa-language"></i>
@@ -235,10 +256,17 @@
             </div>
         </h2>
 
+        <!-- 卡片内容应用新排版 -->
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 找朋友 (Making Friends)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">找朋友</span>
+                    <span class="sub-title">(Making Friends)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/找朋友.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -247,8 +275,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 小兔子乖乖 (Good Little Bunny)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">小兔子乖乖</span>
+                    <span class="sub-title">(Good Little Bunny)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/小兔子乖乖.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -257,8 +291,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 数鸭子 (Counting Ducks)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">数鸭子</span>
+                    <span class="sub-title">(Counting Ducks)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/数鸭子.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -267,8 +307,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 小星星 (Little Star)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">小星星</span>
+                    <span class="sub-title">(Little Star)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/小星星.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -277,8 +323,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 我的好妈妈 (My Dear Mother)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">我的好妈妈</span>
+                    <span class="sub-title">(My Dear Mother)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/我的好妈妈.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -287,8 +339,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 礼貌歌 (The Politeness Song)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">礼貌歌</span>
+                    <span class="sub-title">(The Politeness Song)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/礼貌歌.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -297,8 +355,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 打电话 (Making a Phone Call)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">打电话</span>
+                    <span class="sub-title">(Making a Phone Call)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/打电话.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -307,8 +371,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 虫儿飞 (Bugs Fly)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">虫儿飞</span>
+                    <span class="sub-title">(Bugs Fly)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/虫儿飞.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -317,8 +387,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 蜗牛与黄鹂鸟 (The Snail and the Oriole)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">蜗牛与黄鹂鸟</span>
+                    <span class="sub-title">(The Snail and the Oriole)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/蜗牛与黄鹂鸟.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -327,8 +403,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 采蘑菇的小姑娘 (Mushroom Picking Girl)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">采蘑菇的小姑娘</span>
+                    <span class="sub-title">(Mushroom Picking Girl)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/采蘑菇的小姑娘.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -337,8 +419,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 粉刷匠 (The Little Painter)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">粉刷匠</span>
+                    <span class="sub-title">(The Little Painter)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/粉刷匠.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -347,8 +435,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 娃哈哈 (Joyful Laugh)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">娃哈哈</span>
+                    <span class="sub-title">(Joyful Laugh)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/娃哈哈.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -357,8 +451,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 种太阳 (Planting the Sun)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">种太阳</span>
+                    <span class="sub-title">(Planting the Sun)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/种太阳.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -367,8 +467,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 小燕子 (Little Swallow)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">小燕子</span>
+                    <span class="sub-title">(Little Swallow)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/小燕子.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -377,8 +483,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 世上只有妈妈好 (Mom is the Best)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">世上只有妈妈好</span>
+                    <span class="sub-title">(Mom is the Best)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/世上只有妈妈好.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -387,8 +499,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 小小少年 (Young Boy)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">小小少年</span>
+                    <span class="sub-title">(Young Boy)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/小小少年郎.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -397,8 +515,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 泥娃娃 (Clay Doll)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">泥娃娃</span>
+                    <span class="sub-title">(Clay Doll)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/泥娃娃.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -407,8 +531,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 刷牙歌 (Brushing Teeth Song)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">刷牙歌</span>
+                    <span class="sub-title">(Brushing Teeth Song)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/刷牙歌.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -417,8 +547,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 丢手绢 (Drop the Handkerchief)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">丢手绢</span>
+                    <span class="sub-title">(Drop the Handkerchief)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/丢手绢.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -427,8 +563,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 摇篮曲 (Lullaby)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">摇篮曲</span>
+                    <span class="sub-title">(Lullaby)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/摇篮曲.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -441,8 +583,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Twinkle Twinkle Little Star (一闪一闪小星星)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">Twinkle Twinkle Little Star</span>
+                    <span class="sub-title">(一闪一闪小星星)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Twinkle Twinkle Little Star.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -451,8 +599,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> The ABC Song (字母歌)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">The ABC Song</span>
+                    <span class="sub-title">(字母歌)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/The ABC Song.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -461,8 +615,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> The Wheels on the Bus (巴士上的轮子)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">The Wheels on the Bus</span>
+                    <span class="sub-title">(巴士上的轮子)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/The Wheels on the Bus.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -471,8 +631,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Old MacDonald Had a Farm (老麦克唐纳有个农场)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">Old MacDonald Had a Farm</span>
+                    <span class="sub-title">(老麦克唐纳有个农场)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Old MacDonald Had A Farm.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -481,8 +647,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Head, Shoulders, Knees and Toes (头肩膀膝盖脚趾)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">Head, Shoulders, Knees and Toes</span>
+                    <span class="sub-title">(头肩膀膝盖脚趾)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Head, Shoulders, Knees and Toes.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -491,8 +663,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> If You're Happy and You Know It (幸福拍手歌)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">If You're Happy and You Know It</span>
+                    <span class="sub-title">(幸福拍手歌)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/If You’re Happy and You Know It.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -501,8 +679,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> BINGO (宾果小狗)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">BINGO</span>
+                    <span class="sub-title">(宾果小狗)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/BINGO.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -511,8 +695,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Itsy Bitsy Spider (小小蜘蛛)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">Itsy Bitsy Spider</span>
+                    <span class="sub-title">(小小蜘蛛)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Itsy Bitsy Spider.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -521,8 +711,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Row, Row, Row Your Boat (划小船)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">Row, Row, Row Your Boat</span>
+                    <span class="sub-title">(划小船)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Row, Row, Row Your Boat.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -531,8 +727,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Five Little Monkeys (五只小猴子)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">Five Little Monkeys</span>
+                    <span class="sub-title">(五只小猴子)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Five Little Monkeys Jumping on the Bed.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -541,8 +743,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Finger Family (手指家族)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">Finger Family</span>
+                    <span class="sub-title">(手指家族)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Finger Family.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -551,8 +759,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Rain, Rain, Go Away (雨快走开)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">Rain, Rain, Go Away</span>
+                    <span class="sub-title">(雨快走开)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Rain, Rain, Go Away.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -561,8 +775,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> You Are My Sunshine (你是我的阳光)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">You Are My Sunshine</span>
+                    <span class="sub-title">(你是我的阳光)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/You Are My Sunshine.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -571,8 +791,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Hickory Dickory Dock (滴答钟声响)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">Hickory Dickory Dock</span>
+                    <span class="sub-title">(滴答钟声响)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Hickory Dickory Dock.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -581,8 +807,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Mary Had a Little Lamb (玛丽有只小羊羔)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">Mary Had a Little Lamb</span>
+                    <span class="sub-title">(玛丽有只小羊羔)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Mary Had a Little Lamb.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -591,8 +823,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Ten Little Numbers (十个数字)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">Ten Little Numbers</span>
+                    <span class="sub-title">(十个数字)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Ten Little Numbers.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -601,8 +839,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> The Ants Go Marching (蚂蚁去游行)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">The Ants Go Marching</span>
+                    <span class="sub-title">(蚂蚁去游行)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/The Ants Go Marching.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -611,8 +855,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> London Bridge is Falling Down (伦敦桥要倒了)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">London Bridge is Falling Down</span>
+                    <span class="sub-title">(伦敦桥要倒了)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/London Bridge is Falling Down.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -621,8 +871,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Hush, Little Baby (睡吧小宝贝)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">Hush, Little Baby</span>
+                    <span class="sub-title">(睡吧小宝贝)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Hush, Little Baby.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -631,8 +887,14 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Please and Thank You (请和谢谢礼貌歌)</div>
-            <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
+            <div class="song-title">
+                <i class="fas fa-compact-disc song-icon"></i>
+                <div class="title-text">
+                    <span class="main-title">Please and Thank You</span>
+                    <span class="sub-title">(请和谢谢礼貌歌)</span>
+                </div>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Please and Thank You.mp3" type="audio/mpeg">
                 您的浏览器不支持音频播放。
@@ -657,13 +919,12 @@
             <span class="colorful-text-zh">点击我开始真人视频一对一快速学会中文对话</span>
             <span class="colorful-text-en">Click here to start a 1-on-1 live video chat to quickly learn Chinese conversation</span>
         </div>
-        <a href="https://wa.me/962771128288" target="_blank" class="whatsapp-button">
+        <a href="https://wa.me/962771128288" target="_blank" class="whatsapp-button" onclick="handleWhatsAppClick(event)">
             <i class="fab fa-whatsapp"></i>
         </a>
     </div>
 
     <script>
-        // 中间人物点击发音逻辑
         function speakGreeting(character, element, event) {
             if (event) event.stopPropagation();
             let audioUrl = "";
@@ -682,31 +943,24 @@
             setTimeout(() => { element.classList.remove('cheer-anim'); element.classList.add('idle-anim'); }, 800);
         }
 
-        // ✨ 专属：新新宝宝点击播放语音特效 ✨
         function playXinXin(element, event) {
             if (event) event.stopPropagation();
 
-            // 1. 暂停底下的儿歌，防止声音重叠
             const allAudios = document.querySelectorAll('audio');
             allAudios.forEach(audio => {
                 audio.pause();
                 spinIcon(audio, false); 
             });
 
-            // 2. 播放专属语音
             let xxAudio = new Audio('audio/song/新新宝宝.mp3');
             xxAudio.play().catch(e => console.log("音频播放失败", e));
 
-            // 3. 触发激动的弹跳动画
             element.classList.add('excited-swing');
-            
-            // 动画结束后恢复平时的荡秋千
             setTimeout(() => {
                 element.classList.remove('excited-swing');
             }, 500);
         }
 
-        // 唱片机图标旋转逻辑
         function spinIcon(audioElement, isPlaying) {
             const icon = audioElement.parentElement.querySelector('.song-icon');
             if (icon) {
@@ -718,7 +972,6 @@
             }
         }
 
-        // 全局排他播放控制
         document.addEventListener('play', function(e) {
             if (e.target.tagName === 'AUDIO') {
                 const allAudios = document.querySelectorAll('audio');
@@ -729,6 +982,19 @@
                 });
             }
         }, true);
+
+        function handleWhatsAppClick(event) {
+            if (window.innerWidth <= 850) {
+                const textBubble = document.querySelector('.whatsapp-text');
+                if (!textBubble.classList.contains('show-mobile-bubble')) {
+                    event.preventDefault(); 
+                    textBubble.classList.add('show-mobile-bubble'); 
+                    setTimeout(() => {
+                        textBubble.classList.remove('show-mobile-bubble');
+                    }, 5000);
+                }
+            }
+        }
     </script>
 </body>
 </html>

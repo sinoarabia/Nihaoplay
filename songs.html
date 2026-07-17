@@ -73,7 +73,7 @@
             margin-bottom: 30px; 
         }
         
-        /* ✨ 重点优化：板块大标题双语上下分行排版 ✨ */
+        /* ✨ 重点优化：板块大标题双语上下分行、左对齐无括号排版 ✨ */
         .section-title {
             position: relative;
             margin: 10px 0 25px 0;
@@ -88,6 +88,8 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: flex-start; /* 强制左对齐，增强专业感 */
+            text-align: left;
         }
         .main-sec-title {
             font-size: 1.5rem;
@@ -123,7 +125,7 @@
         .badge-cn { background-color: #fee2e2; color: #ef4444; }
         .badge-en { background-color: #dcfce7; color: #22c55e; }
 
-        /* 卡片内双语标题上下分行排版 */
+        /* 卡片内双语标题上下分行、无括号左对齐排版 */
         .song-title { 
             display: flex; 
             align-items: center; 
@@ -132,7 +134,13 @@
             margin-bottom: 12px;
         }
         .song-icon { font-size: 1.8rem; color: #38bdf8; flex-shrink: 0; }
-        .title-text { display: flex; flex-direction: column; justify-content: center; }
+        .title-text { 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: flex-start; /* 强制左对齐，增强专业感 */
+            text-align: left;
+        }
         .main-title { font-size: 1.25rem; color: #0f172a; font-weight: bold; line-height: 1.3; }
         .sub-title { font-size: 0.95rem; color: #64748b; font-weight: 500; margin-top: 4px; }
 
@@ -250,7 +258,7 @@
         <h2 class="section-title cn-title">
             <div class="title-text-group">
                 <span class="main-sec-title">⭐ 中文儿歌</span>
-                <span class="sub-sec-title">(Chinese Songs)</span>
+                <span class="sub-sec-title">Chinese Songs</span>
             </div>
             <!-- ✨ 动态图片版：新新宝宝荡秋千 ✨ -->
             <div class="xinxin-swing" onclick="playXinXin(this, event)" title="点击播放: 新新宝宝">
@@ -265,7 +273,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">找朋友</span>
-                    <span class="sub-title">(Making Friends)</span>
+                    <span class="sub-title">Making Friends</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -281,7 +289,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">小兔子乖乖</span>
-                    <span class="sub-title">(Good Little Bunny)</span>
+                    <span class="sub-title">Good Little Bunny</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -297,7 +305,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">数鸭子</span>
-                    <span class="sub-title">(Counting Ducks)</span>
+                    <span class="sub-title">Counting Ducks</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -313,7 +321,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">小星星</span>
-                    <span class="sub-title">(Little Star)</span>
+                    <span class="sub-title">Little Star</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -329,7 +337,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">我的好妈妈</span>
-                    <span class="sub-title">(My Dear Mother)</span>
+                    <span class="sub-title">My Dear Mother</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -345,7 +353,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">礼貌歌</span>
-                    <span class="sub-title">(The Politeness Song)</span>
+                    <span class="sub-title">The Politeness Song</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -361,7 +369,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">打电话</span>
-                    <span class="sub-title">(Making a Phone Call)</span>
+                    <span class="sub-title">Making a Phone Call</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -377,7 +385,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">虫儿飞</span>
-                    <span class="sub-title">(Bugs Fly)</span>
+                    <span class="sub-title">Bugs Fly</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -393,7 +401,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">蜗牛与黄鹂鸟</span>
-                    <span class="sub-title">(The Snail and the Oriole)</span>
+                    <span class="sub-title">The Snail and the Oriole</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -409,7 +417,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">采蘑菇的小姑娘</span>
-                    <span class="sub-title">(Mushroom Picking Girl)</span>
+                    <span class="sub-title">Mushroom Picking Girl</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -425,7 +433,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">粉刷匠</span>
-                    <span class="sub-title">(The Little Painter)</span>
+                    <span class="sub-title">The Little Painter</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -441,7 +449,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">娃哈哈</span>
-                    <span class="sub-title">(Joyful Laugh)</span>
+                    <span class="sub-title">Joyful Laugh</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -457,7 +465,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">种太阳</span>
-                    <span class="sub-title">(Planting the Sun)</span>
+                    <span class="sub-title">Planting the Sun</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -473,7 +481,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">小燕子</span>
-                    <span class="sub-title">(Little Swallow)</span>
+                    <span class="sub-title">Little Swallow</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -489,7 +497,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">世上只有妈妈好</span>
-                    <span class="sub-title">(Mom is the Best)</span>
+                    <span class="sub-title">Mom is the Best</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -505,7 +513,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">小小少年</span>
-                    <span class="sub-title">(Young Boy)</span>
+                    <span class="sub-title">Young Boy</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -521,7 +529,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">泥娃娃</span>
-                    <span class="sub-title">(Clay Doll)</span>
+                    <span class="sub-title">Clay Doll</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -537,7 +545,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">刷牙歌</span>
-                    <span class="sub-title">(Brushing Teeth Song)</span>
+                    <span class="sub-title">Brushing Teeth Song</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -553,7 +561,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">丢手绢</span>
-                    <span class="sub-title">(Drop the Handkerchief)</span>
+                    <span class="sub-title">Drop the Handkerchief</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -569,7 +577,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">摇篮曲</span>
-                    <span class="sub-title">(Lullaby)</span>
+                    <span class="sub-title">Lullaby</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -584,7 +592,7 @@
         <h2 class="section-title en-title">
             <div class="title-text-group">
                 <span class="main-sec-title">🎈 英文儿歌</span>
-                <span class="sub-sec-title">(English Songs)</span>
+                <span class="sub-sec-title">English Songs</span>
             </div>
         </h2>
 
@@ -594,7 +602,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">Twinkle Twinkle Little Star</span>
-                    <span class="sub-title">(一闪一闪小星星)</span>
+                    <span class="sub-title">一闪一闪小星星</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -610,7 +618,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">The ABC Song</span>
-                    <span class="sub-title">(字母歌)</span>
+                    <span class="sub-title">字母歌</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -626,7 +634,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">The Wheels on the Bus</span>
-                    <span class="sub-title">(巴士上的轮子)</span>
+                    <span class="sub-title">巴士上的轮子</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -642,7 +650,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">Old MacDonald Had a Farm</span>
-                    <span class="sub-title">(老麦克唐纳有个农场)</span>
+                    <span class="sub-title">老麦克唐纳有个农场</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -658,7 +666,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">Head, Shoulders, Knees and Toes</span>
-                    <span class="sub-title">(头肩膀膝盖脚趾)</span>
+                    <span class="sub-title">头肩膀膝盖脚趾</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -674,7 +682,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">If You're Happy and You Know It</span>
-                    <span class="sub-title">(幸福拍手歌)</span>
+                    <span class="sub-title">幸福拍手歌</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -690,7 +698,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">BINGO</span>
-                    <span class="sub-title">(宾果小狗)</span>
+                    <span class="sub-title">宾果小狗</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -706,7 +714,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">Itsy Bitsy Spider</span>
-                    <span class="sub-title">(小小蜘蛛)</span>
+                    <span class="sub-title">小小蜘蛛</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -722,7 +730,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">Row, Row, Row Your Boat</span>
-                    <span class="sub-title">(划小船)</span>
+                    <span class="sub-title">划小船</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -738,7 +746,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">Five Little Monkeys</span>
-                    <span class="sub-title">(五只小猴子)</span>
+                    <span class="sub-title">五只小猴子</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -754,7 +762,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">Finger Family</span>
-                    <span class="sub-title">(手指家族)</span>
+                    <span class="sub-title">手指家族</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -770,7 +778,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">Rain, Rain, Go Away</span>
-                    <span class="sub-title">(雨快走开)</span>
+                    <span class="sub-title">雨快走开</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -786,7 +794,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">You Are My Sunshine</span>
-                    <span class="sub-title">(你是我的阳光)</span>
+                    <span class="sub-title">你是我的阳光</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -802,7 +810,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">Hickory Dickory Dock</span>
-                    <span class="sub-title">(滴答钟声响)</span>
+                    <span class="sub-title">滴答钟声响</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -818,7 +826,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">Mary Had a Little Lamb</span>
-                    <span class="sub-title">(玛丽有只小羊羔)</span>
+                    <span class="sub-title">玛丽有只小羊羔</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -834,7 +842,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">Ten Little Numbers</span>
-                    <span class="sub-title">(十个数字)</span>
+                    <span class="sub-title">十个数字</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -850,7 +858,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">The Ants Go Marching</span>
-                    <span class="sub-title">(蚂蚁去游行)</span>
+                    <span class="sub-title">蚂蚁去游行</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -866,7 +874,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">London Bridge is Falling Down</span>
-                    <span class="sub-title">(伦敦桥要倒了)</span>
+                    <span class="sub-title">伦敦桥要倒了</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -882,7 +890,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">Hush, Little Baby</span>
-                    <span class="sub-title">(睡吧小宝贝)</span>
+                    <span class="sub-title">睡吧小宝贝</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>
@@ -898,7 +906,7 @@
                 <i class="fas fa-compact-disc song-icon"></i>
                 <div class="title-text">
                     <span class="main-title">Please and Thank You</span>
-                    <span class="sub-title">(请和谢谢礼貌歌)</span>
+                    <span class="sub-title">请和谢谢礼貌歌</span>
                 </div>
             </div>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click play to sing along / 点击播放一起唱</p>

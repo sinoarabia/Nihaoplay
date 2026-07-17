@@ -116,7 +116,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            padding-right: 60px;
+            padding-right: 70px;
         }
         
         .song-icon {
@@ -150,58 +150,44 @@
             flex-direction: column;
             align-items: center;
             z-index: 10;
-            /* 设定秋千的摆动支点在最上方中心 */
             transform-origin: top center;
-            /* CSS 荡秋千动画 */
             animation: swinging 4s ease-in-out infinite;
             transition: filter 0.2s;
         }
-        .xinxin-swing:hover {
-            filter: brightness(1.1); /* 鼠标移上去轻微提亮 */
-        }
-
-        /* 定义左右摇摆的秋千效果 */
+        .xinxin-swing:hover { filter: brightness(1.1); }
         @keyframes swinging {
             0% { transform: rotate(8deg); }
             50% { transform: rotate(-8deg); }
             100% { transform: rotate(8deg); }
         }
-
-        /* 控制你上传的图片大小和圆角 */
         .swing-img {
-            width: 80px; /* 如果觉得太大或太小，修改这里的数值 */
+            width: 80px; 
             height: auto;
-            border-radius: 50%; /* 变成漂亮的圆形画框 */
+            border-radius: 50%; 
             box-shadow: 0 6px 12px rgba(0,0,0,0.15);
             border: 3px solid #fff;
             object-fit: cover;
-            aspect-ratio: 1/1; /* 保证它是正圆形 */
+            aspect-ratio: 1/1; 
             background-color: white;
         }
-
-        /* 名字标签 */
         .xx-name {
             background: #ff6b6b;
             color: white;
             font-size: 0.7rem;
             padding: 2px 10px;
             border-radius: 12px;
-            margin-top: -10px; /* 稍微向上提，盖在图片底部 */
+            margin-top: -10px; 
             font-weight: bold;
             border: 2px solid #fff;
             z-index: 4;
             position: relative;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
-
-        /* 点击播放时，激动跳跃的特效 */
         @keyframes excitedJump {
             0%, 100% { transform: scale(1) rotate(0deg); }
             50% { transform: scale(1.1) translateY(-10px) rotate(5deg); }
         }
-        .excited-swing {
-            animation: excitedJump 0.5s ease-in-out !important;
-        }
+        .excited-swing { animation: excitedJump 0.5s ease-in-out !important; }
         
         footer { margin-top: 10px; font-size: 0.9rem; color: #a0aec0; }
 
@@ -260,22 +246,19 @@
     <!-- ===== 儿歌列表开始 ===== -->
     <div class="songs-container">
         
-        <!-- =================== 中文儿歌标题区 =================== -->
+        <!-- =================== 中文儿歌 (20首) =================== -->
         <h2 style="position: relative; color: #0284c7; margin: 10px 0 25px 0; border-bottom: 2px dashed #bae6fd; padding-bottom: 10px;">
             ⭐ 中文儿歌 (Chinese Songs)
-            
             <!-- ✨ 动态图片版：新新宝宝荡秋千 ✨ -->
             <div class="xinxin-swing" onclick="playXinXin(this, event)" title="点击播放: 新新宝宝">
-                <!-- 注意：这里的 src 是你刚上传到 GitHub 的图片名字 -->
                 <img src="xinxin.png" alt="新新宝宝" class="swing-img">
                 <div class="xx-name">新新</div>
             </div>
         </h2>
 
-        <!-- 卡片 1 -->
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 找朋友</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 找朋友 (Making Friends)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/找朋友.mp3" type="audio/mpeg">
@@ -285,7 +268,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 小兔子乖乖</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 小兔子乖乖 (Good Little Bunny)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/小兔子乖乖.mp3" type="audio/mpeg">
@@ -295,7 +278,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 数鸭子</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 数鸭子 (Counting Ducks)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/数鸭子.mp3" type="audio/mpeg">
@@ -305,7 +288,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 小星星</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 小星星 (Little Star)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/小星星.mp3" type="audio/mpeg">
@@ -315,7 +298,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 我的好妈妈</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 我的好妈妈 (My Dear Mother)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/我的好妈妈.mp3" type="audio/mpeg">
@@ -325,7 +308,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 礼貌歌</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 礼貌歌 (The Politeness Song)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/礼貌歌.mp3" type="audio/mpeg">
@@ -335,7 +318,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 打电话</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 打电话 (Making a Phone Call)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/打电话.mp3" type="audio/mpeg">
@@ -345,7 +328,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 虫儿飞</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 虫儿飞 (Bugs Fly)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/虫儿飞.mp3" type="audio/mpeg">
@@ -355,7 +338,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 蜗牛与黄鹂鸟</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 蜗牛与黄鹂鸟 (The Snail and the Oriole)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/蜗牛与黄鹂鸟.mp3" type="audio/mpeg">
@@ -365,7 +348,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 采蘑菇的小姑娘</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 采蘑菇的小姑娘 (Mushroom Picking Girl)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/采蘑菇的小姑娘.mp3" type="audio/mpeg">
@@ -375,7 +358,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 粉刷匠</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 粉刷匠 (The Little Painter)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/粉刷匠.mp3" type="audio/mpeg">
@@ -385,7 +368,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 娃哈哈</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 娃哈哈 (Joyful Laugh)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/娃哈哈.mp3" type="audio/mpeg">
@@ -395,7 +378,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 种太阳</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 种太阳 (Planting the Sun)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/种太阳.mp3" type="audio/mpeg">
@@ -405,7 +388,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 小燕子</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 小燕子 (Little Swallow)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/小燕子.mp3" type="audio/mpeg">
@@ -415,7 +398,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 世上只有妈妈好</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 世上只有妈妈好 (Mom is the Best)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/世上只有妈妈好.mp3" type="audio/mpeg">
@@ -425,7 +408,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 小小少年</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 小小少年 (Young Boy)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/小小少年郎.mp3" type="audio/mpeg">
@@ -435,7 +418,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 泥娃娃</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 泥娃娃 (Clay Doll)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/泥娃娃.mp3" type="audio/mpeg">
@@ -445,7 +428,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 刷牙歌</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 刷牙歌 (Brushing Teeth Song)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/刷牙歌.mp3" type="audio/mpeg">
@@ -455,7 +438,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 丢手绢</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 丢手绢 (Drop the Handkerchief)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/丢手绢.mp3" type="audio/mpeg">
@@ -465,7 +448,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 摇篮曲</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> 摇篮曲 (Lullaby)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/摇篮曲.mp3" type="audio/mpeg">
@@ -479,7 +462,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Twinkle Twinkle Little Star</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Twinkle Twinkle Little Star (一闪一闪小星星)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Twinkle Twinkle Little Star.mp3" type="audio/mpeg">
@@ -489,7 +472,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> The ABC Song</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> The ABC Song (字母歌)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/The ABC Song.mp3" type="audio/mpeg">
@@ -499,7 +482,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> The Wheels on the Bus</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> The Wheels on the Bus (巴士上的轮子)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/The Wheels on the Bus.mp3" type="audio/mpeg">
@@ -509,7 +492,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Old MacDonald Had a Farm</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Old MacDonald Had a Farm (老麦克唐纳有个农场)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Old MacDonald Had A Farm.mp3" type="audio/mpeg">
@@ -519,7 +502,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Head, Shoulders, Knees and Toes</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Head, Shoulders, Knees and Toes (头肩膀膝盖脚趾)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Head, Shoulders, Knees and Toes.mp3" type="audio/mpeg">
@@ -529,7 +512,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> If You're Happy and You Know It</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> If You're Happy and You Know It (幸福拍手歌)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/If You’re Happy and You Know It.mp3" type="audio/mpeg">
@@ -539,7 +522,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> BINGO</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> BINGO (宾果小狗)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/BINGO.mp3" type="audio/mpeg">
@@ -549,7 +532,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Itsy Bitsy Spider</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Itsy Bitsy Spider (小小蜘蛛)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Itsy Bitsy Spider.mp3" type="audio/mpeg">
@@ -559,7 +542,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Row, Row, Row Your Boat</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Row, Row, Row Your Boat (划小船)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Row, Row, Row Your Boat.mp3" type="audio/mpeg">
@@ -569,7 +552,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Five Little Monkeys</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Five Little Monkeys (五只小猴子)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Five Little Monkeys Jumping on the Bed.mp3" type="audio/mpeg">
@@ -579,7 +562,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Finger Family</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Finger Family (手指家族)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Finger Family.mp3" type="audio/mpeg">
@@ -589,7 +572,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Rain, Rain, Go Away</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Rain, Rain, Go Away (雨快走开)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Rain, Rain, Go Away.mp3" type="audio/mpeg">
@@ -599,7 +582,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> You Are My Sunshine</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> You Are My Sunshine (你是我的阳光)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/You Are My Sunshine.mp3" type="audio/mpeg">
@@ -609,7 +592,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Hickory Dickory Dock</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Hickory Dickory Dock (滴答钟声响)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Hickory Dickory Dock.mp3" type="audio/mpeg">
@@ -619,7 +602,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Mary Had a Little Lamb</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Mary Had a Little Lamb (玛丽有只小羊羔)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Mary Had a Little Lamb.mp3" type="audio/mpeg">
@@ -629,7 +612,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Ten Little Numbers</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Ten Little Numbers (十个数字)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Ten Little Numbers.mp3" type="audio/mpeg">
@@ -639,7 +622,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> The Ants Go Marching</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> The Ants Go Marching (蚂蚁去游行)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/The Ants Go Marching.mp3" type="audio/mpeg">
@@ -649,7 +632,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> London Bridge is Falling Down</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> London Bridge is Falling Down (伦敦桥要倒了)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/London Bridge is Falling Down.mp3" type="audio/mpeg">
@@ -659,7 +642,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Hush, Little Baby</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Hush, Little Baby (睡吧小宝贝)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Hush, Little Baby.mp3" type="audio/mpeg">
@@ -669,7 +652,7 @@
 
         <div class="song-card">
             <span class="lang-badge badge-en">English</span>
-            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Please and Thank You</div>
+            <div class="song-title"><i class="fas fa-compact-disc song-icon"></i> Please and Thank You (请和谢谢礼貌歌)</div>
             <p style="color: #64748b; font-size: 0.9rem;">Click play to sing along / 点击播放一起唱</p>
             <audio controls preload="none" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
                 <source src="audio/song/Please and Thank You.mp3" type="audio/mpeg">
@@ -732,7 +715,7 @@
                 spinIcon(audio, false); 
             });
 
-            // 2. 播放专属语音（确保你传了 新新宝宝.mp3）
+            // 2. 播放专属语音
             let xxAudio = new Audio('audio/song/新新宝宝.mp3');
             xxAudio.play().catch(e => console.log("音频播放失败", e));
 

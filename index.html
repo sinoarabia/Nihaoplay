@@ -6,7 +6,6 @@
     <meta name="referrer" content="no-referrer">
     <title>NihaoPlay - Learn Chinese!</title>
     
-    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
@@ -14,7 +13,6 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Comic Sans MS', 'Chalkboard SE', Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; overflow-x: hidden; }
         
-        /* --- Header & Top Auth Group --- */
         header { text-align: center; margin-bottom: 20px; width: 100%; position: relative; padding-top: 15px; }
         h1 { font-size: 2.5rem; color: var(--primary-color); text-shadow: 2px 2px 0px #fff, 4px 4px 0px rgba(0,0,0,0.05); letter-spacing: 2px; margin-bottom: 5px; }
         p.subtitle { font-size: 1rem; color: #718096; }
@@ -31,12 +29,10 @@
         .user-welcome button { border: none; background: #cbd5e0; color: white; padding: 4px 10px; border-radius: 8px; cursor: pointer; font-size: 0.8rem; font-weight: bold; transition: 0.2s; }
         .user-welcome button:hover { background: #a0aec0; }
 
-        /* --- Navigation & Stage --- */
         .middle-section { display: flex; align-items: center; justify-content: center; gap: 30px; width: 100%; max-width: 1000px; margin: 10px 0 30px 0; }
         .nav-group { display: flex; flex-direction: column; gap: 20px; } 
         
         .nav-btn-wrapper { position: relative; width: 100%; }
-        /* Free tags blink, VIP tags stay static */
         .top-tag { position: absolute; top: -10px; right: -5px; color: white; font-size: 0.65rem; font-weight: bold; padding: 3px 8px; border-radius: 12px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         .tag-free { background: #ff6b6b; animation: pulseTag 1.5s infinite; }
         .tag-vip { background: #ab47bc; } 
@@ -47,7 +43,6 @@
         .side-nav-btn:active { transform: translateY(6px); box-shadow: 0 0px 0px #333; }
         .side-nav-btn i { font-size: 1.6rem; }
         
-        /* Characters */
         .stage { display: flex; justify-content: center; align-items: flex-end; gap: 30px; transform: scale(0.9); height: 180px; }
         .character { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: 0.2s; }
         .character:hover { transform: scale(1.05); }
@@ -56,11 +51,9 @@
         
         .boy-head { width: 70px; height: 70px; background: #ffe0b2; border-radius: 50%; position: relative; border: 3px solid #333; } .boy-cap { position: absolute; top: -12px; left: 5px; width: 60px; height: 25px; background: #29b6f6; border-radius: 40px 40px 0 0; border: 3px solid #333; } .boy-cap-brim { position: absolute; top: 5px; left: 45px; width: 25px; height: 8px; background: #ffca28; border-radius: 0 10px 10px 0; border: 3px solid #333; } .face-details { position: relative; top: 25px; display: flex; justify-content: space-around; padding: 0 10px; } .eye { width: 10px; height: 10px; background: #333; border-radius: 50%; } .smile { width: 24px; height: 12px; border: 3px solid #333; border-top: none; border-radius: 0 0 20px 20px; margin: 12px auto 0; } .boy-body { width: 55px; height: 60px; background: #29b6f6; border-radius: 15px 15px 5px 5px; border: 3px solid #333; margin-top: -3px; } .bao-head { width: 85px; height: 80px; background: #ffffff; border-radius: 50% 50% 45% 45%; position: relative; border: 4px solid #333; box-shadow: inset -5px -5px 0px rgba(0,0,0,0.05); } .bao-top { position: absolute; top: -14px; left: 32px; width: 20px; height: 20px; background: #ffffff; border-radius: 50% 50% 0 0; border: 3px solid #333; border-bottom: none; transform: rotate(45deg); } .bao-blush { position: absolute; top: 40px; width: 14px; height: 8px; background: #ff8a80; border-radius: 50%; opacity: 0.7; } .blush-left { left: 8px; } .blush-right { right: 8px; } .bao-smile { width: 20px; height: 10px; border: 3.5px solid #333; border-top: none; border-radius: 0 0 15px 15px; margin: 30px auto 0; } .bao-body { width: 45px; height: 25px; background: #ffffff; border-radius: 10px 10px 20px 20px; border: 4px solid #333; margin-top: -5px; } .girl-head { width: 70px; height: 70px; background: #ffe0b2; border-radius: 50%; position: relative; border: 3px solid #333; } .hair-bun { position: absolute; width: 28px; height: 28px; background: #ec407a; border-radius: 50%; border: 3px solid #333; top: -8px; } .bun-left { left: -8px; } .bun-right { right: -8px; } .girl-body { width: 55px; height: 60px; background: #ec407a; border-radius: 15px 15px 5px 5px; border: 3px solid #333; margin-top: -3px; } .char-name { background: #333; color: #fff; padding: 2px 10px; border-radius: 20px; font-size: 0.8rem; margin-top: 8px; font-weight: bold; letter-spacing: 1px; }
 
-        /* --- View Containers --- */
         .view-container { width: 100%; max-width: 900px; margin-bottom: 30px; border-radius: 20px; padding: 25px; animation: fadeIn 0.3s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* View 1: Pinyin Board */
         #view-pinyin { background: #8d6e63; box-shadow: 0 10px 20px rgba(0,0,0,0.15); border: 8px solid #a1887f; }
         .category-title { background: rgba(0, 0, 0, 0.15); color: #fff; padding: 6px 15px; border-radius: 10px; margin: 10px 0; font-size: 1rem; display: inline-block; font-weight: bold; }
         .board { background: var(--board-color); border-radius: 12px; padding: 15px; display: grid; grid-template-columns: repeat(auto-fill, minmax(75px, 1fr)); gap: 12px; border: 3px dashed rgba(255,255,255,0.4); }
@@ -68,13 +61,11 @@
         .pinyin-btn:active { transform: translateY(5px); box-shadow: 0 0px 0px #333; }
         .pinyin-btn span.base-letter { font-size: 0.85rem; color: #718096; margin-top: 3px; font-family: Arial, sans-serif; background: rgba(0,0,0,0.05); padding: 2px 8px; border-radius: 8px; }
 
-        /* View 2: VIP Dashboard */
         #view-course { background: #ffffff; border: 4px solid #ab47bc; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: none; }
         .vip-card { background: #fdf3ff; padding: 20px; border-radius: 15px; border-left: 5px solid #ab47bc; margin-top: 15px; }
         .zoom-btn { display: inline-block; background: #2D8CFF; color: white; padding: 10px 20px; border-radius: 10px; text-decoration: none; font-weight: bold; margin-top: 15px; box-shadow: 0 4px 10px rgba(45,140,255,0.3); transition: 0.2s; }
         .zoom-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(45,140,255,0.4); }
 
-        /* View 3: Songs */
         #view-songs { background: #e0f2fe; border: 8px solid #bae6fd; display: none; }
         .song-card { background: white; border-radius: 15px; padding: 15px 20px; margin-bottom: 15px; border: 2px solid #e2e8f0; display: flex; align-items: center; cursor: pointer; transition: 0.2s; }
         .song-card:hover { transform: translateY(-2px); border-color: #38bdf8; }
@@ -82,7 +73,6 @@
         .rotating { animation: spin 3s linear infinite; color: #f59e0b; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* --- Modals --- */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px); display: none; justify-content: center; align-items: center; z-index: 2000; }
         .modal-content { background: #fff; padding: 25px; border-radius: 20px; width: 90%; max-width: 380px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); animation: popIn 0.3s ease-out; }
         @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
@@ -91,12 +81,10 @@
         .modal-btn { color: white; border: none; padding: 12px; font-size: 1rem; font-weight: bold; border-radius: 12px; cursor: pointer; width: 100%; transition: 0.1s; }
         .modal-btn:active { transform: translateY(4px); }
 
-        /* Floating WhatsApp (Opens in new tab automatically via a tag) */
         .whatsapp-float { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: #25d366; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 35px; text-decoration: none; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.4); z-index: 1000; transition: 0.2s; animation: pulseGlow 2s infinite; }
         .whatsapp-float:hover { transform: scale(1.1); }
         @keyframes pulseGlow { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); } 70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
 
-        /* Mobile Fixes */
         @media (max-width: 850px) {
             header { padding-top: 50px; }
             .top-auth-group { top: 0; left: 50%; transform: translateX(-50%); flex-direction: row; width: 100%; justify-content: center; }
@@ -112,9 +100,7 @@
         }
     </style>
 </head>
-<body>
-    
-    <header>
+<body><header>
         <div class="top-auth-group" id="authGroup">
             <button class="login-top-btn guest-btn" onclick="openModal('guestApplyModal')">Guest Login / تسجيل الزوار</button>
             <button class="login-top-btn vip-btn" onclick="openModal('vipLoginModal')">VIP Login / دخول VIP</button>
@@ -183,9 +169,7 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- ================= VIEW 1: PINYIN BOARD ================= -->
+    </div><!-- ================= VIEW 1: PINYIN BOARD ================= -->
     <div id="view-pinyin" class="view-container">
         <div class="category-wrapper"><div class="category-title">🎈 Single Vowels / الحروف الصوتية الفردية</div><div class="board">
             <button class="pinyin-btn" onclick="speakPinyin('ā', event)">ā<span class="base-letter">a</span></button><button class="pinyin-btn" onclick="speakPinyin('ō', event)">ō<span class="base-letter">o</span></button><button class="pinyin-btn" onclick="speakPinyin('ē', event)">ē<span class="base-letter">e</span></button><button class="pinyin-btn" onclick="speakPinyin('ī', event)">ī<span class="base-letter">i</span></button><button class="pinyin-btn" onclick="speakPinyin('ū', event)">ū<span class="base-letter">u</span></button><button class="pinyin-btn" onclick="speakPinyin('ǖ', event)">ǖ<span class="base-letter">ü</span></button>
@@ -209,7 +193,6 @@
                 <h3><i class="fas fa-clock"></i> Next Class / الدرس القادم</h3>
                 <p style="margin: 5px 0;"><strong>Every Mon & Fri</strong></p>
                 <p><strong>8:00 PM</strong> (Local Time)</p>
-                <!-- ✨ Zoom 链接使用 target="_blank" 在新页面打开 ✨ -->
                 <a href="#" target="_blank" class="zoom-btn"><i class="fas fa-video"></i> Join Zoom / انضمام لزوم</a>
             </div>
             <div class="vip-card">
@@ -226,44 +209,50 @@
     <div id="view-songs" class="view-container">
         <h2 style="color: #0284c7; margin-bottom: 20px; font-size: 1.5rem; border-bottom: 2px dashed #bae6fd; padding-bottom: 10px;">🎵 Songs / أغاني</h2>
         
-        <div class="song-card" onclick="toggleAudio(this)">
-            <i class="fas fa-compact-disc song-icon"></i>
-            <div>
-                <div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">找朋友 (Making Friends)</div>
-                <div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div>
-            </div>
-            <audio src="audio/song/找朋友.mp3"></audio>
-        </div>
-        <div class="song-card" onclick="toggleAudio(this)">
-            <i class="fas fa-compact-disc song-icon"></i>
-            <div>
-                <div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">小星星 (Little Star)</div>
-                <div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div>
-            </div>
-            <audio src="audio/song/小星星.mp3"></audio>
-        </div>
-        <div class="song-card" onclick="toggleAudio(this)">
-            <i class="fas fa-compact-disc song-icon"></i>
-            <div>
-                <div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">Twinkle Twinkle Little Star</div>
-                <div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div>
-            </div>
-            <audio src="audio/song/Twinkle Twinkle Little Star.mp3"></audio>
-        </div>
-        <div class="song-card" onclick="toggleAudio(this)">
-            <i class="fas fa-compact-disc song-icon"></i>
-            <div>
-                <div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">The ABC Song</div>
-                <div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div>
-            </div>
-            <audio src="audio/song/The ABC Song.mp3"></audio>
-        </div>
-        <!-- To keep code clean, just duplicate the .song-card div above to add the rest of your 20 songs -->
-    </div>
+        <h3 style="color: #0284c7; margin-top: 10px; margin-bottom: 15px; font-size: 1.2rem;">🇨🇳 Chinese Songs / أغاني صينية</h3>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">找朋友 (Making Friends)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/找朋友.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">小兔子乖乖 (Good Little Bunny)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/小兔子乖乖.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">数鸭子 (Counting Ducks)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/数鸭子.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">小星星 (Little Star)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/小星星.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">我的好妈妈 (My Dear Mother)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/我的好妈妈.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">礼貌歌 (The Politeness Song)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/礼貌歌.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">打电话 (Making a Phone Call)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/打电话.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">虫儿飞 (Bugs Fly)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/虫儿飞.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">蜗牛与黄鹂鸟 (Snail & Oriole)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/蜗牛与黄鹂鸟.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">采蘑菇的小姑娘 (Mushroom Girl)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/采蘑菇的小姑娘.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">粉刷匠 (The Little Painter)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/粉刷匠.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">娃哈哈 (Joyful Laugh)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/娃哈哈.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">种太阳 (Planting the Sun)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/种太阳.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">小燕子 (Little Swallow)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/小燕子.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">世上只有妈妈好 (Mom is Best)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/世上只有妈妈好.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">小小少年 (Young Boy)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/小小少年郎.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">泥娃娃 (Clay Doll)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/泥娃娃.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">刷牙歌 (Brushing Teeth Song)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/刷牙歌.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">丢手绢 (Drop the Handkerchief)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/丢手绢.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">摇篮曲 (Lullaby)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/摇篮曲.mp3"></audio></div>
 
-    <footer style="margin-top: 10px; font-size: 0.85rem; color: #a0aec0;">&copy; 2026 nihaoplay.com - All Rights Reserved.</footer>
-
-    <!-- ================= MODALS ================= -->
+        <h3 style="color: #059669; margin-top: 30px; margin-bottom: 15px; font-size: 1.2rem; border-top: 2px dashed #bae6fd; padding-top: 20px;">🇬🇧 English Songs / أغاني إنجليزية</h3>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">Twinkle Twinkle Little Star</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/Twinkle Twinkle Little Star.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">The ABC Song</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/The ABC Song.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">The Wheels on the Bus</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/The Wheels on the Bus.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">Old MacDonald Had a Farm</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/Old MacDonald Had A Farm.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">Head, Shoulders, Knees and Toes</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/Head, Shoulders, Knees and Toes.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">If You're Happy and You Know It</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/If You’re Happy and You Know It.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">BINGO</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/BINGO.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">Itsy Bitsy Spider</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/Itsy Bitsy Spider.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">Row, Row, Row Your Boat</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/Row, Row, Row Your Boat.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">Five Little Monkeys</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/Five Little Monkeys Jumping on the Bed.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">Finger Family</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/Finger Family.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">Rain, Rain, Go Away</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/Rain, Rain, Go Away.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">You Are My Sunshine</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/You Are My Sunshine.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">Hickory Dickory Dock</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/Hickory Dickory Dock.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">Mary Had a Little Lamb</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/Mary Had a Little Lamb.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">Ten Little Numbers</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/Ten Little Numbers.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">The Ants Go Marching</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/The Ants Go Marching.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">London Bridge is Falling Down</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/London Bridge is Falling Down.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">Hush, Little Baby</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/Hush, Little Baby.mp3"></audio></div>
+        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">Please and Thank You</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/Please and Thank You.mp3"></audio></div>
+    </div><!-- ================= MODALS ================= -->
     
     <!-- 1. Guest Apply Modal -->
     <div class="modal-overlay" id="guestApplyModal">
@@ -290,8 +279,8 @@
             <input type="email" id="applyEmail" class="modal-input" placeholder="Email / البريد الإلكتروني">
             <button class="modal-btn" style="background:#4ecdc4; box-shadow:0 4px 0px #38b2a6;" onclick="submitGuestApplication()">Apply via WhatsApp<br><span dir="rtl" style="font-size: 0.85rem;">تقديم عبر واتساب</span></button>
             <div style="margin-top: 15px; display: flex; justify-content: space-between; font-size: 0.85rem;">
-                <span class="modal-link" onclick="closeAllModals()">Cancel / إلغاء</span>
-                <span class="modal-link" style="color: #4ecdc4; font-weight: bold;" onclick="openModal('guestLoginModal')">Have account? Login</span>
+                <span class="modal-link" style="color: #a0aec0; cursor: pointer; text-decoration: underline;" onclick="closeAllModals()">Cancel / إلغاء</span>
+                <span class="modal-link" style="color: #4ecdc4; font-weight: bold; cursor: pointer; text-decoration: underline;" onclick="openModal('guestLoginModal')">Have account? Login</span>
             </div>
         </div>
     </div>
@@ -302,11 +291,11 @@
             <h2 style="color: #4ecdc4; margin-bottom: 15px; font-size: 1.4rem;">🔑 Guest Login<br><span dir="rtl" style="font-size: 1.1rem;">تسجيل دخول الزوار</span></h2>
             <input type="text" id="guestAccount" class="modal-input" placeholder="Name or Email / الاسم أو البريد">
             <input type="password" id="guestPassword" class="modal-input" placeholder="Password / كلمة المرور">
-            <label class="checkbox-group"><input type="checkbox" id="rememberGuest"> Remember Me / تذكرني</label>
+            <label style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; font-size: 0.9rem; color: #4a5568;"><input type="checkbox" id="rememberGuest"> Remember Me / تذكرني</label>
             <button class="modal-btn" style="background:#4ecdc4; box-shadow:0 4px 0px #38b2a6;" onclick="handleLogin('guest')">Login / دخول</button>
             <div style="margin-top: 15px; display: flex; justify-content: space-between; font-size: 0.85rem;">
-                <span class="modal-link" onclick="closeAllModals()">Cancel / إلغاء</span>
-                <span class="modal-link" style="color: #4ecdc4; font-weight: bold;" onclick="openModal('guestApplyModal')">No account? Apply</span>
+                <span class="modal-link" style="color: #a0aec0; cursor: pointer; text-decoration: underline;" onclick="closeAllModals()">Cancel / إلغاء</span>
+                <span class="modal-link" style="color: #4ecdc4; font-weight: bold; cursor: pointer; text-decoration: underline;" onclick="openModal('guestApplyModal')">No account? Apply</span>
             </div>
         </div>
     </div>
@@ -321,9 +310,9 @@
             </p>
             <input type="text" id="vipAccount" class="modal-input" placeholder="Name or Email / الاسم أو البريد">
             <input type="password" id="vipPassword" class="modal-input" placeholder="Password / كلمة المرور">
-            <label class="checkbox-group"><input type="checkbox" id="rememberVip"> Remember Me / تذكرني</label>
+            <label style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; font-size: 0.9rem; color: #4a5568;"><input type="checkbox" id="rememberVip"> Remember Me / تذكرني</label>
             <button class="modal-btn" style="background:#ab47bc; box-shadow:0 4px 0px #8e24aa;" onclick="handleLogin('vip')">Login / دخول</button>
-            <span class="modal-link" style="display:block; text-align:center;" onclick="closeAllModals()">Cancel / إلغاء</span>
+            <span class="modal-link" style="display:block; text-align:center; color: #a0aec0; margin-top: 15px; font-size: 0.9rem; cursor: pointer; text-decoration: underline;" onclick="closeAllModals()">Cancel / إلغاء</span>
         </div>
     </div>
 
@@ -364,7 +353,7 @@
             }
         }
 
-        // View Manager (Fixes the "Stuck" Issue)
+        // View Manager
         function switchView(viewId) {
             document.getElementById('view-pinyin').style.display = 'none';
             document.getElementById('view-course').style.display = 'none';
@@ -373,10 +362,8 @@
             const targetView = document.getElementById(viewId);
             targetView.style.display = 'block';
             
-            // Smooth scroll to the view container
             targetView.scrollIntoView({ behavior: 'smooth', block: 'start' });
             
-            // Stop all playing audios when switching views
             document.querySelectorAll('audio').forEach(a => { a.pause(); a.currentTime = 0; });
             document.querySelectorAll('.song-icon').forEach(icon => icon.classList.remove('rotating'));
         }
@@ -418,7 +405,7 @@
             location.reload(); 
         }
 
-        // WhatsApp Application (✨ Opens in New Tab ✨)
+        // WhatsApp Application
         function submitGuestApplication() {
             const name = document.getElementById('applyName').value;
             const age = document.getElementById('applyAge').value;
@@ -431,7 +418,6 @@
             const phone = "962771128288"; 
             const msg = `Guest Account Application / طلب حساب زائر:\n\nName (الاسم): ${name}\nAge (العمر): ${age}\nGender (الجنس): ${gender}\nLevel (المستوى): ${level}\nEmail (البريد): ${email}\n\nPlease assign a guest password. (يرجى تخصيص كلمة مرور زائر)`;
             
-            // New Tab execution
             window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
             closeAllModals();
         }
@@ -449,7 +435,6 @@
             localStorage.setItem('booked1on1', 'true');
             alert("Redirecting to booking schedule...\nجاري التوجيه لجدول المواعيد...");
             
-            // ✨ Replace YOUR_CALENDLY_LINK with real link. Opens in new tab. ✨
             // window.open('YOUR_CALENDLY_LINK', '_blank');
         }
 
@@ -508,12 +493,10 @@
             }
         }
 
-        // Toggle Audio for Songs
         function toggleAudio(cardElement) {
             const audio = cardElement.querySelector('audio');
             const icon = cardElement.querySelector('.song-icon');
             
-            // Pause all others
             document.querySelectorAll('audio').forEach(a => {
                 if (a !== audio) {
                     a.pause();
@@ -529,7 +512,6 @@
                 icon.classList.remove('rotating');
             }
             
-            // Auto remove rotation when song ends
             audio.onended = function() { icon.classList.remove('rotating'); };
         }
     </script>

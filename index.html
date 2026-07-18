@@ -430,7 +430,7 @@
         <div class="song-card" onclick="toggleAudio(this)">
             <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">Please and Thank You</div><div class="sub-title">请和谢谢礼貌歌</div></div><audio src="audio/song/Please and Thank You.mp3"></audio>
         </div>
-    </div><!-- ================= REDIRECT TO VIP SHORT DRAMA ================= -->
+    </div><!-- ================= REDIRECT TO VVIP SHORT DRAMA ================= -->
     <style>
         .arab-premium-banner {
             background: linear-gradient(135deg, #111827 0%, #1f2937 50%, #374151 100%);
@@ -501,10 +501,10 @@
             <h3 style="color: #9ca3af; margin-bottom: 25px; font-size: 1.05rem; font-weight: bold; z-index: 1; letter-spacing: 0.5px;">
                 Exclusive: Business Chinese Short Dramas
             </h3>
-            <!-- 发光跳转按钮 -->
-            <a href="videos.html" class="btn-golden-arab">
-                <!-- 阿拉伯语：立即观看 (VIP) -->
-                <span dir="rtl" style="font-size: 1.4rem; margin-bottom: 5px;">شاهد الآن (VIP) 🎬</span>
+            <!-- 发光跳转按钮：点击唤起 VVIP 弹窗 -->
+            <a href="javascript:void(0);" onclick="openVvipPromo()" class="btn-golden-arab">
+                <!-- 阿拉伯语：立即观看 (VVIP) -->
+                <span dir="rtl" style="font-size: 1.4rem; margin-bottom: 5px;">شاهد الآن (VVIP) 🎬</span>
                 <span style="font-size: 0.95rem; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Unlock Premium Videos</span>
             </a>
             <!-- 底部保障提示：阿拉伯语中文字幕 -->
@@ -523,12 +523,11 @@
     <div class="video-modal-overlay" id="videoModal" oncontextmenu="return false;">
         <div class="video-modal-content">
             <div class="video-close-btn" onclick="closeVideoModal()"><i class="fas fa-times"></i></div>
-            <!-- 【重点修复】：加入了 allow 权限参数，防止出现 153 错误 -->
             <iframe id="videoIframe" class="video-iframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
     </div>
 
-    <!-- 新增：非VIP点击歌曲时的专属套餐提示弹窗 -->
+    <!-- VIP 套餐提示弹窗 (点击音乐触发) -->
     <div class="modal-overlay" id="vipPromoModal">
         <div class="modal-content" style="border-color: #f5af19; max-width: 450px; padding: 20px; overflow-y: auto; max-height: 90vh;">
             <h2 style="color: #f5af19; margin-bottom: 15px; font-size: 1.3rem;">⭐ VIP Subscription<br><span dir="rtl" style="font-size: 1.1rem;">اشتراك VIP</span></h2>
@@ -541,8 +540,8 @@
                 <ul style="margin-left: 20px; margin-bottom: 10px; margin-top: 5px;">
                     <li>30-min 1-on-1 live video Chinese lesson (Beginners can expect to learn 5-10 words).</li>
                     <li dir="rtl">درس فيديو مباشر 1 لـ 1 لمدة 30 دقيقة (يتوقع للمبتدئين تعلم 5-10 كلمات).</li>
-                    <li style="margin-top: 5px;">Unlimited song listening (Cultivates musical and language sense).</li>
-                    <li dir="rtl">استماع غير محدود للأغاني (ينمي الحس الموسيقي واللغوي).</li>
+                    <li style="margin-top: 5px;">Unlimited song listening.</li>
+                    <li dir="rtl">استماع غير محدود للأغاني.</li>
                 </ul>
 
                 <h4 style="color: #2d3748; margin-top: 15px;">💎 20JD Value Package / باقة التوفير 20JD:</h4>
@@ -556,9 +555,6 @@
                     <li style="margin-top: 5px;">Unlimited song listening.</li>
                     <li dir="rtl">استماع غير محدود للأغاني.</li>
                 </ul>
-                
-                <p style="font-weight: bold; color: #2d3748; margin-bottom: 5px; text-align: center;">Contact live customer service on WhatsApp to complete payment and subscription.</p>
-                <p dir="rtl" style="font-weight: bold; color: #2d3748; text-align: center;">تواصل مع خدمة العملاء المباشرة عبر واتساب لإكمال الدفع والاشتراك.</p>
             </div>
 
             <button class="modal-btn" style="background:#25d366; box-shadow:0 4px 0px #1da851; display: flex; align-items: center; justify-content: center; gap: 10px;" onclick="window.open('https://wa.me/962771128288', '_blank')">
@@ -568,6 +564,64 @@
         </div>
     </div>
 
+    <!-- VVIP 套餐提示弹窗 (点击视频区按钮触发，含下一步) -->
+    <div class="modal-overlay" id="vvipPromoModal">
+        <div class="modal-content" style="border-color: #d4af37; max-width: 450px; padding: 20px; overflow-y: auto; max-height: 90vh;">
+            <h2 style="color: #d4af37; margin-bottom: 15px; font-size: 1.3rem;">👑 VVIP Subscription<br><span dir="rtl" style="font-size: 1.1rem;">اشتراك VVIP</span></h2>
+
+            <div style="text-align: left; font-size: 0.85rem; line-height: 1.6; color: #4a5568; margin-bottom: 15px; background: #fffdf0; padding: 15px; border-radius: 12px; border: 1px solid #fef08a;">
+                
+                <h4 style="color: #b45309; margin-top: 10px;">🏆 260JD / Month Monthly Service</h4>
+                <h4 dir="rtl" style="color: #b45309; margin-top: 2px; margin-bottom: 8px;">🏆 خدمة شهرية 260JD / شهر</h4>
+                <ul style="margin-left: 20px; margin-bottom: 10px; margin-top: 5px;">
+                    <li>Ten 60-min 1-on-1 live video Chinese lessons per month. Beginners studying seriously for a month can deeply understand about 100 words. (Monthly subscribers will have a vocabulary exam at the end of each month, and deep learning continues only after passing).</li>
+                    <li dir="rtl" style="margin-top: 3px;">عشرة دروس فيديو حية لـ 1 لـ 1 لمدة 60 دقيقة شهريًا. المبتدئون الذين يدرسون بجدية لمدة شهر يمكنهم فهم حوالي 100 كلمة بعمق. (سيخضع المشتركون شهريًا لامتحان مفردات، ويستمر التعلم العميق فقط بعد النجاح).</li>
+                    <li style="margin-top: 5px;">Unlimited viewing of business video short dramas with Chinese and Arabic subtitles.</li>
+                    <li dir="rtl" style="margin-top: 3px;">مشاهدة غير محدودة لمسلسلات الأعمال القصيرة المترجمة.</li>
+                </ul>
+
+                <h4 style="color: #b45309; margin-top: 15px;">🏆 50JD / Month Monthly Service</h4>
+                <h4 dir="rtl" style="color: #b45309; margin-top: 2px; margin-bottom: 8px;">🏆 خدمة شهرية 50JD / شهر</h4>
+                <ul style="margin-left: 20px; margin-bottom: 15px; margin-top: 5px;">
+                    <li>Unlimited viewing of business video short dramas with Chinese and Arabic subtitles, suitable for browsing and learning by parents or university students with language basics.</li>
+                    <li dir="rtl" style="margin-top: 3px;">مشاهدة غير محدودة لمسلسلات الأعمال القصيرة مع ترجمة صينية وعربية، مناسبة لتصفح وتعلم أولياء الأمور أو طلاب الجامعات ذوي الأساسيات اللغوية.</li>
+                </ul>
+            </div>
+
+            <!-- 下一步按钮 -->
+            <button class="modal-btn" style="background:#d4af37; box-shadow:0 4px 0px #b45309; color: #111827; display: flex; align-items: center; justify-content: center; gap: 10px;" onclick="openModal('vvipApplyModal')">
+                Next Step / الخطوة التالية <i class="fas fa-arrow-right"></i>
+            </button>
+            <span class="modal-link" style="display:block; text-align:center; color: #a0aec0; margin-top: 15px; font-size: 0.9rem; cursor: pointer; text-decoration: underline;" onclick="closeAllModals()">Close / إغلاق</span>
+        </div>
+    </div>
+
+    <!-- VVIP 下一步填写表单弹窗 -->
+    <div class="modal-overlay" id="vvipApplyModal">
+        <div class="modal-content" style="border-color: #d4af37;">
+            <h2 style="color: #d4af37; margin-bottom: 10px; font-size: 1.4rem;">👑 VVIP Application<br><span dir="rtl" style="font-size: 1.1rem;">طلب حساب VVIP</span></h2>
+            <p style="color: #718096; margin-bottom: 15px; font-size: 0.85rem; line-height: 1.4;">
+                Please fill in the information to subscribe to VVIP via WhatsApp.<br>
+                <span dir="rtl" style="color: #b45309;">يرجى ملء المعلومات للاشتراك في VVIP عبر واتساب.</span>
+            </p>
+            <input type="text" id="applyVvipName" class="modal-input" placeholder="Name / الاسم">
+            <select id="applyVvipPlan" class="modal-input">
+                <option value="" disabled selected>Select Plan / اختر الباقة</option>
+                <option value="260JD/Month">260JD / Month (Lessons + Dramas)</option>
+                <option value="50JD/Month">50JD / Month (Dramas Only)</option>
+            </select>
+            <input type="email" id="applyVvipEmail" class="modal-input" placeholder="Email / البريد الإلكتروني">
+            <button class="modal-btn" style="background:#25d366; box-shadow:0 4px 0px #1da851; display: flex; align-items: center; justify-content: center; gap: 10px;" onclick="submitVvipApplication()">
+                <i class="fab fa-whatsapp" style="font-size: 1.2rem;"></i> Submit via WhatsApp
+            </button>
+            <div style="margin-top: 15px; display: flex; justify-content: space-between; font-size: 0.85rem;">
+                <span class="modal-link" style="color: #a0aec0; cursor: pointer; text-decoration: underline;" onclick="openModal('vvipPromoModal')">Back / رجوع</span>
+                <span class="modal-link" style="color: #a0aec0; cursor: pointer; text-decoration: underline;" onclick="closeAllModals()">Cancel / إلغاء</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 原有的 Guest/VIP Login 弹窗 -->
     <div class="modal-overlay" id="guestApplyModal">
         <div class="modal-content" style="border-color: #4ecdc4;">
             <h2 style="color: #4ecdc4; margin-bottom: 10px; font-size: 1.4rem;">🌐 Guest Application<br><span dir="rtl" style="font-size: 1.1rem;">طلب حساب زائر</span></h2>
@@ -711,6 +765,31 @@
     function closeVideoModal() {
         document.getElementById('videoModal').style.display = 'none';
         document.getElementById('videoIframe').src = ''; 
+    }
+
+    // --- 点击底部的金色 VVIP 按钮唤起逻辑 ---
+    function openVvipPromo() {
+        // 如果当前已经是登录且有权限的用户（您可以根据需要在此处添加判定条件），可以直接跳转视频页
+        // window.location.href = 'videos.html';
+        
+        // 目前强制唤起 VVIP 介绍弹窗
+        openModal('vvipPromoModal');
+    }
+
+    // --- 提交 VVIP 表单至 WhatsApp ---
+    function submitVvipApplication() {
+        const name = document.getElementById('applyVvipName').value;
+        const plan = document.getElementById('applyVvipPlan').value;
+        const email = document.getElementById('applyVvipEmail').value;
+        
+        if(!name || !plan || !email) { 
+            alert("请填写所有信息。\nPlease fill in all fields.\nيرجى تعبئة جميع الحقول."); 
+            return; 
+        }
+        
+        const msg = `VVIP Subscription Request / طلب اشتراك VVIP:\n\nName (الاسم): ${name}\nPlan (الباقة): ${plan}\nEmail (البريد): ${email}\n\nPlease help me complete the payment. (يرجى مساعدتي في إكمال الدفع)`;
+        window.open(`https://wa.me/962771128288?text=${encodeURIComponent(msg)}`, '_blank');
+        closeAllModals();
     }
 
     // --- 提取：渲染 VIP 看板数据的通用函数 ---

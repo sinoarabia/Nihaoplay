@@ -475,13 +475,13 @@
         const pwd = type === 'vip' ? document.getElementById('vipPassword').value : document.getElementById('guestPassword').value;
         const rem = type === 'vip' ? document.getElementById('rememberVip').checked : document.getElementById('rememberGuest').checked;
 
-        if (!acc || !pwd) { alert("Please enter account and password.\nيرجى إدخال الحساب وكلمة المرور."); return; }
+        if (!acc || !pwd) { alert("Please enter account and password.\nيرجى إدخال الحساب وكلمة المرور.\n请输入账号和密码。"); return; }
 
         if (type === 'vip') {
             if ((acc === 'nihaoplayfun' || acc === 'nihaofunplay') && pwd === '888888') { } 
-            else { alert("Incorrect VIP account or password!\nحساب أو كلمة مرور VIP غير صحيحة!"); return; }
+            else { alert("Incorrect VIP account or password!\nحساب أو كلمة مرور VIP غير صحيحة!\nVIP账号或密码错误！"); return; }
         } else {
-            if (pwd !== '123456') { alert("Incorrect Guest password!\nكلمة مرور الزائر غير صحيحة!"); return; }
+            if (pwd !== '123456') { alert("Incorrect Guest password!\nكلمة مرور الزائر غير صحيحة!\nGuest密码错误！"); return; }
         }
 
         currentUser = { role: type, name: acc };
@@ -507,9 +507,8 @@
         const gender = document.getElementById('applyGender').value;
         const level = document.getElementById('applyLevel').value;
         const email = document.getElementById('applyEmail').value;
-        if(!name || !age || !gender || !level || !email) { alert("Please fill in all fields.\nيرجى تعبئة جميع الحقول."); return; }
+        if(!name || !age || !gender || !level || !email) { alert("Please fill in all fields.\nيرجى تعبئة جميع الحقول.\n请填写所有信息。"); return; }
         
-        // 只要点击发送信息，即赋予本地浏览拼音发音的权限
         localStorage.setItem('guestApplied', 'true');
         
         const msg = `Guest Account Application / طلب حساب زائر:\n\nName (الاسم): ${name}\nAge (العمر): ${age}\nGender (الجنس): ${gender}\nLevel (المستوى): ${level}\nEmail (البريد): ${email}\n\nPlease assign a guest password. (يرجى تخصيص كلمة مرور زائر)`;
@@ -518,35 +517,30 @@
     }
 
     function handlePinyinBtnClick() {
-        // 任何人都可以打开拼音面板，听音权限在点击具体音符时判定
         switchView('view-pinyin');
     }
 
     function handleBookTrialClick() {
-        if (currentUser?.role === 'vip') { alert("You are already a VIP student, please click the VIP Course button.\nأنت طالب VIP بالفعل، يرجى النقر على زر دورة VIP."); return; }
-        if (localStorage.getItem('booked1on1') === 'true') { alert("You have already booked a trial class using this device.\nلقد قمت بحجز درس تجريبي بالفعل باستخدام هذا الجهاز."); return; }
+        if (currentUser?.role === 'vip') { alert("You are already a VIP student, please click the VIP Course button.\nأنت طالب VIP بالفعل، يرجى النقر على زر دورة VIP.\n您已经是VIP学生，请点击VIP课程。"); return; }
+        if (localStorage.getItem('booked1on1') === 'true') { alert("You have already booked a trial class using this device.\nلقد قمت بحجز درس تجريبي بالفعل باستخدام هذا الجهاز.\n您已使用此设备预约过体验课。"); return; }
         localStorage.setItem('booked1on1', 'true');
-        alert("Redirecting to booking schedule...\nجاري التوجيه لجدول المواعيد...");
-        // window.open('YOUR_CALENDLY_LINK', '_blank');
+        alert("Redirecting to booking schedule...\nجاري التوجيه لجدول المواعيد...\n正在跳转至预约界面...");
     }
 
     function handleVipCourseClick() {
-        if (currentUser?.role !== 'vip') { alert("This feature is for VIP students only.\nهذه الميزة لطلاب VIP فقط."); return; }
+        if (currentUser?.role !== 'vip') { alert("This feature is for VIP students only.\nهذه الميزة لطلاب VIP فقط.\n此功能仅限VIP学生使用。"); return; }
         switchView('view-course');
     }
 
     function handleSongClick() {
-        // 任何人（无论是否登录）都可以打开音乐面板浏览歌单
         switchView('view-songs');
     }
 
-    // --- Xinxin Baby Logic ---
     function playXinXin(element, event) {
         if (event) event.stopPropagation();
         
-        // Xinxin宝宝 仅限 VIP 点击发声
         if (currentUser?.role !== 'vip') {
-            alert("Only VIP customers have permission to play. Please contact customer service via WhatsApp to activate VIP service.\nعذراً، هذه الميزة لعملاء VIP فقط. يرجى التواصل عبر واتساب لتفعيل خدمة VIP.");
+            alert("Only VIP customers have permission to play. Please contact customer service via WhatsApp to activate VIP service.\nعذراً، هذه الميزة لعملاء VIP فقط. يرجى التواصل عبر واتساب لتفعيل خدمة VIP.\n仅限VIP客户播放，请点击Whatsapp联系客服开通VIP服务。");
             window.open('https://wa.me/962771128288', '_blank');
             return;
         }
@@ -566,8 +560,6 @@
     function speakGreeting(character, element, event) {
         if (event) event.stopPropagation();
         
-        // 任何人都可以点击播放爸爸、妈妈、宝宝的音频
-        
         let audioUrl = ""; const t = new Date().getTime(); 
         if (character === 'baba') audioUrl = `audio/baba.mp3?t=${t}`; 
         else if (character === 'mama') audioUrl = `audio/mama.mp3?t=${t}`; 
@@ -581,10 +573,9 @@
     function speakPinyin(letter, event) {
         if (event) event.stopPropagation();
         
-        // 检测是否已登录 或 是否已提交过Guest申请
         const hasGuestAccess = localStorage.getItem('guestApplied') === 'true';
         if (!currentUser && !hasGuestAccess) { 
-            alert("Please apply for a Guest account to play sounds.\nيرجى النقر على زر الزائر للحصول على صلاحية الاستماع.");
+            alert("Please apply for a Guest account to play sounds.\nيرجى النقر على زر الزائر للحصول على صلاحية الاستماع.\n请申请Guest账号获取发音权限。");
             openModal('guestApplyModal');
             return; 
         }
@@ -616,9 +607,8 @@
     }
 
     function toggleAudio(cardElement) {
-        // 非VIP点击音乐弹窗提示拦截，并引流到 WhatsApp
         if (currentUser?.role !== 'vip') {
-            alert("Only VIP customers have permission to play. Please contact customer service via WhatsApp to activate VIP service.\nعذراً، هذه الميزة لعملاء VIP فقط. يرجى التواصل عبر واتساب لتفعيل خدمة VIP.");
+            alert("Only VIP customers have permission to play. Please contact customer service via WhatsApp to activate VIP service.\nعذراً، هذه الميزة لعملاء VIP فقط. يرجى التواصل عبر واتساب لتفعيل خدمة VIP.\n仅限VIP客户播放，请点击Whatsapp联系客服开通VIP服务。");
             window.open('https://wa.me/962771128288', '_blank');
             return;
         }

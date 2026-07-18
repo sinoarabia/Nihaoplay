@@ -13,6 +13,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Comic Sans MS', 'Chalkboard SE', Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; overflow-x: hidden; }
         
+        /* --- Header & Auth --- */
         header { text-align: center; margin-bottom: 20px; width: 100%; position: relative; padding-top: 15px; }
         h1 { font-size: 2.5rem; color: var(--primary-color); text-shadow: 2px 2px 0px #fff, 4px 4px 0px rgba(0,0,0,0.05); letter-spacing: 2px; margin-bottom: 5px; }
         p.subtitle { font-size: 1rem; color: #718096; }
@@ -29,10 +30,12 @@
         .user-welcome button { border: none; background: #cbd5e0; color: white; padding: 4px 10px; border-radius: 8px; cursor: pointer; font-size: 0.8rem; font-weight: bold; transition: 0.2s; }
         .user-welcome button:hover { background: #a0aec0; }
 
+        /* --- Navigation & Stage --- */
         .middle-section { display: flex; align-items: center; justify-content: center; gap: 30px; width: 100%; max-width: 1000px; margin: 10px 0 30px 0; }
         .nav-group { display: flex; flex-direction: column; gap: 20px; } 
-        
         .nav-btn-wrapper { position: relative; width: 100%; }
+        
+        /* Tags (Free blinks, VIP stays static) */
         .top-tag { position: absolute; top: -10px; right: -5px; color: white; font-size: 0.65rem; font-weight: bold; padding: 3px 8px; border-radius: 12px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         .tag-free { background: #ff6b6b; animation: pulseTag 1.5s infinite; }
         .tag-vip { background: #ab47bc; } 
@@ -51,9 +54,11 @@
         
         .boy-head { width: 70px; height: 70px; background: #ffe0b2; border-radius: 50%; position: relative; border: 3px solid #333; } .boy-cap { position: absolute; top: -12px; left: 5px; width: 60px; height: 25px; background: #29b6f6; border-radius: 40px 40px 0 0; border: 3px solid #333; } .boy-cap-brim { position: absolute; top: 5px; left: 45px; width: 25px; height: 8px; background: #ffca28; border-radius: 0 10px 10px 0; border: 3px solid #333; } .face-details { position: relative; top: 25px; display: flex; justify-content: space-around; padding: 0 10px; } .eye { width: 10px; height: 10px; background: #333; border-radius: 50%; } .smile { width: 24px; height: 12px; border: 3px solid #333; border-top: none; border-radius: 0 0 20px 20px; margin: 12px auto 0; } .boy-body { width: 55px; height: 60px; background: #29b6f6; border-radius: 15px 15px 5px 5px; border: 3px solid #333; margin-top: -3px; } .bao-head { width: 85px; height: 80px; background: #ffffff; border-radius: 50% 50% 45% 45%; position: relative; border: 4px solid #333; box-shadow: inset -5px -5px 0px rgba(0,0,0,0.05); } .bao-top { position: absolute; top: -14px; left: 32px; width: 20px; height: 20px; background: #ffffff; border-radius: 50% 50% 0 0; border: 3px solid #333; border-bottom: none; transform: rotate(45deg); } .bao-blush { position: absolute; top: 40px; width: 14px; height: 8px; background: #ff8a80; border-radius: 50%; opacity: 0.7; } .blush-left { left: 8px; } .blush-right { right: 8px; } .bao-smile { width: 20px; height: 10px; border: 3.5px solid #333; border-top: none; border-radius: 0 0 15px 15px; margin: 30px auto 0; } .bao-body { width: 45px; height: 25px; background: #ffffff; border-radius: 10px 10px 20px 20px; border: 4px solid #333; margin-top: -5px; } .girl-head { width: 70px; height: 70px; background: #ffe0b2; border-radius: 50%; position: relative; border: 3px solid #333; } .hair-bun { position: absolute; width: 28px; height: 28px; background: #ec407a; border-radius: 50%; border: 3px solid #333; top: -8px; } .bun-left { left: -8px; } .bun-right { right: -8px; } .girl-body { width: 55px; height: 60px; background: #ec407a; border-radius: 15px 15px 5px 5px; border: 3px solid #333; margin-top: -3px; } .char-name { background: #333; color: #fff; padding: 2px 10px; border-radius: 20px; font-size: 0.8rem; margin-top: 8px; font-weight: bold; letter-spacing: 1px; }
 
+        /* --- Views --- */
         .view-container { width: 100%; max-width: 900px; margin-bottom: 30px; border-radius: 20px; padding: 25px; animation: fadeIn 0.3s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* Pinyin Board */
         #view-pinyin { background: #8d6e63; box-shadow: 0 10px 20px rgba(0,0,0,0.15); border: 8px solid #a1887f; }
         .category-title { background: rgba(0, 0, 0, 0.15); color: #fff; padding: 6px 15px; border-radius: 10px; margin: 10px 0; font-size: 1rem; display: inline-block; font-weight: bold; }
         .board { background: var(--board-color); border-radius: 12px; padding: 15px; display: grid; grid-template-columns: repeat(auto-fill, minmax(75px, 1fr)); gap: 12px; border: 3px dashed rgba(255,255,255,0.4); }
@@ -61,18 +66,33 @@
         .pinyin-btn:active { transform: translateY(5px); box-shadow: 0 0px 0px #333; }
         .pinyin-btn span.base-letter { font-size: 0.85rem; color: #718096; margin-top: 3px; font-family: Arial, sans-serif; background: rgba(0,0,0,0.05); padding: 2px 8px; border-radius: 8px; }
 
+        /* Course */
         #view-course { background: #ffffff; border: 4px solid #ab47bc; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: none; }
         .vip-card { background: #fdf3ff; padding: 20px; border-radius: 15px; border-left: 5px solid #ab47bc; margin-top: 15px; }
         .zoom-btn { display: inline-block; background: #2D8CFF; color: white; padding: 10px 20px; border-radius: 10px; text-decoration: none; font-weight: bold; margin-top: 15px; box-shadow: 0 4px 10px rgba(45,140,255,0.3); transition: 0.2s; }
         .zoom-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(45,140,255,0.4); }
 
-        #view-songs { background: #e0f2fe; border: 8px solid #bae6fd; display: none; }
-        .song-card { background: white; border-radius: 15px; padding: 15px 20px; margin-bottom: 15px; border: 2px solid #e2e8f0; display: flex; align-items: center; cursor: pointer; transition: 0.2s; }
+        /* Songs & Xinxin Baby */
+        #view-songs { background: #e0f2fe; border: 8px solid #bae6fd; display: none; position: relative; }
+        .song-card { background: white; border-radius: 15px; padding: 15px 20px; margin-bottom: 12px; border: 2px solid #e2e8f0; display: flex; align-items: center; cursor: pointer; transition: 0.2s; }
         .song-card:hover { transform: translateY(-2px); border-color: #38bdf8; }
         .song-icon { font-size: 2rem; color: #38bdf8; margin-right: 15px; transition: 0.3s; }
         .rotating { animation: spin 3s linear infinite; color: #f59e0b; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
+        
+        .title-text { display: flex; flex-direction: column; align-items: flex-start; text-align: left; }
+        .main-title { font-size: 1.1rem; font-weight: bold; color: #0f172a; line-height: 1.2; }
+        .sub-title { font-size: 0.85rem; color: #64748b; margin-top: 4px; }
 
+        .xinxin-swing { position: absolute; right: 25px; top: 20px; cursor: pointer; display: flex; flex-direction: column; align-items: center; z-index: 10; transform-origin: top center; animation: swinging 4s ease-in-out infinite; transition: filter 0.2s; }
+        .xinxin-swing:hover { filter: brightness(1.1); }
+        @keyframes swinging { 0% { transform: rotate(8deg); } 50% { transform: rotate(-8deg); } 100% { transform: rotate(8deg); } }
+        .swing-img { width: 70px; height: auto; border-radius: 50%; box-shadow: 0 6px 12px rgba(0,0,0,0.15); border: 3px solid #fff; object-fit: cover; aspect-ratio: 1/1; background-color: white; }
+        .xx-name { background: #ff6b6b; color: white; font-size: 0.7rem; padding: 2px 10px; border-radius: 12px; margin-top: -10px; font-weight: bold; border: 2px solid #fff; z-index: 4; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        @keyframes excitedJump { 0%, 100% { transform: scale(1) rotate(0deg); } 50% { transform: scale(1.1) translateY(-10px) rotate(5deg); } }
+        .excited-swing { animation: excitedJump 0.5s ease-in-out !important; }
+
+        /* --- Modals & WhatsApp --- */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px); display: none; justify-content: center; align-items: center; z-index: 2000; }
         .modal-content { background: #fff; padding: 25px; border-radius: 20px; width: 90%; max-width: 380px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); animation: popIn 0.3s ease-out; }
         @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
@@ -85,6 +105,7 @@
         .whatsapp-float:hover { transform: scale(1.1); }
         @keyframes pulseGlow { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); } 70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
 
+        /* Responsive Mobile Fixes */
         @media (max-width: 850px) {
             header { padding-top: 50px; }
             .top-auth-group { top: 0; left: 50%; transform: translateX(-50%); flex-direction: row; width: 100%; justify-content: center; }
@@ -97,6 +118,9 @@
             .side-nav-btn i { font-size: 1.4rem; }
             .top-tag { font-size: 0.6rem; padding: 2px 6px; top: -8px; right: -5px; }
             .whatsapp-float { width: 50px; height: 50px; font-size: 28px; bottom: 15px; right: 15px; }
+            .xinxin-swing { top: 15px; right: 15px; }
+            .swing-img { width: 50px; border-width: 2px; }
+            .xx-name { font-size: 0.6rem; padding: 2px 6px; }
         }
     </style>
 </head>
@@ -134,7 +158,7 @@
             </div>
         </div>
 
-        <!-- Stage -->
+        <!-- Stage Characters -->
         <div class="stage">
             <div class="character" onclick="speakGreeting('baba', this, event)">
                 <div class="boy-head"><div class="boy-cap"></div><div class="boy-cap-brim"></div><div class="face-details"><div class="eye"></div><div class="eye"></div></div><div class="smile"></div></div>
@@ -169,7 +193,9 @@
                 </div>
             </div>
         </div>
-    </div><!-- ================= VIEW 1: PINYIN BOARD ================= -->
+    </div>
+
+    <!-- ================= VIEW 1: PINYIN BOARD ================= -->
     <div id="view-pinyin" class="view-container">
         <div class="category-wrapper"><div class="category-title">🎈 Single Vowels / الحروف الصوتية الفردية</div><div class="board">
             <button class="pinyin-btn" onclick="speakPinyin('ā', event)">ā<span class="base-letter">a</span></button><button class="pinyin-btn" onclick="speakPinyin('ō', event)">ō<span class="base-letter">o</span></button><button class="pinyin-btn" onclick="speakPinyin('ē', event)">ē<span class="base-letter">e</span></button><button class="pinyin-btn" onclick="speakPinyin('ī', event)">ī<span class="base-letter">i</span></button><button class="pinyin-btn" onclick="speakPinyin('ū', event)">ū<span class="base-letter">u</span></button><button class="pinyin-btn" onclick="speakPinyin('ǖ', event)">ǖ<span class="base-letter">ü</span></button>
@@ -203,58 +229,144 @@
                 </ul>
             </div>
         </div>
-    </div>
-
-    <!-- ================= VIEW 3: SONGS ================= -->
+    </div><!-- ================= VIEW 3: SONGS ================= -->
     <div id="view-songs" class="view-container">
-        <h2 style="color: #0284c7; margin-bottom: 20px; font-size: 1.5rem; border-bottom: 2px dashed #bae6fd; padding-bottom: 10px;">🎵 Songs / أغاني</h2>
+        <!-- Xinxin Baby Swing -->
+        <div class="xinxin-swing" onclick="playXinXin(this, event)" title="Play / تشغيل">
+            <img src="xinxin.png" alt="Xinxin" class="swing-img">
+            <div class="xx-name">Xinxin</div>
+        </div>
+
+        <h2 style="color: #0284c7; margin-bottom: 20px; font-size: 1.5rem; border-bottom: 2px dashed #bae6fd; padding-bottom: 10px; padding-right: 80px;">🎵 Songs / أغاني</h2>
         
         <h3 style="color: #0284c7; margin-top: 10px; margin-bottom: 15px; font-size: 1.2rem;">🇨🇳 Chinese Songs / أغاني صينية</h3>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">找朋友 (Making Friends)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/找朋友.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">小兔子乖乖 (Good Little Bunny)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/小兔子乖乖.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">数鸭子 (Counting Ducks)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/数鸭子.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">小星星 (Little Star)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/小星星.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">我的好妈妈 (My Dear Mother)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/我的好妈妈.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">礼貌歌 (The Politeness Song)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/礼貌歌.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">打电话 (Making a Phone Call)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/打电话.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">虫儿飞 (Bugs Fly)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/虫儿飞.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">蜗牛与黄鹂鸟 (Snail & Oriole)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/蜗牛与黄鹂鸟.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">采蘑菇的小姑娘 (Mushroom Girl)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/采蘑菇的小姑娘.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">粉刷匠 (The Little Painter)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/粉刷匠.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">娃哈哈 (Joyful Laugh)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/娃哈哈.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">种太阳 (Planting the Sun)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/种太阳.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">小燕子 (Little Swallow)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/小燕子.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">世上只有妈妈好 (Mom is Best)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/世上只有妈妈好.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">小小少年 (Young Boy)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/小小少年郎.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">泥娃娃 (Clay Doll)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/泥娃娃.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">刷牙歌 (Brushing Teeth Song)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/刷牙歌.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">丢手绢 (Drop the Handkerchief)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/丢手绢.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">摇篮曲 (Lullaby)</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/摇篮曲.mp3"></audio></div>
+        
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">找朋友</div><div class="sub-title">Making Friends</div></div><audio src="audio/song/找朋友.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">小兔子乖乖</div><div class="sub-title">Good Little Bunny</div></div><audio src="audio/song/小兔子乖乖.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">数鸭子</div><div class="sub-title">Counting Ducks</div></div><audio src="audio/song/数鸭子.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">小星星</div><div class="sub-title">Little Star</div></div><audio src="audio/song/小星星.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">我的好妈妈</div><div class="sub-title">My Dear Mother</div></div><audio src="audio/song/我的好妈妈.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">礼貌歌</div><div class="sub-title">The Politeness Song</div></div><audio src="audio/song/礼貌歌.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">打电话</div><div class="sub-title">Making a Phone Call</div></div><audio src="audio/song/打电话.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">虫儿飞</div><div class="sub-title">Bugs Fly</div></div><audio src="audio/song/虫儿飞.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">蜗牛与黄鹂鸟</div><div class="sub-title">Snail & Oriole</div></div><audio src="audio/song/蜗牛与黄鹂鸟.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">采蘑菇的小姑娘</div><div class="sub-title">Mushroom Girl</div></div><audio src="audio/song/采蘑菇的小姑娘.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">粉刷匠</div><div class="sub-title">The Little Painter</div></div><audio src="audio/song/粉刷匠.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">娃哈哈</div><div class="sub-title">Joyful Laugh</div></div><audio src="audio/song/娃哈哈.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">种太阳</div><div class="sub-title">Planting the Sun</div></div><audio src="audio/song/种太阳.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">小燕子</div><div class="sub-title">Little Swallow</div></div><audio src="audio/song/小燕子.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">世上只有妈妈好</div><div class="sub-title">Mom is Best</div></div><audio src="audio/song/世上只有妈妈好.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">小小少年</div><div class="sub-title">Young Boy</div></div><audio src="audio/song/小小少年郎.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">泥娃娃</div><div class="sub-title">Clay Doll</div></div><audio src="audio/song/泥娃娃.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">刷牙歌</div><div class="sub-title">Brushing Teeth Song</div></div><audio src="audio/song/刷牙歌.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">丢手绢</div><div class="sub-title">Drop the Handkerchief</div></div><audio src="audio/song/丢手绢.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">摇篮曲</div><div class="sub-title">Lullaby</div></div><audio src="audio/song/摇篮曲.mp3"></audio>
+        </div>
 
         <h3 style="color: #059669; margin-top: 30px; margin-bottom: 15px; font-size: 1.2rem; border-top: 2px dashed #bae6fd; padding-top: 20px;">🇬🇧 English Songs / أغاني إنجليزية</h3>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">Twinkle Twinkle Little Star</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/Twinkle Twinkle Little Star.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">The ABC Song</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/The ABC Song.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">The Wheels on the Bus</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/The Wheels on the Bus.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">Old MacDonald Had a Farm</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/Old MacDonald Had A Farm.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">Head, Shoulders, Knees and Toes</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/Head, Shoulders, Knees and Toes.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">If You're Happy and You Know It</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/If You’re Happy and You Know It.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">BINGO</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/BINGO.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">Itsy Bitsy Spider</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/Itsy Bitsy Spider.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">Row, Row, Row Your Boat</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/Row, Row, Row Your Boat.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">Five Little Monkeys</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/Five Little Monkeys Jumping on the Bed.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">Finger Family</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/Finger Family.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">Rain, Rain, Go Away</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/Rain, Rain, Go Away.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">You Are My Sunshine</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/You Are My Sunshine.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">Hickory Dickory Dock</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/Hickory Dickory Dock.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">Mary Had a Little Lamb</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/Mary Had a Little Lamb.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">Ten Little Numbers</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/Ten Little Numbers.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">The Ants Go Marching</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/The Ants Go Marching.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">London Bridge is Falling Down</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/London Bridge is Falling Down.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">Hush, Little Baby</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/Hush, Little Baby.mp3"></audio></div>
-        <div class="song-card" onclick="toggleAudio(this)"><i class="fas fa-compact-disc song-icon"></i><div><div style="font-size: 1.15rem; font-weight: bold; color: #0f172a;">Please and Thank You</div><div style="font-size: 0.85rem; color: #64748b;">Click to play / انقر للتشغيل</div></div><audio src="audio/song/Please and Thank You.mp3"></audio></div>
-    </div><!-- ================= MODALS ================= -->
-    
-    <!-- 1. Guest Apply Modal -->
+        
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">Twinkle Twinkle Little Star</div><div class="sub-title">一闪一闪小星星</div></div><audio src="audio/song/Twinkle Twinkle Little Star.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">The ABC Song</div><div class="sub-title">字母歌</div></div><audio src="audio/song/The ABC Song.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">The Wheels on the Bus</div><div class="sub-title">巴士上的轮子</div></div><audio src="audio/song/The Wheels on the Bus.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">Old MacDonald Had a Farm</div><div class="sub-title">老麦克唐纳有个农场</div></div><audio src="audio/song/Old MacDonald Had A Farm.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">Head, Shoulders, Knees and Toes</div><div class="sub-title">头肩膀膝盖脚趾</div></div><audio src="audio/song/Head, Shoulders, Knees and Toes.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">If You're Happy and You Know It</div><div class="sub-title">幸福拍手歌</div></div><audio src="audio/song/If You’re Happy and You Know It.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">BINGO</div><div class="sub-title">宾果小狗</div></div><audio src="audio/song/BINGO.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">Itsy Bitsy Spider</div><div class="sub-title">小小蜘蛛</div></div><audio src="audio/song/Itsy Bitsy Spider.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">Row, Row, Row Your Boat</div><div class="sub-title">划小船</div></div><audio src="audio/song/Row, Row, Row Your Boat.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">Five Little Monkeys</div><div class="sub-title">五只小猴子</div></div><audio src="audio/song/Five Little Monkeys Jumping on the Bed.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">Finger Family</div><div class="sub-title">手指家族</div></div><audio src="audio/song/Finger Family.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">Rain, Rain, Go Away</div><div class="sub-title">雨快走开</div></div><audio src="audio/song/Rain, Rain, Go Away.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">You Are My Sunshine</div><div class="sub-title">你是我的阳光</div></div><audio src="audio/song/You Are My Sunshine.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">Hickory Dickory Dock</div><div class="sub-title">滴答钟声响</div></div><audio src="audio/song/Hickory Dickory Dock.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">Mary Had a Little Lamb</div><div class="sub-title">玛丽有只小羊羔</div></div><audio src="audio/song/Mary Had a Little Lamb.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">Ten Little Numbers</div><div class="sub-title">十个数字</div></div><audio src="audio/song/Ten Little Numbers.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">The Ants Go Marching</div><div class="sub-title">蚂蚁去游行</div></div><audio src="audio/song/The Ants Go Marching.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">London Bridge is Falling Down</div><div class="sub-title">伦敦桥要倒了</div></div><audio src="audio/song/London Bridge is Falling Down.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">Hush, Little Baby</div><div class="sub-title">睡吧小宝贝</div></div><audio src="audio/song/Hush, Little Baby.mp3"></audio>
+        </div>
+        <div class="song-card" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">Please and Thank You</div><div class="sub-title">请和谢谢礼貌歌</div></div><audio src="audio/song/Please and Thank You.mp3"></audio>
+        </div>
+    </div>
+
+    <footer style="margin-top: 10px; font-size: 0.85rem; color: #a0aec0;">&copy; 2026 nihaoplay.com - All Rights Reserved.</footer><!-- ================= MODALS & WHATSAPP ================= -->
     <div class="modal-overlay" id="guestApplyModal">
         <div class="modal-content" style="border-color: #4ecdc4;">
             <h2 style="color: #4ecdc4; margin-bottom: 10px; font-size: 1.4rem;">🌐 Guest Application<br><span dir="rtl" style="font-size: 1.1rem;">طلب حساب زائر</span></h2>
@@ -285,7 +397,6 @@
         </div>
     </div>
 
-    <!-- 2. Guest Login Modal -->
     <div class="modal-overlay" id="guestLoginModal">
         <div class="modal-content" style="border-color: #4ecdc4;">
             <h2 style="color: #4ecdc4; margin-bottom: 15px; font-size: 1.4rem;">🔑 Guest Login<br><span dir="rtl" style="font-size: 1.1rem;">تسجيل دخول الزوار</span></h2>
@@ -300,7 +411,6 @@
         </div>
     </div>
 
-    <!-- 3. VIP Login Modal -->
     <div class="modal-overlay" id="vipLoginModal">
         <div class="modal-content" style="border-color: #ab47bc;">
             <h2 style="color: #ab47bc; margin-bottom: 10px; font-size: 1.4rem;">👑 VIP Login<br><span dir="rtl" style="font-size: 1.1rem;">تسجيل دخول VIP</span></h2>
@@ -316,17 +426,12 @@
         </div>
     </div>
 
-    <!-- ✨ WhatsApp Float (Automatically opens in new tab) ✨ -->
-    <a href="https://wa.me/962771128288" target="_blank" class="whatsapp-float">
-        <i class="fab fa-whatsapp"></i>
-    </a>
+    <a href="https://wa.me/962771128288" target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
 
     <!-- ================= SCRIPTS ================= -->
     <script>
-        // State
         let currentUser = null; 
 
-        // Initialization & Remember Me
         window.onload = function() {
             const savedRole = localStorage.getItem('autoLoginRole');
             const savedName = localStorage.getItem('autoLoginName');
@@ -336,8 +441,6 @@
                 if (savedRole === 'vip') { document.getElementById('vipAccount').value = savedName; document.getElementById('rememberVip').checked = true; }
             }
             updateUI();
-            
-            // Auto open correct view based on login status
             if (currentUser?.role === 'vip') switchView('view-course');
             else switchView('view-pinyin');
         };
@@ -353,7 +456,6 @@
             }
         }
 
-        // View Manager
         function switchView(viewId) {
             document.getElementById('view-pinyin').style.display = 'none';
             document.getElementById('view-course').style.display = 'none';
@@ -361,18 +463,15 @@
             
             const targetView = document.getElementById(viewId);
             targetView.style.display = 'block';
-            
             targetView.scrollIntoView({ behavior: 'smooth', block: 'start' });
             
             document.querySelectorAll('audio').forEach(a => { a.pause(); a.currentTime = 0; });
             document.querySelectorAll('.song-icon').forEach(icon => icon.classList.remove('rotating'));
         }
 
-        // Modals
         function openModal(id) { closeAllModals(); document.getElementById(id).style.display = 'flex'; }
         function closeAllModals() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
 
-        // Login Logic
         function handleLogin(type) {
             const acc = type === 'vip' ? document.getElementById('vipAccount').value.trim() : document.getElementById('guestAccount').value.trim();
             const pwd = type === 'vip' ? document.getElementById('vipPassword').value : document.getElementById('guestPassword').value;
@@ -381,7 +480,7 @@
             if (!acc || !pwd) { alert("Please enter account and password.\nيرجى إدخال الحساب وكلمة المرور."); return; }
 
             if (type === 'vip') {
-                if ((acc === 'nihaoplayfun' || acc === 'nihaofunplay') && pwd === '888888') { /* Valid */ } 
+                if ((acc === 'nihaoplayfun' || acc === 'nihaofunplay') && pwd === '888888') { } 
                 else { alert("Incorrect VIP account or password!\nحساب أو كلمة مرور VIP غير صحيحة!"); return; }
             } else {
                 if (pwd !== '123456') { alert("Incorrect Guest password!\nكلمة مرور الزائر غير صحيحة!"); return; }
@@ -393,7 +492,6 @@
 
             closeAllModals(); 
             updateUI();
-            
             if (type === 'vip') switchView('view-course');
             else switchView('view-pinyin');
         }
@@ -405,24 +503,18 @@
             location.reload(); 
         }
 
-        // WhatsApp Application
         function submitGuestApplication() {
             const name = document.getElementById('applyName').value;
             const age = document.getElementById('applyAge').value;
             const gender = document.getElementById('applyGender').value;
             const level = document.getElementById('applyLevel').value;
             const email = document.getElementById('applyEmail').value;
-
             if(!name || !age || !gender || !level || !email) { alert("Please fill in all fields.\nيرجى تعبئة جميع الحقول."); return; }
-
-            const phone = "962771128288"; 
             const msg = `Guest Account Application / طلب حساب زائر:\n\nName (الاسم): ${name}\nAge (العمر): ${age}\nGender (الجنس): ${gender}\nLevel (المستوى): ${level}\nEmail (البريد): ${email}\n\nPlease assign a guest password. (يرجى تخصيص كلمة مرور زائر)`;
-            
-            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+            window.open(`https://wa.me/962771128288?text=${encodeURIComponent(msg)}`, '_blank');
             closeAllModals();
         }
 
-        // Buttons Click Managers
         function handlePinyinBtnClick() {
             if (!currentUser) { alert("Please login as a Guest or VIP first.\nيرجى تسجيل الدخول كزائر أو VIP أولاً."); openModal('guestApplyModal'); return; }
             switchView('view-pinyin');
@@ -431,10 +523,8 @@
         function handleBookTrialClick() {
             if (currentUser?.role === 'vip') { alert("You are already a VIP student, please click the VIP Course button.\nأنت طالب VIP بالفعل، يرجى النقر على زر دورة VIP."); return; }
             if (localStorage.getItem('booked1on1') === 'true') { alert("You have already booked a trial class using this device.\nلقد قمت بحجز درس تجريبي بالفعل باستخدام هذا الجهاز."); return; }
-            
             localStorage.setItem('booked1on1', 'true');
             alert("Redirecting to booking schedule...\nجاري التوجيه لجدول المواعيد...");
-            
             // window.open('YOUR_CALENDLY_LINK', '_blank');
         }
 
@@ -448,7 +538,23 @@
             switchView('view-songs');
         }
 
-        // Media & Animations
+        // --- Xinxin Baby Logic ---
+        function playXinXin(element, event) {
+            if (event) event.stopPropagation();
+            if (!currentUser) { alert("Please login first.\nيرجى تسجيل الدخول أولاً."); return; }
+            
+            document.querySelectorAll('audio').forEach(a => {
+                a.pause();
+                const icon = a.parentElement.querySelector('.song-icon');
+                if(icon) icon.classList.remove('rotating');
+            });
+
+            new Audio(`audio/song/新新宝宝.mp3`).play().catch(e => console.log("Audio failed"));
+
+            element.classList.add('excited-swing');
+            setTimeout(() => { element.classList.remove('excited-swing'); }, 500);
+        }
+
         function speakGreeting(character, element, event) {
             if (event) event.stopPropagation();
             if (!currentUser) { alert("Please login first.\nيرجى تسجيل الدخول أولاً."); openModal('guestLoginModal'); return; }
@@ -500,7 +606,8 @@
             document.querySelectorAll('audio').forEach(a => {
                 if (a !== audio) {
                     a.pause();
-                    a.parentElement.querySelector('.song-icon').classList.remove('rotating');
+                    const aIcon = a.parentElement.querySelector('.song-icon');
+                    if(aIcon) aIcon.classList.remove('rotating');
                 }
             });
 

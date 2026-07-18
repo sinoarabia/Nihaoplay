@@ -11,128 +11,192 @@
         :root { --bg-color: #f7f9fc; --primary-color: #ff6b6b; --board-color: #4ecdc4; --text-color: #2d3748; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Comic Sans MS', 'Chalkboard SE', Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; overflow-x: hidden; }
+        
+        /* Header & Auth */
         header { text-align: center; margin-bottom: 20px; width: 100%; position: relative; padding-top: 15px; }
-        h1 { font-size: 2.5rem; color: var(--primary-color); margin-bottom: 5px; }
+        h1 { font-size: 2.5rem; color: var(--primary-color); text-shadow: 2px 2px 0px #fff, 4px 4px 0px rgba(0,0,0,0.05); letter-spacing: 2px; margin-bottom: 5px; }
+        p.subtitle { font-size: 1rem; color: #718096; }
+        
         .top-auth-group { position: absolute; top: 0px; right: 0px; display: flex; flex-direction: column; gap: 8px; }
-        .login-top-btn { background: transparent; border: 2px solid; padding: 6px 15px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 0.8rem; }
-        .user-welcome { display: none; position: absolute; top: 0; right: 0; background: #fff; padding: 6px 12px; border-radius: 20px; border: 2px solid #e2e8f0; font-weight: bold; font-size: 0.85rem; }
+        .login-top-btn { background: transparent; border: 2px solid; padding: 6px 15px; border-radius: 20px; font-weight: bold; cursor: pointer; transition: all 0.2s; font-size: 0.8rem; }
+        .guest-btn { border-color: #4ecdc4; color: #4ecdc4; }
+        .guest-btn:hover { background: #4ecdc4; color: white; }
+        .vip-btn { border-color: #ab47bc; color: #ab47bc; }
+        .vip-btn:hover { background: #ab47bc; color: white; }
         
-        .middle-section { display: flex; align-items: center; justify-content: center; gap: 30px; width: 100%; max-width: 1000px; margin: 20px 0; }
+        .user-welcome { display: none; position: absolute; top: 0; right: 0; background: #fff; padding: 8px 15px; border-radius: 20px; border: 2px solid #e2e8f0; font-weight: bold; font-size: 0.9rem; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .user-welcome span { color: var(--primary-color); margin-right: 10px; }
+        .user-welcome button { border: none; background: #cbd5e0; color: white; padding: 4px 10px; border-radius: 8px; cursor: pointer; font-size: 0.8rem; font-weight: bold; transition: 0.2s; }
+        
+        /* Navigation & Stage */
+        .middle-section { display: flex; align-items: center; justify-content: center; gap: 30px; width: 100%; max-width: 1000px; margin: 10px 0 30px 0; }
         .nav-group { display: flex; flex-direction: column; gap: 20px; } 
-        .side-nav-btn { background: #ffffff; border: 4px solid #333; border-radius: 20px; padding: 10px; font-size: 0.95rem; font-weight: bold; width: 160px; height: 85px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 5px 0px #333; }
+        .nav-btn-wrapper { position: relative; width: 100%; }
+        .top-tag { position: absolute; top: -10px; right: -5px; color: white; font-size: 0.65rem; font-weight: bold; padding: 3px 8px; border-radius: 12px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .tag-free { background: #ff6b6b; animation: pulseTag 1.5s infinite; }
+        .tag-vip { background: #ab47bc; } 
+        @keyframes pulseTag { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
+
+        .side-nav-btn { background: #ffffff; border: 4px solid #333; border-radius: 20px; padding: 10px 15px; font-size: 0.95rem; font-weight: bold; color: #333; box-shadow: 0 6px 0px #333; transition: all 0.1s; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; min-width: 160px; height: 85px; cursor: pointer; }
         
-        /* Characters (Always Free) */
-        .stage { display: flex; justify-content: center; align-items: flex-end; gap: 40px; transform: scale(0.9); }
-        .character { cursor: pointer; transition: 0.2s; }
-        
-        /* Board & Containers */
-        .view-container { width: 100%; max-width: 900px; margin-bottom: 30px; border-radius: 20px; padding: 25px; }
-        .pinyin-btn { background: #ffffff; border: 3px solid #333; border-radius: 12px; padding: 10px; font-size: 1.5rem; font-weight: bold; cursor: pointer; height: 60px; width: 70px; }
-        
-        @media (max-width: 850px) { .middle-section { flex-direction: column; } .nav-group { flex-direction: row; } }
+        /* Character CSS Drawings (Keep intact) */
+        .stage { display: flex; justify-content: center; align-items: flex-end; gap: 40px; width: 100%; max-width: 600px; height: 220px; position: relative; }
+        .character { display: flex; flex-direction: column; align-items: center; position: relative; cursor: pointer; }
+        .boy-head { width: 70px; height: 70px; background: #ffe0b2; border-radius: 50%; position: relative; border: 3px solid #333; } .boy-cap { position: absolute; top: -12px; left: 5px; width: 60px; height: 25px; background: #29b6f6; border-radius: 40px 40px 0 0; border: 3px solid #333; } .boy-cap-brim { position: absolute; top: 5px; left: 45px; width: 25px; height: 8px; background: #ffca28; border-radius: 0 10px 10px 0; border: 3px solid #333; } .face-details { position: relative; top: 25px; display: flex; justify-content: space-around; padding: 0 10px; } .eye { width: 10px; height: 10px; background: #333; border-radius: 50%; } .smile { width: 24px; height: 12px; border: 3px solid #333; border-top: none; border-radius: 0 0 20px 20px; margin: 12px auto 0; } .boy-body { width: 55px; height: 60px; background: #29b6f6; border-radius: 15px 15px 5px 5px; border: 3px solid #333; margin-top: -3px; } .bao-head { width: 85px; height: 80px; background: #ffffff; border-radius: 50% 50% 45% 45%; position: relative; border: 4px solid #333; box-shadow: inset -5px -5px 0px rgba(0,0,0,0.05); } .bao-top { position: absolute; top: -14px; left: 32px; width: 20px; height: 20px; background: #ffffff; border-radius: 50% 50% 0 0; border: 3px solid #333; border-bottom: none; transform: rotate(45deg); } .bao-blush { position: absolute; top: 40px; width: 14px; height: 8px; background: #ff8a80; border-radius: 50%; opacity: 0.7; } .blush-left { left: 8px; } .blush-right { right: 8px; } .bao-smile { width: 20px; height: 10px; border: 3.5px solid #333; border-top: none; border-radius: 0 0 15px 15px; margin: 30px auto 0; } .bao-body { width: 45px; height: 25px; background: #ffffff; border-radius: 10px 10px 20px 20px; border: 4px solid #333; margin-top: -5px; } .girl-head { width: 70px; height: 70px; background: #ffe0b2; border-radius: 50%; position: relative; border: 3px solid #333; } .hair-bun { position: absolute; width: 28px; height: 28px; background: #ec407a; border-radius: 50%; border: 3px solid #333; top: -8px; } .bun-left { left: -8px; } .bun-right { right: -8px; } .girl-body { width: 55px; height: 60px; background: #ec407a; border-radius: 15px 15px 5px 5px; border: 3px solid #333; margin-top: -3px; } .char-name { background: #333; color: #fff; padding: 2px 10px; border-radius: 20px; font-size: 0.85rem; margin-top: 8px; font-weight: bold; letter-spacing: 1px; }
     </style>
-</head>
-<body>
-    <header>
+</head><header>
         <div class="top-auth-group" id="authGroup">
-            <button class="login-top-btn" style="border-color:#4ecdc4;color:#4ecdc4;" onclick="openModal('guestApplyModal')">Guest Login</button>
-            <button class="login-top-btn" style="border-color:#ab47bc;color:#ab47bc;" onclick="openModal('vipLoginModal')">VIP Login</button>
+            <button class="login-top-btn guest-btn" onclick="openModal('guestApplyModal')">Guest Login / تسجيل الزوار</button>
+            <button class="login-top-btn vip-btn" onclick="openModal('vipLoginModal')">VIP Login / دخول VIP</button>
         </div>
-        <div class="user-welcome" id="userWelcome"><span id="welcomeName"></span> <button onclick="handleLogout()">Logout</button></div>
+        <div class="user-welcome" id="userWelcome">
+            <span id="welcomeName"></span>
+            <button onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
         <h1>NihaoPlay!</h1>
-    </header><div class="middle-section">
+        <p class="subtitle" dir="ltr">Click the letters to play & learn Chinese Pinyin!</p>
+    </header>
+    
+    <div class="middle-section">
         <div class="nav-group">
-            <div class="side-nav-btn" style="border-color: #ff6b6b; color: #ff6b6b;" onclick="handlePinyinBtnClick()">
+            <div class="nav-btn-wrapper">
                 <div class="top-tag tag-free">FREE</div>
-                <i class="fas fa-language"></i><span>Chinese PinYin</span>
+                <div class="side-nav-btn" style="border-color: #ff6b6b; color: #ff6b6b;" onclick="handlePinyinBtnClick()">
+                    <i class="fas fa-language"></i><span>Chinese PinYin</span>
+                </div>
             </div>
-            <div class="side-nav-btn" style="border-color: #f5af19; color: #f5af19;" onclick="handleBookTrialClick()">
+            <div class="nav-btn-wrapper">
                 <div class="top-tag tag-free">FREE</div>
-                <i class="fas fa-calendar-alt"></i><span>Book 1-on-1</span>
+                <div class="side-nav-btn" style="border-color: #f5af19; color: #f5af19;" onclick="handleBookTrialClick()">
+                    <i class="fas fa-calendar-alt"></i><span>Book 1-on-1</span>
+                </div>
             </div>
         </div>
 
         <div class="stage">
             <div class="character" onclick="speakGreeting('baba', this, event)">
-                <div class="boy-head" style="width: 60px; height: 60px; background: #ffe0b2; border-radius: 50%; border: 3px solid #333;"></div>
-                <div style="font-size: 0.7rem; font-weight: bold;">爸爸 Baba</div>
+                <div class="boy-head"><div class="boy-cap"></div><div class="boy-cap-brim"></div><div class="face-details"><div class="eye"></div><div class="eye"></div></div><div class="smile"></div></div>
+                <div class="boy-body"></div><div class="char-name">爸爸 Baba</div>
             </div>
             <div class="character" onclick="speakGreeting('baby', this, event)">
-                <div class="bao-head" style="width: 70px; height: 65px; background: #fff; border-radius: 50% 50% 45% 45%; border: 4px solid #333;"></div>
-                <div style="font-size: 0.7rem; font-weight: bold;">宝宝 Baby</div>
+                <div class="bao-head"><div class="bao-top"></div><div class="bao-blush blush-left"></div><div class="bao-blush blush-right"></div><div class="face-details"><div class="eye"></div><div class="eye"></div></div><div class="bao-smile"></div></div>
+                <div class="bao-body"></div><div class="char-name">宝宝 Baby</div>
             </div>
             <div class="character" onclick="speakGreeting('mama', this, event)">
-                <div class="girl-head" style="width: 60px; height: 60px; background: #ffe0b2; border-radius: 50%; border: 3px solid #333;"></div>
-                <div style="font-size: 0.7rem; font-weight: bold;">妈妈 Mama</div>
+                <div class="girl-head"><div class="hair-bun bun-left"></div><div class="hair-bun bun-right"></div><div class="face-details"><div class="eye"></div><div class="eye"></div></div><div class="smile"></div></div>
+                <div class="girl-body"></div><div class="char-name">妈妈 Mama</div>
             </div>
         </div>
 
         <div class="nav-group">
-            <div class="side-nav-btn" style="border-color: #ab47bc; color: #ab47bc;" onclick="handleVipCourseClick()">
+            <div class="nav-btn-wrapper">
                 <div class="top-tag tag-vip">VIP</div>
-                <i class="fas fa-chalkboard-teacher"></i><span>VIP Course</span>
+                <div class="side-nav-btn" style="border-color: #ab47bc; color: #ab47bc;" onclick="handleVipCourseClick()">
+                    <i class="fas fa-chalkboard-teacher"></i><span>VIP Course</span>
+                </div>
             </div>
-            <div class="side-nav-btn" style="border-color: #4ecdc4; color: #4ecdc4;" onclick="handleSongClick()">
+            <div class="nav-btn-wrapper">
                 <div class="top-tag tag-vip">VIP</div>
-                <i class="fas fa-music"></i><span>Song of CN/EN</span>
+                <div class="side-nav-btn" style="border-color: #4ecdc4; color: #4ecdc4;" onclick="handleSongClick()">
+                    <i class="fas fa-music"></i><span>Song of CN/EN</span>
+                </div>
             </div>
         </div>
-    </div><!-- Pinyin Board -->
-    <div id="view-pinyin" class="view-container" style="display:none; background: #8d6e63; border: 8px solid #a1887f;">
+    </div><!-- Pinyin Board (Only interactive after Guest Login) -->
+    <div id="view-pinyin" class="view-container" style="display:none; background: #8d6e63; border: 8px solid #a1887f; border-radius: 20px; padding: 20px;">
+        <div class="category-title">🎈 Single Vowels</div>
         <div class="board">
-            <button class="pinyin-btn" onclick="speakPinyin('ā', event)">ā</button>
-            <button class="pinyin-btn" onclick="speakPinyin('b', event)">b</button>
-            <!-- 在这里填入你所有的拼音按钮 -->
+            <button class="pinyin-btn" onclick="speakPinyin('ā', event)">ā</button><button class="pinyin-btn" onclick="speakPinyin('ō', event)">ō</button><button class="pinyin-btn" onclick="speakPinyin('ē', event)">ē</button>
+            <!-- (请按此格式填入你所有的拼音) -->
         </div>
     </div>
 
-    <!-- Song Board -->
-    <div id="view-songs" class="view-container" style="display:none; background: #e0f2fe; border: 8px solid #bae6fd;">
-        <!-- 这里放入你那40首歌的完整 div 代码 -->
-        <!-- 记得给每个 audio src 加上 ?v=20261 强制更新缓存 -->
+    <!-- VIP Course Panel -->
+    <div id="view-course" class="view-container" style="display:none; background: #fff; border: 4px solid #ab47bc; border-radius: 20px; padding: 30px;">
+        <h2>👑 VIP Class Dashboard</h2>
+        <div class="vip-card">
+            <h3><i class="fas fa-clock"></i> Next Class</h3>
+            <p>Every Mon & Fri - 8:00 PM</p>
+            <a href="#" target="_blank" class="zoom-btn">Join Zoom</a>
+        </div>
+    </div>
+
+    <!-- Songs Panel (All 40 Songs) -->
+    <div id="view-songs" class="view-container" style="display:none; background: #e0f2fe; border: 8px solid #bae6fd; border-radius: 20px; padding: 30px;">
+        <h2>🎵 Chinese & English Songs</h2>
+        <!-- 示例添加几首，请按此结构填入全部40首 -->
         <div class="song-card" onclick="toggleAudio(this)">
             <i class="fas fa-compact-disc song-icon"></i>
-            <div><div class="main-title">找朋友</div><div class="sub-title">Making Friends</div></div>
-            <audio src="audio/song/找朋友.mp3?v=20261"></audio>
+            <div><div class="main-title">找朋友 (Making Friends)</div></div>
+            <audio src="audio/song/找朋友.mp3?v=20260718"></audio>
         </div>
-        <!-- (重复上述结构填入所有歌曲) -->
-    </div><script>
+        <!-- 记得给每个 audio src 加上 ?v=20260718 强制更新缓存 -->
+    </div><!-- Modals -->
+    <div class="modal-overlay" id="guestApplyModal"><div class="modal-content"><h2 style="color:#4ecdc4">Guest Application</h2>
+        <input type="text" id="applyName" class="modal-input" placeholder="Name">
+        <input type="number" id="applyAge" class="modal-input" placeholder="Age">
+        <button class="modal-btn" style="background:#4ecdc4" onclick="submitGuestApplication()">Submit to WhatsApp</button>
+        <span class="modal-link" onclick="closeAllModals()">Cancel</span></div></div>
+
+    <div class="modal-overlay" id="guestLoginModal"><div class="modal-content"><h2 style="color:#4ecdc4">Guest Login</h2>
+        <input type="text" id="guestAccount" class="modal-input" placeholder="Name/Email">
+        <input type="password" id="guestPassword" class="modal-input" placeholder="Password">
+        <label><input type="checkbox" id="rememberGuest"> Remember Me</label>
+        <button class="modal-btn" style="background:#4ecdc4" onclick="handleLogin('guest')">Login</button></div></div>
+
+    <div class="modal-overlay" id="vipLoginModal"><div class="modal-content" style="border-color:#ab47bc"><h2 style="color:#ab47bc">VIP Login</h2>
+        <input type="text" id="vipAccount" class="modal-input" placeholder="Account">
+        <input type="password" id="vipPassword" class="modal-input" placeholder="Password">
+        <label><input type="checkbox" id="rememberVip"> Remember Me</label>
+        <button class="modal-btn" style="background:#ab47bc" onclick="handleLogin('vip')">Login</button></div></div>
+
+    <a href="https://wa.me/962771128288" target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
+
+    <script>
         let currentUser = null; 
 
-        // 核心权限逻辑
-        function handlePinyinBtnClick() {
-            // 只要发送了资料(Guest) 或 是VIP 就可以播放
-            if (!currentUser) { 
-                alert("Please submit guest details to unlock Pinyin.");
-                openModal('guestApplyModal'); 
-                return; 
+        window.onload = function() {
+            const r = localStorage.getItem('role'), n = localStorage.getItem('name');
+            if(r && n) { currentUser = { role: r, name: n }; updateUI(); }
+        };
+
+        function updateUI() {
+            if (currentUser) {
+                document.getElementById('authGroup').style.display = 'none';
+                const welcome = document.getElementById('userWelcome');
+                welcome.style.display = 'block';
+                document.getElementById('welcomeName').innerText = currentUser.name + ' (' + currentUser.role.toUpperCase() + ')';
             }
-            switchView('view-pinyin');
         }
 
-        function handleSongClick() {
-            if (currentUser?.role !== 'vip') {
-                alert("VIP Only! Access Denied.");
-                return;
-            }
-            switchView('view-songs');
+        function handleLogin(type) {
+            const acc = type === 'vip' ? document.getElementById('vipAccount').value : document.getElementById('guestAccount').value;
+            const pwd = type === 'vip' ? document.getElementById('vipPassword').value : document.getElementById('guestPassword').value;
+            
+            if (type === 'vip' && (acc === 'nihaoplayfun' || acc === 'nihaofunplay') && pwd === '888888') {
+                currentUser = { role: 'vip', name: acc };
+                if(document.getElementById('rememberVip').checked) { localStorage.setItem('role','vip'); localStorage.setItem('name',acc); }
+            } else if (type === 'guest' && pwd === '123456') {
+                currentUser = { role: 'guest', name: acc };
+                if(document.getElementById('rememberGuest').checked) { localStorage.setItem('role','guest'); localStorage.setItem('name',acc); }
+            } else { alert("Wrong Credentials!"); return; }
+            
+            closeAllModals(); updateUI();
+            if (type === 'vip') switchView('view-course');
         }
 
-        // 处理发音：所有人(即使没登录)点击三个小人都可以直接发声
-        function speakGreeting(character, element, event) {
-            // 这里不需要 currentUser 检查
-            new Audio(`audio/${character}.mp3?v=20261`).play().catch(e => console.log("Audio Error"));
-            element.classList.add('cheer-anim');
-            setTimeout(() => element.classList.remove('cheer-anim'), 800);
+        function switchView(id) {
+            document.querySelectorAll('.view-container').forEach(v => v.style.display = 'none');
+            document.getElementById(id).style.display = 'block';
         }
 
-        // 处理拼音播放：必须是 Guest 或 VIP 才能播放
-        function speakPinyin(letter, event) {
-            if (!currentUser) { alert("Please login first."); return; }
-            new Audio(`audio/${letter}.mp3?v=20261`).play().catch(e => console.log("Audio Error"));
-        }
-        
-        // ... (其他关闭弹窗、跳转逻辑保持一致) ...
+        function handlePinyinBtnClick() { if(!currentUser) { openModal('guestApplyModal'); return; } switchView('view-pinyin'); }
+        function handleSongClick() { if(currentUser?.role !== 'vip') { alert("VIP Only!"); return; } switchView('view-songs'); }
+        function handleLogout() { localStorage.clear(); location.reload(); }
+        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeAllModals() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
+        function toggleAudio(el) { const a = el.querySelector('audio'); a.paused ? a.play() : a.pause(); }
     </script>
 </body>
 </html>
+<body>

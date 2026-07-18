@@ -481,7 +481,8 @@
             if ((acc === 'nihaoplayfun' || acc === 'nihaofunplay') && pwd === '888888') { } 
             else { alert("Incorrect VIP account or password!\nحساب أو كلمة مرور VIP غير صحيحة!\nVIP账号或密码错误！"); return; }
         } else {
-            if (pwd !== '123456') { alert("Incorrect Guest password!\nكلمة مرور الزائر غير صحيحة!\nGuest密码错误！"); return; }
+            // 这里修改了访客密码的判断逻辑：只要密码是 www.nihaoplay.com 即可登录
+            if (pwd !== 'www.nihaoplay.com') { alert("Incorrect Guest password!\nكلمة مرور الزائر غير صحيحة!\nGuest密码错误！"); return; }
         }
 
         currentUser = { role: type, name: acc };

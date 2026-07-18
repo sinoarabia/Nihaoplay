@@ -31,7 +31,7 @@
         .user-welcome button:hover { background: #a0aec0; }
 
         /* --- Navigation & Stage --- */
-        .middle-section { display: flex; align-items: center; justify-content: center; gap: 30px; width: 100%; max-width: 1000px; margin: 10px 0 30px 0; }
+        .middle-section { display: flex; align-items: center; justify-content: center; gap: 80px; width: 100%; max-width: 1150px; margin: 10px 0 30px 0; }
         .nav-group { display: flex; flex-direction: column; gap: 20px; } 
         .nav-btn-wrapper { position: relative; width: 100%; }
         
@@ -41,7 +41,7 @@
         .tag-vip { background: #ab47bc; } 
         @keyframes pulseTag { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
 
-        .side-nav-btn { background: #ffffff; border: 4px solid #333; border-radius: 20px; padding: 10px 15px; font-size: 0.95rem; font-weight: bold; color: #333; box-shadow: 0 6px 0px #333; transition: all 0.1s; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; min-width: 150px; height: 85px; cursor: pointer; }
+        .side-nav-btn { background: #ffffff; border: 4px solid #333; border-radius: 20px; padding: 10px 15px; font-weight: bold; color: #333; box-shadow: 0 6px 0px #333; transition: all 0.1s; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; min-width: 160px; height: 95px; cursor: pointer; }
         .side-nav-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 0px #333; background: #f7f9fc; }
         .side-nav-btn:active { transform: translateY(6px); box-shadow: 0 0px 0px #333; }
         .side-nav-btn i { font-size: 1.6rem; }
@@ -101,11 +101,11 @@
         .modal-btn { color: white; border: none; padding: 12px; font-size: 1rem; font-weight: bold; border-radius: 12px; cursor: pointer; width: 100%; transition: 0.1s; }
         .modal-btn:active { transform: translateY(4px); }
 
-        .whatsapp-float { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: #25d366; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 35px; text-decoration: none; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.4); z-index: 1000; transition: 0.2s; animation: pulseGlow 2s infinite; }
+        .whatsapp-float { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: #25d366; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 35px; text-decoration: none; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.4); z-index: 1000; transition: 0.2s; animation: pulseGlow 2s infinite; cursor: pointer; }
         .whatsapp-float:hover { transform: scale(1.1); }
         @keyframes pulseGlow { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); } 70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
 
-        /* --- 新增：无缝跳转提示层 Toast --- */
+        /* --- 无缝跳转提示层 Toast --- */
         .toast-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(255,255,255,0.85); backdrop-filter: blur(4px);
@@ -117,7 +117,7 @@
             border: 4px solid #f5af19; animation: popIn 0.3s ease-out;
         }
 
-        /* --- 新增：WhatsApp 智能提示气泡 --- */
+        /* --- WhatsApp 智能提示气泡 --- */
         .wa-prompt {
             position: fixed; bottom: 35px; right: 90px;
             background: #fff; border: 3px solid #25d366;
@@ -126,12 +126,12 @@
             z-index: 999; width: 260px;
             animation: floatPrompt 3s infinite ease-in-out, popIn 0.4s ease-out;
             cursor: pointer; transition: all 0.2s;
+            display: none; 
         }
         .wa-prompt:hover { transform: scale(1.02); }
         .wa-prompt-text { font-size: 0.8rem; margin-bottom: 6px; line-height: 1.3; font-weight: bold; }
         .wa-prompt-text:last-of-type { margin-bottom: 0; }
         
-        /* 电脑端小箭头（指向右侧按钮） */
         .wa-prompt-arrow {
             position: absolute; bottom: 15px; right: -12px; width: 0; height: 0;
             border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-left: 10px solid #25d366;
@@ -162,7 +162,7 @@
             .stage { order: -1; margin-bottom: 0; height: 160px; }
             .nav-group { flex-direction: row; width: 100%; justify-content: center; gap: 15px; }
             .nav-btn-wrapper { width: 45%; }
-            .side-nav-btn { min-width: auto; width: 100%; height: 80px; padding: 10px; font-size: 0.85rem; }
+            .side-nav-btn { min-width: auto; width: 100%; height: 85px; padding: 10px; font-size: 0.85rem; }
             .side-nav-btn i { font-size: 1.4rem; }
             .top-tag { font-size: 0.6rem; padding: 2px 6px; top: -8px; right: -5px; }
             .whatsapp-float { width: 50px; height: 50px; font-size: 28px; bottom: 15px; right: 15px; }
@@ -170,12 +170,8 @@
             .swing-img { width: 50px; border-width: 2px; }
             .xx-name { font-size: 0.6rem; padding: 2px 6px; }
 
-            /* 手机端智能气泡自适应 */
-            .wa-prompt {
-                right: 15px; bottom: 85px; width: 240px;
-            }
+            .wa-prompt { right: 15px; bottom: 85px; width: 240px; }
             .wa-prompt-text { font-size: 0.75rem; }
-            /* 手机端小箭头（指向下方按钮中间） */
             .wa-prompt-arrow {
                 bottom: -12px; right: 20px; 
                 border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 10px solid #25d366; border-bottom: none;
@@ -204,19 +200,21 @@
         <!-- FREE Buttons -->
         <div class="nav-group">
             <div class="nav-btn-wrapper">
-                <div class="top-tag tag-free">FREE / مجاني</div>
+                <div class="top-tag tag-free">免费 / FREE / مجاني</div>
                 <div class="side-nav-btn" style="border-color: #ff6b6b; color: #ff6b6b;" onclick="handlePinyinBtnClick()">
                     <i class="fas fa-language"></i>
-                    <span>Chinese PinYin</span>
-                    <span dir="rtl" style="font-size: 0.7rem;">بينيين الصينية</span>
+                    <span style="font-size: 1.05rem;">汉语拼音</span>
+                    <span style="font-size: 0.85rem;">Chinese PinYin</span>
+                    <span dir="rtl" style="font-size: 0.75rem;">بينيين الصينية</span>
                 </div>
             </div>
             <div class="nav-btn-wrapper">
-                <div class="top-tag tag-free">FREE / مجاني</div>
+                <div class="top-tag tag-free">免费 / FREE / مجاني</div>
                 <div class="side-nav-btn" style="border-color: #f5af19; color: #f5af19;" onclick="handleBookTrialClick()">
                     <i class="fas fa-calendar-alt"></i>
-                    <span>Book 1-on-1</span>
-                    <span dir="rtl" style="font-size: 0.7rem;">حجز درس تجريبي</span>
+                    <span style="font-size: 1.05rem;">预约试听</span>
+                    <span style="font-size: 0.85rem;">Book 1-on-1</span>
+                    <span dir="rtl" style="font-size: 0.75rem;">حجز درس تجريبي</span>
                 </div>
             </div>
         </div>
@@ -240,19 +238,21 @@
         <!-- VIP Buttons -->
         <div class="nav-group">
             <div class="nav-btn-wrapper">
-                <div class="top-tag tag-vip">VIP ONLY / خاص</div>
+                <div class="top-tag tag-vip">仅限VIP / VIP ONLY / خاص</div>
                 <div class="side-nav-btn" style="border-color: #ab47bc; color: #ab47bc;" onclick="handleVipCourseClick()">
                     <i class="fas fa-chalkboard-teacher"></i>
-                    <span>VIP Course</span>
-                    <span dir="rtl" style="font-size: 0.7rem;">دورة VIP</span>
+                    <span style="font-size: 1.05rem;">VIP 课程</span>
+                    <span style="font-size: 0.85rem;">VIP Course</span>
+                    <span dir="rtl" style="font-size: 0.75rem;">دورة VIP</span>
                 </div>
             </div>
             <div class="nav-btn-wrapper">
-                <div class="top-tag tag-vip">VIP ONLY / خاص</div>
+                <div class="top-tag tag-vip">仅限VIP / VIP ONLY / خاص</div>
                 <div class="side-nav-btn" style="border-color: #4ecdc4; color: #4ecdc4;" onclick="handleSongClick()">
                     <i class="fas fa-music"></i>
-                    <span>Song of CN/EN</span>
-                    <span dir="rtl" style="font-size: 0.7rem;">أغاني</span>
+                    <span style="font-size: 1.05rem;">中英儿歌</span>
+                    <span style="font-size: 0.85rem;">Song of CN/EN</span>
+                    <span dir="rtl" style="font-size: 0.75rem;">أغاني</span>
                 </div>
             </div>
         </div>
@@ -300,9 +300,9 @@
             <div class="xx-name">Xinxin</div>
         </div>
 
-        <h2 style="color: #0284c7; margin-bottom: 20px; font-size: 1.5rem; border-bottom: 2px dashed #bae6fd; padding-bottom: 10px; padding-right: 80px;">🎵 Songs / أغاني</h2>
+        <h2 style="color: #0284c7; margin-bottom: 20px; font-size: 1.5rem; border-bottom: 2px dashed #bae6fd; padding-bottom: 10px; padding-right: 80px;">🎵 中英儿歌 / Songs / أغاني</h2>
         
-        <h3 style="color: #0284c7; margin-top: 10px; margin-bottom: 15px; font-size: 1.2rem;">🇨🇳 Chinese Songs / أغاني صينية</h3>
+        <h3 style="color: #0284c7; margin-top: 10px; margin-bottom: 15px; font-size: 1.2rem;">🇨🇳 中文儿歌 / Chinese Songs / أغاني صينية</h3>
         
         <div class="song-card" onclick="toggleAudio(this)">
             <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">找朋友</div><div class="sub-title">Making Friends</div></div><audio src="audio/song/找朋友.mp3"></audio>
@@ -365,7 +365,7 @@
             <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">摇篮曲</div><div class="sub-title">Lullaby</div></div><audio src="audio/song/摇篮曲.mp3"></audio>
         </div>
 
-        <h3 style="color: #059669; margin-top: 30px; margin-bottom: 15px; font-size: 1.2rem; border-top: 2px dashed #bae6fd; padding-top: 20px;">🇬🇧 English Songs / أغاني إنجليزية</h3>
+        <h3 style="color: #059669; margin-top: 30px; margin-bottom: 15px; font-size: 1.2rem; border-top: 2px dashed #bae6fd; padding-top: 20px;">🇬🇧 英文儿歌 / English Songs / أغاني إنجليزية</h3>
         
         <div class="song-card" onclick="toggleAudio(this)">
             <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">Twinkle Twinkle Little Star</div><div class="sub-title">一闪一闪小星星</div></div><audio src="audio/song/Twinkle Twinkle Little Star.mp3"></audio>
@@ -429,9 +429,7 @@
         </div>
     </div>
 
-    <footer style="margin-top: 10px; font-size: 0.85rem; color: #a0aec0;">&copy; 2026 nihaoplay.com - All Rights Reserved.</footer>
-
-    <!-- ================= MODALS & WHATSAPP ================= -->
+    <footer style="margin-top: 10px; font-size: 0.85rem; color: #a0aec0;">&copy; 2026 nihaoplay.com - All Rights Reserved.</footer><!-- ================= MODALS & WHATSAPP ================= -->
     <div class="modal-overlay" id="guestApplyModal">
         <div class="modal-content" style="border-color: #4ecdc4;">
             <h2 style="color: #4ecdc4; margin-bottom: 10px; font-size: 1.4rem;">🌐 Guest Application<br><span dir="rtl" style="font-size: 1.1rem;">طلب حساب زائر</span></h2>
@@ -491,16 +489,18 @@
         </div>
     </div>
 
-    <!-- --- 新增：智能提示气泡结构 --- -->
+    <!-- --- WhatsApp 智能提示气泡 --- -->
     <div class="wa-prompt" id="waPrompt" onclick="goToWa(event)">
         <div class="wa-prompt-close" onclick="closeWaPrompt(event)"><i class="fas fa-times"></i></div>
+        <!-- 严格按照中英阿排序 -->
         <div class="wa-prompt-text" style="color:#e53e3e;">点击我开始真人视频一对一快速学会中文对话！</div>
-        <div class="wa-prompt-text" dir="rtl" style="color:#059669;">انقر هنا لبدء فيديو مباشر لتعلم المحادثة الصينية بسرعة!</div>
         <div class="wa-prompt-text">Click me to start a 1-on-1 live video and learn Chinese conversation quickly!</div>
+        <div class="wa-prompt-text" dir="rtl" style="color:#059669;">انقر هنا لبدء فيديو مباشر لتعلم المحادثة الصينية بسرعة!</div>
         <div class="wa-prompt-arrow"></div>
     </div>
 
-    <a href="https://wa.me/962771128288" target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
+    <!-- 将纯超链接修改为通过 JS 控制的 div 按钮 -->
+    <div class="whatsapp-float" onclick="handleWaClick(event)"><i class="fab fa-whatsapp"></i></div>
     
 <script>
     let currentUser = null; 
@@ -509,12 +509,26 @@
     // --- 监听点击网页空白处缩回气泡 ---
     document.addEventListener('click', function(e) {
         const prompt = document.getElementById('waPrompt');
-        if (prompt && prompt.style.display !== 'none') {
+        if (prompt && prompt.style.display === 'block') {
             if (!e.target.closest('.whatsapp-float') && !e.target.closest('.wa-prompt')) {
                 prompt.style.display = 'none';
             }
         }
     });
+
+    // --- 绿泡泡两步交互逻辑 ---
+    function handleWaClick(event) {
+        event.stopPropagation(); // 阻止点击事件冒泡到 document
+        const prompt = document.getElementById('waPrompt');
+        if (prompt.style.display === 'block') {
+            // 如果提示框已经显示，再点击就直接进入聊天
+            window.open('https://wa.me/962771128288', '_blank');
+            prompt.style.display = 'none';
+        } else {
+            // 第一次点击，弹出提示框
+            prompt.style.display = 'block';
+        }
+    }
 
     function closeWaPrompt(event) {
         event.stopPropagation();
@@ -522,6 +536,7 @@
     }
 
     function goToWa(event) {
+        event.stopPropagation(); // 阻止冒泡
         if(!event.target.closest('.wa-prompt-close')){
             window.open('https://wa.me/962771128288', '_blank');
             document.getElementById('waPrompt').style.display = 'none';
@@ -581,13 +596,13 @@
         const pwd = type === 'vip' ? document.getElementById('vipPassword').value : document.getElementById('guestPassword').value;
         const rem = type === 'vip' ? document.getElementById('rememberVip').checked : document.getElementById('rememberGuest').checked;
 
-        if (!acc || !pwd) { alert("Please enter account and password.\nيرجى إدخال الحساب وكلمة المرور.\n请输入账号和密码。"); return; }
+        if (!acc || !pwd) { alert("请输入账号和密码。\nPlease enter account and password.\nيرجى إدخال الحساب وكلمة المرور."); return; }
 
         if (type === 'vip') {
             if ((acc === 'nihaoplayfun' || acc === 'nihaofunplay') && pwd === '888888') { } 
-            else { alert("Incorrect VIP account or password!\nحساب أو كلمة مرور VIP غير صحيحة!\nVIP账号或密码错误！"); return; }
+            else { alert("VIP账号或密码错误！\nIncorrect VIP account or password!\nحساب أو كلمة مرور VIP غير صحيحة!"); return; }
         } else {
-            if (pwd !== 'www.nihaoplay.com') { alert("Incorrect Guest password!\nكلمة مرور الزائر غير صحيحة!\nGuest密码错误！"); return; }
+            if (pwd !== 'www.nihaoplay.com') { alert("Guest密码错误！\nIncorrect Guest password!\nكلمة مرور الزائر غير صحيحة!"); return; }
         }
 
         currentUser = { role: type, name: acc };
@@ -613,7 +628,7 @@
         const gender = document.getElementById('applyGender').value;
         const level = document.getElementById('applyLevel').value;
         const email = document.getElementById('applyEmail').value;
-        if(!name || !age || !gender || !level || !email) { alert("Please fill in all fields.\nيرجى تعبئة جميع الحقول.\n请填写所有信息。"); return; }
+        if(!name || !age || !gender || !level || !email) { alert("请填写所有信息。\nPlease fill in all fields.\nيرجى تعبئة جميع الحقول."); return; }
         
         localStorage.setItem('guestApplied', 'true');
         
@@ -624,34 +639,32 @@
 
     function handlePinyinBtnClick() { switchView('view-pinyin'); }
 
-    // --- 新增：丝滑0.5秒跳转逻辑 ---
+    // --- 丝滑0.5秒跳转逻辑 ---
     function handleBookTrialClick() {
-        if (currentUser?.role === 'vip') { alert("You are already a VIP student, please click the VIP Course button.\nأنت طالب VIP بالفعل، يرجى النقر على زر دورة VIP.\n您已经是VIP学生，请点击VIP课程。"); return; }
-        if (localStorage.getItem('booked1on1') === 'true') { alert("You have already booked a trial class using this device.\nلقد قمت بحجز درس تجريبي بالفعل باستخدام هذا الجهاز.\n您已使用此设备预约过体验课。"); return; }
+        if (currentUser?.role === 'vip') { alert("您已经是VIP学生，请点击VIP课程。\nYou are already a VIP student, please click the VIP Course button.\nأنت طالب VIP بالفعل، يرجى النقر على زر دورة VIP."); return; }
+        if (localStorage.getItem('booked1on1') === 'true') { alert("您已使用此设备预约过体验课。\nYou have already booked a trial class using this device.\nلقد قمت بحجز درس تجريبي بالفعل باستخدام هذا الجهاز."); return; }
         
         localStorage.setItem('booked1on1', 'true');
         
-        // 创建无缝跳转的过场提示框
         const toast = document.createElement('div');
         toast.className = 'toast-overlay';
         toast.innerHTML = `
             <div class="toast-content">
                 <i class="fas fa-spinner fa-spin" style="color:#f5af19; font-size:2.5rem; margin-bottom:15px;"></i>
-                <div style="font-size: 1.1rem; margin-bottom: 5px; color:#2d3748;">Redirecting to booking schedule...</div>
-                <div dir="rtl" style="font-size: 0.95rem; color: #718096; margin-bottom: 5px;">جاري التوجيه لجدول المواعيد...</div>
-                <div style="font-size: 0.95rem; color: #718096;">正在跳转至预约界面...</div>
+                <div style="font-size: 1.1rem; margin-bottom: 5px; color:#2d3748;">正在跳转至预约界面...</div>
+                <div style="font-size: 0.95rem; color: #718096; margin-bottom: 5px;">Redirecting to booking schedule...</div>
+                <div dir="rtl" style="font-size: 0.95rem; color: #718096;">جاري التوجيه لجدول المواعيد...</div>
             </div>
         `;
         document.body.appendChild(toast);
         
-        // 0.6秒后在当前窗口无缝进入约课页面
         setTimeout(() => {
             window.location.href = 'https://calendly.com/nihaoplay/mutual-understanding';
         }, 600);
     }
 
     function handleVipCourseClick() {
-        if (currentUser?.role !== 'vip') { alert("This feature is for VIP students only.\nهذه الميزة لطلاب VIP فقط.\n此功能仅限VIP学生使用。"); return; }
+        if (currentUser?.role !== 'vip') { alert("此功能仅限VIP学生使用。\nThis feature is for VIP students only.\nهذه الميزة لطلاب VIP فقط."); return; }
         switchView('view-course');
     }
 
@@ -661,7 +674,7 @@
         if (event) event.stopPropagation();
         
         if (currentUser?.role !== 'vip') {
-            alert("Only VIP customers have permission to play. Please contact customer service via WhatsApp to activate VIP service.\nعذراً، هذه الميزة لعملاء VIP فقط. يرجى التواصل عبر واتساب لتفعيل خدمة VIP.\n仅限VIP客户播放，请点击Whatsapp联系客服开通VIP服务。");
+            alert("仅限VIP客户播放，请点击Whatsapp联系客服开通VIP服务。\nOnly VIP customers have permission to play. Please contact customer service via WhatsApp to activate VIP service.\nعذراً، هذه الميزة لعملاء VIP فقط. يرجى التواصل عبر واتساب لتفعيل خدمة VIP.");
             window.open('https://wa.me/962771128288', '_blank');
             return;
         }
@@ -688,7 +701,7 @@
         if (event) event.stopPropagation();
         const hasGuestAccess = localStorage.getItem('guestApplied') === 'true';
         if (!currentUser && !hasGuestAccess) { 
-            alert("Please apply for a Guest account to play sounds.\nيرجى النقر على زر الزائر للحصول على صلاحية الاستماع.\n请申请Guest账号获取发音权限。"); openModal('guestApplyModal'); return; 
+            alert("请申请Guest账号获取发音权限。\nPlease apply for a Guest account to play sounds.\nيرجى النقر على زر الزائر للحصول على صلاحية الاستماع."); openModal('guestApplyModal'); return; 
         }
 
         const map = {
@@ -714,7 +727,7 @@
 
     function toggleAudio(cardElement) {
         if (currentUser?.role !== 'vip') {
-            alert("Only VIP customers have permission to play. Please contact customer service via WhatsApp to activate VIP service.\nعذراً، هذه الميزة لعملاء VIP فقط. يرجى التواصل عبر واتساب لتفعيل خدمة VIP.\n仅限VIP客户播放，请点击Whatsapp联系客服开通VIP服务。");
+            alert("仅限VIP客户播放，请点击Whatsapp联系客服开通VIP服务。\nOnly VIP customers have permission to play. Please contact customer service via WhatsApp to activate VIP service.\nعذراً، هذه الميزة لعملاء VIP فقط. يرجى التواصل عبر واتساب لتفعيل خدمة VIP.");
             window.open('https://wa.me/962771128288', '_blank'); return;
         }
 
@@ -729,7 +742,7 @@
             if (playPromise !== undefined) {
                 playPromise.then(_ => { icon.classList.add('rotating'); }).catch(error => {
                     console.log("Audio play failed:", error);
-                    alert("Audio file not found! Please make sure the filename exactly matches the uploaded file.\n找不到音频文件！请确认代码中填写的名字和上传的文件名大小写/标点完全一致。");
+                    alert("找不到音频文件！请确认代码中填写的名字和上传的文件名大小写/标点完全一致。\nAudio file not found! Please make sure the filename exactly matches the uploaded file.\nلم يتم العثور على ملف الصوت! يرجى التأكد من تطابق اسم الملف.");
                 });
             }
         } else {

@@ -437,10 +437,12 @@
     <footer style="margin-top: 10px; font-size: 0.85rem; color: #a0aec0;">&copy; 2026 nihaoplay.com - All Rights Reserved.</footer><!-- ================= MODALS & WHATSAPP ================= -->
     
     <!-- 【防盗新增】内嵌视频播放弹窗 -->
+    <!-- 整个区域添加 oncontextmenu="return false;" 禁用右键 -->
     <div class="video-modal-overlay" id="videoModal" oncontextmenu="return false;">
         <div class="video-modal-content">
             <div class="video-close-btn" onclick="closeVideoModal()"><i class="fas fa-times"></i></div>
-            <iframe id="videoIframe" class="video-iframe" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+            <!-- 【重点修复】：加入了 allow 权限参数，防止出现 153 错误 -->
+            <iframe id="videoIframe" class="video-iframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
     </div>
 
@@ -558,13 +560,16 @@
     function openVideoModal(videoUrl) {
         let finalUrl = videoUrl;
         
-        // 【智能修复网址格式】：自动提取 YouTube ID 并转换为 embed 格式，防止报错
+        // 【智能修复网址格式】：自动提取 YouTube ID 并转换为官方强制的 embed 格式，附带自动播放
         if (videoUrl.includes('youtu.be/')) {
             const videoId = videoUrl.split('youtu.be/')[1].split('?')[0];
-            finalUrl = 'https://www.youtube.com/embed/' + videoId + '?rel=0&modestbranding=1';
+            finalUrl = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
         } else if (videoUrl.includes('watch?v=')) {
             const videoId = videoUrl.split('watch?v=')[1].split('&')[0];
-            finalUrl = 'https://www.youtube.com/embed/' + videoId + '?rel=0&modestbranding=1';
+            finalUrl = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
+        } else if (videoUrl.includes('youtube.com/embed/')) {
+            // 如果已经在表格里填了正确的 embed 链接，直接拼接参数
+            finalUrl = videoUrl + (videoUrl.includes('?') ? '&' : '?') + 'autoplay=1&rel=0';
         }
         
         document.getElementById('videoIframe').src = finalUrl;

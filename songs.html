@@ -1,1036 +1,334 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer">
-    <title>NihaoPlay - Song of CN/EN!</title>
-    
-    <!-- 引入 FontAwesome 图标库 -->
+    <title>NihaoPlay - Learn Full Pinyin!</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* 针对儿歌页面优化了背景色，更柔和 */
-        :root { --bg-color: #f0fdfa; --primary-color: #ff6b6b; --text-color: #2d3748; }
+        :root { --bg-color: #f7f9fc; --primary-color: #ff6b6b; --board-color: #4ecdc4; --text-color: #2d3748; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Comic Sans MS', 'Chalkboard SE', 'Microsoft YaHei', sans-serif; background-color: var(--bg-color); color: var(--text-color); display: flex; flex-direction: column; align-items: center; justify-content: space-between; min-height: 100vh; overflow-x: hidden; padding: 20px; }
-        header { text-align: center; margin-bottom: 10px; }
-        h1 { font-size: 2.5rem; color: var(--primary-color); text-shadow: 2px 2px 0px #fff, 4px 4px 0px rgba(0,0,0,0.05); letter-spacing: 2px; }
-        p.subtitle { font-size: 1.1rem; color: #718096; margin-top: 5px; }
+        body { font-family: 'Comic Sans MS', 'Chalkboard SE', Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; }
         
-        /* 导航与人物区域 */
-        .middle-section { display: flex; align-items: center; justify-content: center; gap: 40px; width: 100%; max-width: 1000px; margin: 20px 0; }
-        .stage { display: flex; justify-content: center; align-items: flex-end; gap: 40px; width: 100%; max-width: 600px; height: 220px; position: relative; }
-        .character { display: flex; flex-direction: column; align-items: center; position: relative; cursor: pointer; transition: transform 0.2s; }
-        .character:hover { transform: scale(1.05); }
+        /* Header & Auth */
+        header { text-align: center; margin-bottom: 20px; width: 100%; position: relative; padding-top: 10px; }
+        h1 { font-size: 2.2rem; color: var(--primary-color); }
+        .top-auth-group { position: absolute; top: 0px; right: 0px; display: flex; flex-direction: column; gap: 5px; }
+        .login-top-btn { background: transparent; border: 2px solid; padding: 4px 10px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 0.75rem; }
+        .guest-btn { border-color: #4ecdc4; color: #4ecdc4; }
+        .vip-btn { border-color: #ab47bc; color: #ab47bc; }
+        .user-welcome { display: none; position: absolute; top: 0; right: 0; background: #fff; padding: 6px 12px; border-radius: 20px; border: 2px solid #e2e8f0; font-weight: bold; font-size: 0.8rem; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
         
-        /* 人物动画与细节 */
-        @keyframes idle { 0%, 100% { transform: translateY(0) scaleY(1); } 50% { transform: translateY(-8px) scaleY(1.02); } }
-        @keyframes cheer { 0%, 100% { transform: translateY(0) scale(1); } 30% { transform: translateY(-45px) scale(0.9, 1.1); } 50% { transform: translateY(-50px) rotate(10deg); } 70% { transform: translateY(-50px) rotate(-10deg); } 85% { transform: translateY(-10px) scale(1.05, 0.95); } }
-        .idle-anim { animation: idle 3s ease-in-out infinite; }
-        .cheer-anim { animation: cheer 0.8s ease-in-out !important; }
-        .boy-head { width: 70px; height: 70px; background: #ffe0b2; border-radius: 50%; position: relative; border: 3px solid #333; }
-        .boy-cap { position: absolute; top: -12px; left: 5px; width: 60px; height: 25px; background: #29b6f6; border-radius: 40px 40px 0 0; border: 3px solid #333; }
-        .boy-cap-brim { position: absolute; top: 5px; left: 45px; width: 25px; height: 8px; background: #ffca28; border-radius: 0 10px 10px 0; border: 3px solid #333; }
-        .face-details { position: relative; top: 25px; display: flex; justify-content: space-around; padding: 0 10px; }
-        .eye { width: 10px; height: 10px; background: #333; border-radius: 50%; }
-        .smile { width: 24px; height: 12px; border: 3px solid #333; border-top: none; border-radius: 0 0 20px 20px; margin: 12px auto 0; }
-        .boy-body { width: 55px; height: 60px; background: #29b6f6; border-radius: 15px 15px 5px 5px; border: 3px solid #333; margin-top: -3px; }
-        .bao-head { width: 85px; height: 80px; background: #ffffff; border-radius: 50% 50% 45% 45%; position: relative; border: 4px solid #333; box-shadow: inset -5px -5px 0px rgba(0,0,0,0.05); }
-        .bao-top { position: absolute; top: -14px; left: 32px; width: 20px; height: 20px; background: #ffffff; border-radius: 50% 50% 0 0; border: 3px solid #333; border-bottom: none; transform: rotate(45deg); }
-        .bao-blush { position: absolute; top: 40px; width: 14px; height: 8px; background: #ff8a80; border-radius: 50%; opacity: 0.7; }
-        .blush-left { left: 8px; } .blush-right { right: 8px; }
-        .bao-smile { width: 20px; height: 10px; border: 3.5px solid #333; border-top: none; border-radius: 0 0 15px 15px; margin: 30px auto 0; }
-        .bao-body { width: 45px; height: 25px; background: #ffffff; border-radius: 10px 10px 20px 20px; border: 4px solid #333; margin-top: -5px; }
-        .girl-head { width: 70px; height: 70px; background: #ffe0b2; border-radius: 50%; position: relative; border: 3px solid #333; }
-        .hair-bun { position: absolute; width: 28px; height: 28px; background: #ec407a; border-radius: 50%; border: 3px solid #333; top: -8px; }
-        .bun-left { left: -8px; } .bun-right { right: -8px; }
-        .girl-body { width: 55px; height: 60px; background: #ec407a; border-radius: 15px 15px 5px 5px; border: 3px solid #333; margin-top: -3px; }
-        .char-name { background: #333; color: #fff; padding: 2px 10px; border-radius: 20px; font-size: 0.85rem; margin-top: 8px; font-weight: bold; letter-spacing: 1px; }
+        /* Nav & Stage */
+        .middle-section { display: flex; align-items: center; justify-content: center; gap: 20px; width: 100%; max-width: 1000px; margin: 20px 0; }
+        .nav-group { display: flex; flex-direction: column; gap: 15px; } 
+        .nav-btn-wrapper { position: relative; width: 100%; }
+        
+        /* Pulse Animation Fix */
+        .top-tag { position: absolute; top: -10px; right: -5px; color: white; font-size: 0.65rem; font-weight: bold; padding: 2px 8px; border-radius: 10px; z-index: 10; }
+        .tag-free { background: #ff6b6b; animation: pulseTag 1.5s infinite; }
+        .tag-vip { background: #ab47bc; /* No animation */ }
+        @keyframes pulseTag { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(1.05); } 100% { opacity: 1; transform: scale(1); } }
 
-        /* 侧边导航按钮 */
-        .side-nav-btn { background: #ffffff; border: 4px solid #333; border-radius: 25px; padding: 15px 25px; font-size: 1.2rem; font-weight: bold; color: #333; text-decoration: none; box-shadow: 0 6px 0px #333; transition: all 0.15s; display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 160px; text-align: center; cursor: pointer; }
-        .side-nav-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 0px #333; background: #f7f9fc; }
-        .side-nav-btn:active { transform: translateY(6px); box-shadow: 0 0px 0px #333; }
-        .side-nav-btn i { font-size: 2.2rem; }
+        .side-nav-btn { background: #ffffff; border: 3px solid #333; border-radius: 18px; padding: 10px; font-size: 0.9rem; font-weight: bold; color: #333; text-decoration: none; box-shadow: 0 4px 0px #333; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 140px; height: 75px; cursor: pointer; }
+        .side-nav-btn i { font-size: 1.4rem; margin-bottom: 3px; }
         
-        /* 当前页面高亮状态 */
-        .side-nav-btn.active-nav { background: #e0f2fe; color: #0284c7; border-color: #0ea5e9; box-shadow: 0 6px 0px #0ea5e9; }
-        .side-nav-btn.active-nav i { color: #0284c7; }
-        .side-nav-btn.active-nav:hover { box-shadow: 0 8px 0px #0ea5e9; }
-        .side-nav-btn.active-nav:active { box-shadow: 0 0px 0px #0ea5e9; }
-        .side-nav-btn:not(.active-nav) i { color: #ff6b6b; } 
-
-        /* ==== 儿歌容器与卡片样式 ==== */
-        .songs-container { 
-            width: 100%; 
-            max-width: 900px; 
-            background: #e0f2fe; 
-            padding: 30px 25px 40px 25px; 
-            border-radius: 20px; 
-            box-shadow: 0 10px 20px rgba(0,0,0,0.08), inset 0 -5px 0px rgba(0,0,0,0.05); 
-            border: 8px solid #bae6fd; 
-            margin-bottom: 30px; 
-        }
+        .stage { display: flex; justify-content: center; align-items: flex-end; gap: 20px; transform: scale(0.8); }
+        .character { cursor: pointer; }
         
-        /* ✨ 板块大标题双语上下分行、文字对齐文字 ✨ */
-        .section-title {
-            position: relative;
-            margin: 10px 0 25px 0;
-            padding-bottom: 10px;
-            display: flex;
-            align-items: center; 
-        }
-        .cn-title { border-bottom: 2px dashed #bae6fd; padding-right: 95px; }
-        .en-title { margin-top: 40px; border-bottom: 2px dashed #a7f3d0; }
+        /* Layout Fixes */
+        .board-container, .songs-container, .vip-dashboard { width: 100%; max-width: 900px; margin-bottom: 20px; }
+        .board { display: grid; grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: 10px; padding: 15px; }
         
-        .title-text-group {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-            text-align: left;
-        }
-        .main-sec-title { font-size: 1.5rem; font-weight: bold; line-height: 1.2; }
-        .sub-sec-title { font-size: 1.05rem; margin-top: 5px; font-weight: 500; }
-        
-        .cn-title .main-sec-title { color: #0284c7; }
-        .cn-title .sub-sec-title { color: #0284c7; opacity: 0.75; }
-        .en-title .main-sec-title { color: #059669; }
-        .en-title .sub-sec-title { color: #059669; opacity: 0.75; }
-
-        .song-card {
-            background: white;
-            border-radius: 18px;
-            padding: 20px 25px;
-            margin-bottom: 25px;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.05);
-            border: 3px solid #e2e8f0;
-            text-align: left;
-            position: relative;
-            transition: transform 0.2s;
-        }
-        .song-card:hover { transform: translateY(-3px); border-color: #7dd3fc; }
-        
-        .lang-badge { position: absolute; top: 20px; right: 25px; font-size: 0.8rem; font-weight: bold; padding: 4px 10px; border-radius: 12px; }
-        .badge-cn { background-color: #fee2e2; color: #ef4444; }
-        .badge-en { background-color: #dcfce7; color: #22c55e; }
-
-        /* ✨ 针对宝宝优化的点击区域 ✨ */
-        .song-title { 
-            display: flex; 
-            align-items: center; 
-            gap: 15px; 
-            padding-right: 70px; 
-            margin-bottom: 12px;
-            cursor: pointer; /* 鼠标悬浮变成小手 */
-            user-select: none; /* 防止宝宝误触选中文字 */
-            transition: opacity 0.2s;
-            padding: 5px; /* 增加一点内边距让点击范围更大 */
-            border-radius: 12px;
-        }
-        .song-title:active { opacity: 0.6; background-color: #f1f5f9; } /* 点击时的反馈效果 */
-        
-        .song-icon { font-size: 2.2rem; color: #38bdf8; flex-shrink: 0; transition: color 0.3s; }
-        .song-title:hover .song-icon { color: #0ea5e9; } /* 提示可点击 */
-        
-        .title-text { 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: flex-start; 
-            text-align: left;
-        }
-        .main-title { font-size: 1.25rem; color: #0f172a; font-weight: bold; line-height: 1.3; }
-        .sub-title { font-size: 0.95rem; color: #64748b; font-weight: 500; margin-top: 4px; }
-
-        .rotating { animation: spin 3s linear infinite; color: #f59e0b !important; /* 播放时碟片变金黄色 */ }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-
-        /* ✨ 彻底隐藏原生播放器和进度条，保持页面清爽 ✨ */
-        audio { display: none; }
-
-        /* 新新宝宝图片秋千动画 */
-        .xinxin-swing { position: absolute; right: 0px; bottom: 5px; cursor: pointer; display: flex; flex-direction: column; align-items: center; z-index: 10; transform-origin: top center; animation: swinging 4s ease-in-out infinite; transition: filter 0.2s; }
-        .xinxin-swing:hover { filter: brightness(1.1); }
-        @keyframes swinging { 0% { transform: rotate(8deg); } 50% { transform: rotate(-8deg); } 100% { transform: rotate(8deg); } }
-        
-        .swing-img { width: 80px; height: auto; border-radius: 50%; box-shadow: 0 6px 12px rgba(0,0,0,0.15); border: 3px solid #fff; object-fit: cover; aspect-ratio: 1/1; background-color: white; }
-        .xx-name { background: #ff6b6b; color: white; font-size: 0.7rem; padding: 2px 10px; border-radius: 12px; margin-top: -10px; font-weight: bold; border: 2px solid #fff; z-index: 4; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        
-        @keyframes excitedJump { 0%, 100% { transform: scale(1) rotate(0deg); } 50% { transform: scale(1.1) translateY(-10px) rotate(5deg); } }
-        .excited-swing { animation: excitedJump 0.5s ease-in-out !important; }
-        
-        /* 底部加载提示框高级排版 */
-        .browser-tip { background: white; border: 2px dashed #bae6fd; border-radius: 16px; padding: 15px 20px; margin: 20px auto 15px; max-width: 900px; width: 90%; box-shadow: 0 8px 15px rgba(0,0,0,0.03); display: flex; flex-direction: column; gap: 8px; }
-        .tip-line { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.85rem; color: #64748b; font-weight: 500; }
-
-        /* WhatsApp 气泡悬浮窗 */
-        .whatsapp-float-container { position: fixed; bottom: 20px; right: 20px; z-index: 1000; display: flex; flex-direction: column; align-items: flex-end; }
-        .whatsapp-button { display: inline-flex; justify-content: center; align-items: center; width: 60px; height: 60px; background-color: #25d366; color: white; border-radius: 50%; text-decoration: none; font-size: 35px; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.4); transition: transform 0.3s ease; animation: pulseGlow 2s infinite; position: relative; z-index: 2; }
-        .whatsapp-button:hover { transform: scale(1.1); }
-        @keyframes pulseGlow { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); } 70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
-
-        .whatsapp-text { background: white; padding: 12px 16px; border-radius: 15px; font-family: Arial, sans-serif; white-space: nowrap; position: absolute; bottom: 75px; right: 0; opacity: 0; visibility: hidden; transform: translateY(10px) scale(0.9); transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); transform-origin: bottom right; box-shadow: 0 8px 20px rgba(0,0,0,0.15); background-clip: padding-box; border: 4px solid transparent; background-image: linear-gradient(white, white), linear-gradient(45deg, #ff6b6b, #ffca28, #4ecdc4, #29b6f6, #ab47bc); background-origin: border-box; background-size: 100% 100%, 300% 300%; animation: borderGradient 4s ease infinite; }
-        
-        @media (min-width: 851px) { .whatsapp-float-container:hover .whatsapp-text { opacity: 1; visibility: visible; transform: translateY(0) scale(1); } }
-        .whatsapp-text.show-mobile-bubble { opacity: 1 !important; visibility: visible !important; transform: translateY(0) scale(1) !important; }
-
-        .colorful-text-ar { background: linear-gradient(45deg, #0082c8, #00c6ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 14px; font-weight: bold; display: block; margin-bottom: 5px; text-align: center; }
-        .colorful-text-zh { background: linear-gradient(45deg, #ff6b6b, #ab47bc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 16px; font-weight: bold; display: block; margin-bottom: 5px; text-align: center; }
-        .colorful-text-en { background: linear-gradient(45deg, #f12711, #f5af19); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 12px; font-weight: bold; display: block; text-align: center; }
-
+        /* Responsiveness */
         @media (max-width: 850px) {
-            .middle-section { flex-wrap: wrap; gap: 20px; }
-            .stage { order: -1; margin-bottom: 10px; }
-            .side-nav-btn { flex-direction: row; min-width: auto; padding: 10px 20px; font-size: 1.1rem; }
-            .side-nav-btn i { font-size: 1.5rem; }
-            .main-sec-title { font-size: 1.25rem !important; }
-            .sub-sec-title { font-size: 0.9rem !important; }
-            .cn-title { padding-right: 75px !important; } 
-            .swing-img { width: 60px; border-width: 2px; } 
-            .xinxin-swing { bottom: 0px; right: 0px; }
-            .xx-name { font-size: 0.65rem; padding: 2px 8px; margin-top: -6px; }
-            .whatsapp-button { width: 50px; height: 50px; font-size: 28px; box-shadow: 0 2px 6px rgba(37, 211, 102, 0.4); }
-            .whatsapp-float-container { bottom: 15px; right: 15px; }
-            .whatsapp-text { bottom: 65px; padding: 12px 15px; white-space: normal; width: 85vw; max-width: 320px; right: 0; line-height: 1.5; }
+            .middle-section { flex-direction: column; }
+            .nav-group { flex-direction: row; }
+            .stage { height: 150px; }
         }
     </style>
 </head>
 <body>
     <header>
+        <div class="top-auth-group" id="authGroup">
+            <button class="login-top-btn guest-btn" onclick="openModal('guestApplyModal')">Guest Login</button>
+            <button class="login-top-btn vip-btn" onclick="openModal('vipLoginModal')">VIP Login</button>
+        </div>
+        <div class="user-welcome" id="userWelcome">
+            <span id="welcomeName"></span> <button onclick="handleLogout()">Logout</button>
+        </div>
         <h1>NihaoPlay!</h1>
-        <p class="subtitle">Sing along & learn Chinese!</p>
     </header>
-    
+    太棒了！为了防止分段复制时漏掉标签，我直接将第二段和第三段（从中间导航栏一直到 HTML 结束）一次性全部整合在这一个代码块里。
+
+你只需要把下面的代码**接在你刚才复制的第一段代码的 `</header>` 后面**即可完成整个网页的拼装。
+
+这里使用了统一的 **View Manager（视图控制器）** 逻辑，彻底解决了页面卡死的问题。无论你点拼音、儿歌还是课程，页面都会在同一个位置丝滑切换，不用来回跳转。
+
+### 第二段与第三段代码 (接在 `</header>` 之后)
+
+```html
+    <!-- Navigation & Stage -->
     <div class="middle-section">
-        <a href="index.html" class="side-nav-btn">
-            <i class="fas fa-language"></i>
-            <span>Chinese PinYin</span>
-        </a>
-
-        <div class="stage">
-            <div class="character idle-anim" id="boy" onclick="speakGreeting('baba', this, event)">
-                <div class="boy-head"><div class="boy-cap"></div><div class="boy-cap-brim"></div><div class="face-details"><div class="eye"></div><div class="eye"></div></div><div class="smile"></div></div>
-                <div class="boy-body"></div><div class="char-name">爸爸 Baba</div>
-            </div>
-            <div class="character idle-anim" id="bao" onclick="speakGreeting('baby', this, event)">
-                <div class="bao-head"><div class="bao-top"></div><div class="bao-blush blush-left"></div><div class="bao-blush blush-right"></div><div class="face-details"><div class="eye"></div><div class="eye"></div></div><div class="bao-smile"></div></div>
-                <div class="bao-body"></div><div class="char-name">宝宝 Baby</div>
-            </div>
-            <div class="character idle-anim" id="girl" onclick="speakGreeting('mama', this, event)">
-                <div class="girl-head"><div class="hair-bun bun-left"></div><div class="hair-bun bun-right"></div><div class="face-details"><div class="eye"></div><div class="eye"></div></div><div class="smile"></div></div>
-                <div class="girl-body"></div><div class="char-name">妈妈 Mama</div>
-            </div>
-        </div>
-
-        <a href="songs.html" class="side-nav-btn active-nav">
-            <i class="fas fa-music"></i>
-            <span>Song of CN/EN</span>
-        </a>
-    </div>
-
-    <!-- ===== 儿歌列表开始 ===== -->
-    <div class="songs-container">
         
-        <!-- =================== 中文儿歌标题 =================== -->
-        <h2 class="section-title cn-title">
-            <span style="font-size: 1.8rem; margin-right: 12px;">⭐</span>
-            <div class="title-text-group">
-                <span class="main-sec-title">中文儿歌</span>
-                <span class="sub-sec-title">Chinese Songs</span>
-            </div>
-            <div class="xinxin-swing" onclick="playXinXin(this, event)" title="点击播放: 新新宝宝">
-                <img src="xinxin.png" alt="新新宝宝" class="swing-img">
-                <div class="xx-name">新新</div>
-            </div>
-        </h2>
-
-        <!-- ✨移除了所有 audio 的 controls 属性，界面更干净 ✨ -->
-        <div class="song-card">
-            <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">找朋友</span>
-                    <span class="sub-title">Making Friends</span>
+        <!-- Left Group (FREE) -->
+        <div class="nav-group">
+            <div class="nav-btn-wrapper">
+                <div class="top-tag tag-free">FREE / مجاني</div>
+                <div class="side-nav-btn" style="border-color: #ff6b6b; color: #ff6b6b;" onclick="handlePinyinBtnClick()">
+                    <i class="fas fa-language"></i>
+                    <span>Chinese PinYin</span>
+                    <span dir="rtl" style="font-size: 0.75rem;">بينيين الصينية</span>
                 </div>
             </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/找朋友.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">小兔子乖乖</span>
-                    <span class="sub-title">Good Little Bunny</span>
+            <div class="nav-btn-wrapper">
+                <div class="top-tag tag-free">FREE / مجاني</div>
+                <div class="side-nav-btn" style="border-color: #f5af19; color: #f5af19;" onclick="handleBookTrialClick()">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Book 1-on-1</span>
+                    <span dir="rtl" style="font-size: 0.75rem;">حجز درس تجريبي</span>
                 </div>
             </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/小兔子乖乖.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
         </div>
 
-        <div class="song-card">
-            <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">数鸭子</span>
-                    <span class="sub-title">Counting Ducks</span>
+        <!-- Stage Characters -->
+        <div class="stage">
+            <div class="character" onclick="speakGreeting('baba', this, event)">
+                <div class="boy-head" style="width: 60px; height: 60px; background: #ffe0b2; border-radius: 50%; position: relative; border: 3px solid #333;"><div class="boy-cap" style="position: absolute; top: -10px; left: 2px; width: 50px; height: 20px; background: #29b6f6; border-radius: 40px 40px 0 0; border: 3px solid #333;"></div><div class="face-details" style="position: relative; top: 20px; display: flex; justify-content: space-around; padding: 0 10px;"><div style="width: 8px; height: 8px; background: #333; border-radius: 50%;"></div><div style="width: 8px; height: 8px; background: #333; border-radius: 50%;"></div></div></div>
+                <div style="background: #333; color: #fff; padding: 2px 10px; border-radius: 20px; font-size: 0.7rem; margin-top: 5px; font-weight: bold;">爸爸 Baba</div>
+            </div>
+            <div class="character" onclick="speakGreeting('baby', this, event)">
+                <div class="bao-head" style="width: 70px; height: 65px; background: #ffffff; border-radius: 50% 50% 45% 45%; position: relative; border: 4px solid #333;"><div style="position: absolute; top: 35px; left: 5px; width: 10px; height: 6px; background: #ff8a80; border-radius: 50%; opacity: 0.7;"></div><div style="position: absolute; top: 35px; right: 5px; width: 10px; height: 6px; background: #ff8a80; border-radius: 50%; opacity: 0.7;"></div><div class="face-details" style="position: relative; top: 20px; display: flex; justify-content: space-around; padding: 0 10px;"><div style="width: 8px; height: 8px; background: #333; border-radius: 50%;"></div><div style="width: 8px; height: 8px; background: #333; border-radius: 50%;"></div></div></div>
+                <div style="background: #333; color: #fff; padding: 2px 10px; border-radius: 20px; font-size: 0.7rem; margin-top: 5px; font-weight: bold;">宝宝 Baby</div>
+            </div>
+            <div class="character" onclick="speakGreeting('mama', this, event)">
+                <div class="girl-head" style="width: 60px; height: 60px; background: #ffe0b2; border-radius: 50%; position: relative; border: 3px solid #333;"><div style="position: absolute; width: 22px; height: 22px; background: #ec407a; border-radius: 50%; border: 3px solid #333; top: -5px; left: -5px;"></div><div style="position: absolute; width: 22px; height: 22px; background: #ec407a; border-radius: 50%; border: 3px solid #333; top: -5px; right: -5px;"></div><div class="face-details" style="position: relative; top: 20px; display: flex; justify-content: space-around; padding: 0 10px;"><div style="width: 8px; height: 8px; background: #333; border-radius: 50%;"></div><div style="width: 8px; height: 8px; background: #333; border-radius: 50%;"></div></div></div>
+                <div style="background: #333; color: #fff; padding: 2px 10px; border-radius: 20px; font-size: 0.7rem; margin-top: 5px; font-weight: bold;">妈妈 Mama</div>
+            </div>
+        </div>
+
+        <!-- Right Group (VIP) -->
+        <div class="nav-group">
+            <div class="nav-btn-wrapper">
+                <div class="top-tag tag-vip">VIP ONLY / خاص</div>
+                <div class="side-nav-btn" style="border-color: #ab47bc; color: #ab47bc;" onclick="handleVipCourseClick()">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <span>VIP Course</span>
+                    <span dir="rtl" style="font-size: 0.75rem;">دورة VIP</span>
                 </div>
             </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/数鸭子.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">小星星</span>
-                    <span class="sub-title">Little Star</span>
+            <div class="nav-btn-wrapper">
+                <div class="top-tag tag-vip">VIP ONLY / خاص</div>
+                <div class="side-nav-btn" style="border-color: #4ecdc4; color: #4ecdc4;" onclick="handleSongClick()">
+                    <i class="fas fa-music"></i>
+                    <span>Song of CN/EN</span>
+                    <span dir="rtl" style="font-size: 0.75rem;">أغاني</span>
                 </div>
             </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/小星星.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
         </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">我的好妈妈</span>
-                    <span class="sub-title">My Dear Mother</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/我的好妈妈.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">礼貌歌</span>
-                    <span class="sub-title">The Politeness Song</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/礼貌歌.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">打电话</span>
-                    <span class="sub-title">Making a Phone Call</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/打电话.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">虫儿飞</span>
-                    <span class="sub-title">Bugs Fly</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/虫儿飞.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">蜗牛与黄鹂鸟</span>
-                    <span class="sub-title">The Snail and the Oriole</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/蜗牛与黄鹂鸟.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">采蘑菇的小姑娘</span>
-                    <span class="sub-title">Mushroom Picking Girl</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/采蘑菇的小姑娘.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">粉刷匠</span>
-                    <span class="sub-title">The Little Painter</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/粉刷匠.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">娃哈哈</span>
-                    <span class="sub-title">Joyful Laugh</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/娃哈哈.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">种太阳</span>
-                    <span class="sub-title">Planting the Sun</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/种太阳.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">小燕子</span>
-                    <span class="sub-title">Little Swallow</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/小燕子.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">世上只有妈妈好</span>
-                    <span class="sub-title">Mom is the Best</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/世上只有妈妈好.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">小小少年</span>
-                    <span class="sub-title">Young Boy</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/小小少年郎.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">泥娃娃</span>
-                    <span class="sub-title">Clay Doll</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/泥娃娃.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">刷牙歌</span>
-                    <span class="sub-title">Brushing Teeth Song</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/刷牙歌.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">丢手绢</span>
-                    <span class="sub-title">Drop the Handkerchief</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/丢手绢.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-cn">中文</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">摇篮曲</span>
-                    <span class="sub-title">Lullaby</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/摇篮曲.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-
-        <!-- =================== 英文儿歌标题 =================== -->
-        <h2 class="section-title en-title">
-            <span style="font-size: 1.8rem; margin-right: 12px;">🎈</span>
-            <div class="title-text-group">
-                <span class="main-sec-title">英文儿歌</span>
-                <span class="sub-sec-title">English Songs</span>
-            </div>
-        </h2>
-
-        <div class="song-card">
-            <span class="lang-badge badge-en">English</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">Twinkle Twinkle Little Star</span>
-                    <span class="sub-title">一闪一闪小星星</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/Twinkle Twinkle Little Star.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-en">English</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">The ABC Song</span>
-                    <span class="sub-title">字母歌</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/The ABC Song.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-en">English</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">The Wheels on the Bus</span>
-                    <span class="sub-title">巴士上的轮子</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/The Wheels on the Bus.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-en">English</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">Old MacDonald Had a Farm</span>
-                    <span class="sub-title">老麦克唐纳有个农场</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/Old MacDonald Had A Farm.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-en">English</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">Head, Shoulders, Knees and Toes</span>
-                    <span class="sub-title">头肩膀膝盖脚趾</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/Head, Shoulders, Knees and Toes.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-en">English</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">If You're Happy and You Know It</span>
-                    <span class="sub-title">幸福拍手歌</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/If You’re Happy and You Know It.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-en">English</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">BINGO</span>
-                    <span class="sub-title">宾果小狗</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/BINGO.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-en">English</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">Itsy Bitsy Spider</span>
-                    <span class="sub-title">小小蜘蛛</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/Itsy Bitsy Spider.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-en">English</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">Row, Row, Row Your Boat</span>
-                    <span class="sub-title">划小船</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/Row, Row, Row Your Boat.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-en">English</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">Five Little Monkeys</span>
-                    <span class="sub-title">五只小猴子</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/Five Little Monkeys Jumping on the Bed.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-en">English</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">Finger Family</span>
-                    <span class="sub-title">手指家族</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/Finger Family.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-en">English</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">Rain, Rain, Go Away</span>
-                    <span class="sub-title">雨快走开</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/Rain, Rain, Go Away.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-en">English</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">You Are My Sunshine</span>
-                    <span class="sub-title">你是我的阳光</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/You Are My Sunshine.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-en">English</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">Hickory Dickory Dock</span>
-                    <span class="sub-title">滴答钟声响</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/Hickory Dickory Dock.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-en">English</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">Mary Had a Little Lamb</span>
-                    <span class="sub-title">玛丽有只小羊羔</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/Mary Had a Little Lamb.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-en">English</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">Ten Little Numbers</span>
-                    <span class="sub-title">十个数字</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/Ten Little Numbers.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-en">English</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">The Ants Go Marching</span>
-                    <span class="sub-title">蚂蚁去游行</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/The Ants Go Marching.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-en">English</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">London Bridge is Falling Down</span>
-                    <span class="sub-title">伦敦桥要倒了</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/London Bridge is Falling Down.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-en">English</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">Hush, Little Baby</span>
-                    <span class="sub-title">睡吧小宝贝</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/Hush, Little Baby.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-        <div class="song-card">
-            <span class="lang-badge badge-en">English</span>
-            <div class="song-title" onclick="toggleAudio(this)" title="点击播放/暂停">
-                <i class="fas fa-compact-disc song-icon"></i>
-                <div class="title-text">
-                    <span class="main-title">Please and Thank You</span>
-                    <span class="sub-title">请和谢谢礼貌歌</span>
-                </div>
-            </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 10px;">Click the title or disc to play / 点击上面标题或光盘播放</p>
-            <audio preload="auto" onplay="spinIcon(this, true)" onpause="spinIcon(this, false)">
-                <source src="audio/song/Please and Thank You.mp3" type="audio/mpeg">
-                您的浏览器不支持音频播放。
-            </audio>
-        </div>
-
-    </div>
-    <!-- ===== 儿歌列表结束 ===== -->
-    
-    <!-- ✨ 优化后的高级多语言底部提示框 ✨ -->
-    <div class="browser-tip">
-        <div class="tip-line"><i class="fas fa-info-circle" style="color: #ff6b6b; font-size: 1.1rem;"></i> 如果网页加载缓慢，请点击右上角 "..." 选择 "在浏览器中打开"</div>
-        <div class="tip-line"><i class="fas fa-globe" style="color: #4ecdc4; font-size: 1.1rem;"></i> If the page loads slowly, please click "..." in the top right corner and choose "Open in Browser"</div>
-        <div class="tip-line" dir="rtl"><i class="fas fa-mobile-alt" style="color: #29b6f6; font-size: 1.1rem;"></i> إذا كانت الصفحة بطيئة، يرجى النقر على "..." في الزاوية العلوية واختيار "فتح في المتصفح"</div>
     </div>
 
-    <footer>&copy; 2026 nihaoplay.com - All Rights Reserved.</footer>
-
-    <!-- WhatsApp 炫彩悬浮气泡容器 -->
-    <div class="whatsapp-float-container">
-        <div class="whatsapp-text">
-            <span dir="rtl" class="colorful-text-ar">اضغط هنا لبدء مكالمة فيديو مباشرة وجهاً لوجه لتعلم المحادثة الصينية بسرعة</span>
-            <span class="colorful-text-zh">点击我开始真人视频一对一快速学会中文对话</span>
-            <span class="colorful-text-en">Click here to start a 1-on-1 live video chat to quickly learn Chinese conversation</span>
+    <!-- ================= VIEW 1: PINYIN BOARD ================= -->
+    <div id="view-pinyin" class="board-container" style="background: #8d6e63; padding: 15px 25px 30px 25px; border-radius: 20px; border: 8px solid #a1887f;">
+        <h2 style="color: white; margin-bottom: 15px; font-size: 1.2rem; border-bottom: 2px dashed rgba(255,255,255,0.3); padding-bottom: 5px;">🎈 Pinyin Board / لوحة بينيين</h2>
+        <div class="board" style="background: var(--board-color);">
+            <button class="pinyin-btn" onclick="speakPinyin('ā', event)" style="background: #fff; border: 3px solid #333; border-radius: 12px; font-size: 1.8rem; font-weight: bold; height: 60px;">ā</button>
+            <button class="pinyin-btn" onclick="speakPinyin('ō', event)" style="background: #fff; border: 3px solid #333; border-radius: 12px; font-size: 1.8rem; font-weight: bold; height: 60px;">ō</button>
+            <button class="pinyin-btn" onclick="speakPinyin('ē', event)" style="background: #fff; border: 3px solid #333; border-radius: 12px; font-size: 1.8rem; font-weight: bold; height: 60px;">ē</button>
+            <button class="pinyin-btn" onclick="speakPinyin('b', event)" style="background: #fff; border: 3px solid #333; border-radius: 12px; font-size: 1.8rem; font-weight: bold; height: 60px;">b</button>
+            <button class="pinyin-btn" onclick="speakPinyin('p', event)" style="background: #fff; border: 3px solid #333; border-radius: 12px; font-size: 1.8rem; font-weight: bold; height: 60px;">p</button>
+            <button class="pinyin-btn" onclick="speakPinyin('m', event)" style="background: #fff; border: 3px solid #333; border-radius: 12px; font-size: 1.8rem; font-weight: bold; height: 60px;">m</button>
+            <!-- Here you can add all other Pinyin buttons -->
         </div>
-        <a href="https://wa.me/962771128288" target="_blank" class="whatsapp-button" onclick="handleWhatsAppClick(event)">
-            <i class="fab fa-whatsapp"></i>
-        </a>
     </div>
+
+    <!-- ================= VIEW 2: VIP COURSE ================= -->
+    <div id="view-course" class="vip-dashboard" style="display: none; background: #ffffff; padding: 30px; border-radius: 20px; border: 4px solid #ab47bc;">
+        <div style="display: flex; justify-content: space-between; border-bottom: 2px dashed #edf2f7; padding-bottom: 15px; margin-bottom: 20px;">
+            <h2 style="color: #2d3748; font-size: 1.5rem;"><i class="fas fa-crown" style="color:#ab47bc;"></i> VIP Class / لوحة تحكم VIP</h2>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div style="background: #fdf3ff; padding: 20px; border-radius: 15px; border-left: 5px solid #ab47bc;">
+                <h3 style="color: #4a5568;"><i class="fas fa-clock"></i> Next Class / الدرس القادم</h3>
+                <p><strong>Every Mon & Fri</strong></p>
+                <a href="#" style="display: inline-block; background: #2D8CFF; color: white; padding: 8px 15px; border-radius: 10px; text-decoration: none; margin-top: 10px; font-weight: bold;"><i class="fas fa-video"></i> Join Zoom</a>
+            </div>
+            <div style="background: #fdf3ff; padding: 20px; border-radius: 15px; border-left: 5px solid #ab47bc;">
+                <h3 style="color: #4a5568;"><i class="fas fa-play-circle"></i> Replays / التسجيلات</h3>
+                <ul style="margin-top: 10px; padding-left: 20px; line-height: 1.8;">
+                    <li><a href="#" style="color: #ab47bc;">Lesson 1: Basics 🔒</a></li>
+                    <li><a href="#" style="color: #ab47bc;">Lesson 2: Greetings 🔒</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= VIEW 3: SONGS ================= -->
+    <div id="view-songs" class="songs-container" style="display: none; background: #e0f2fe; padding: 30px; border-radius: 20px; border: 8px solid #bae6fd;">
+        <h2 style="color: #0284c7; margin-bottom: 20px; font-size: 1.5rem; border-bottom: 2px dashed #bae6fd; padding-bottom: 10px;">⭐ Songs / أغاني</h2>
+        
+        <div style="background: white; border-radius: 15px; padding: 15px 20px; margin-bottom: 15px; border: 2px solid #e2e8f0; display: flex; align-items: center; cursor: pointer;" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc" style="font-size: 2rem; color: #38bdf8; margin-right: 15px;"></i>
+            <div>
+                <div style="font-size: 1.2rem; font-weight: bold; color: #0f172a;">Twinkle Twinkle Little Star</div>
+                <div style="font-size: 0.9rem; color: #64748b;">Click to play / انقر للتشغيل</div>
+            </div>
+            <audio src="audio/song/Twinkle Twinkle Little Star.mp3"></audio>
+        </div>
+
+        <div style="background: white; border-radius: 15px; padding: 15px 20px; margin-bottom: 15px; border: 2px solid #e2e8f0; display: flex; align-items: center; cursor: pointer;" onclick="toggleAudio(this)">
+            <i class="fas fa-compact-disc" style="font-size: 2rem; color: #38bdf8; margin-right: 15px;"></i>
+            <div>
+                <div style="font-size: 1.2rem; font-weight: bold; color: #0f172a;">The ABC Song</div>
+                <div style="font-size: 0.9rem; color: #64748b;">Click to play / انقر للتشغيل</div>
+            </div>
+            <audio src="audio/song/The ABC Song.mp3"></audio>
+        </div>
+    </div>
+
+    <footer style="margin-top: 10px; font-size: 0.85rem; color: #a0aec0;">&copy; 2026 nihaoplay.com - All Rights Reserved.</footer>
+
+    <!-- ================= MODALS ================= -->
+    <div class="modal-overlay" id="guestApplyModal" style="position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 2000;">
+        <div style="background: #fff; padding: 25px; border-radius: 20px; width: 90%; max-width: 350px; text-align: center; border: 4px solid #4ecdc4;">
+            <h2 style="color: #4ecdc4; margin-bottom: 10px; font-size: 1.3rem;">🌐 Guest Apply / طلب حساب</h2>
+            <input type="text" id="applyName" placeholder="Name / الاسم" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 2px solid #e2e8f0; border-radius: 10px;">
+            <input type="number" id="applyAge" placeholder="Age / العمر" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 2px solid #e2e8f0; border-radius: 10px;">
+            <select id="applyGender" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 2px solid #e2e8f0; border-radius: 10px;">
+                <option value="" disabled selected>Gender / الجنس</option><option value="Boy">Boy</option><option value="Girl">Girl</option>
+            </select>
+            <select id="applyLevel" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 2px solid #e2e8f0; border-radius: 10px;">
+                <option value="" disabled selected>Level / المستوى</option><option value="Zero">Zero</option><option value="Beginner">Beginner</option>
+            </select>
+            <input type="email" id="applyEmail" placeholder="Email / البريد" style="width: 100%; padding: 10px; margin-bottom: 15px; border: 2px solid #e2e8f0; border-radius: 10px;">
+            <button onclick="submitGuestApplication()" style="background:#4ecdc4; color:white; border:none; padding:10px; border-radius:10px; width:100%; font-weight:bold;">Apply via WhatsApp</button>
+            <div style="margin-top: 10px; color: #a0aec0; font-size: 0.85rem; cursor: pointer; text-decoration: underline;" onclick="closeAllModals()">Cancel</div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="guestLoginModal" style="position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 2000;">
+        <div style="background: #fff; padding: 25px; border-radius: 20px; width: 90%; max-width: 350px; text-align: center; border: 4px solid #4ecdc4;">
+            <h2 style="color: #4ecdc4; margin-bottom: 10px; font-size: 1.3rem;">🔑 Guest Login / دخول الزوار</h2>
+            <input type="text" id="guestAccount" placeholder="Account / الحساب" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 2px solid #e2e8f0; border-radius: 10px;">
+            <input type="password" id="guestPassword" placeholder="Password / كلمة المرور" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 2px solid #e2e8f0; border-radius: 10px;">
+            <label style="display: block; margin-bottom: 15px; font-size: 0.9rem; color: #4a5568;"><input type="checkbox" id="remGuest"> Remember Me / تذكرني</label>
+            <button onclick="handleLogin('guest')" style="background:#4ecdc4; color:white; border:none; padding:10px; border-radius:10px; width:100%; font-weight:bold;">Login</button>
+            <div style="margin-top: 10px; color: #a0aec0; font-size: 0.85rem; cursor: pointer; text-decoration: underline;" onclick="closeAllModals()">Cancel</div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="vipLoginModal" style="position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 2000;">
+        <div style="background: #fff; padding: 25px; border-radius: 20px; width: 90%; max-width: 350px; text-align: center; border: 4px solid #ab47bc;">
+            <h2 style="color: #ab47bc; margin-bottom: 10px; font-size: 1.3rem;">👑 VIP Login / دخول VIP</h2>
+            <p style="font-size: 0.8rem; color: #718096; margin-bottom: 10px;">Signed students only / للطلاب المسجلين فقط</p>
+            <input type="text" id="vipAccount" placeholder="Account / الحساب" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 2px solid #e2e8f0; border-radius: 10px;">
+            <input type="password" id="vipPassword" placeholder="Password / كلمة المرور" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 2px solid #e2e8f0; border-radius: 10px;">
+            <label style="display: block; margin-bottom: 15px; font-size: 0.9rem; color: #4a5568;"><input type="checkbox" id="remVip"> Remember Me / تذكرني</label>
+            <button onclick="handleLogin('vip')" style="background:#ab47bc; color:white; border:none; padding:10px; border-radius:10px; width:100%; font-weight:bold;">Login</button>
+            <div style="margin-top: 10px; color: #a0aec0; font-size: 0.85rem; cursor: pointer; text-decoration: underline;" onclick="closeAllModals()">Cancel</div>
+        </div>
+    </div>
+
+    <!-- Float -->
+    <a href="https://wa.me/962771128288" target="_blank" style="position: fixed; bottom: 20px; right: 20px; background: #25d366; color: white; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; text-decoration: none; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.4); z-index: 1000;">
+        <i class="fab fa-whatsapp"></i>
+    </a>
 
     <script>
-        // ✨ 新增：互动音效专属后台预加载池 ✨
-        const uiAudioCache = {};
-        window.addEventListener('DOMContentLoaded', () => {
-            const uiSounds = ['baba', 'mama', 'baobao', 'song/新新宝宝'];
-            uiSounds.forEach(file => {
-                const audio = new Audio(`audio/${file}.mp3`);
-                audio.preload = 'auto'; // 强制浏览器静默下载
-                uiAudioCache[file] = audio;
-            });
-        });
+        let currentUser = null; 
 
+        window.onload = function() {
+            const savedRole = localStorage.getItem('role');
+            const savedName = localStorage.getItem('name');
+            if (savedRole && savedName) {
+                currentUser = { role: savedRole, name: savedName };
+                if (savedRole === 'guest') document.getElementById('remGuest').checked = true;
+                if (savedRole === 'vip') document.getElementById('remVip').checked = true;
+            }
+            updateUI();
+        };
+
+        function updateUI() {
+            if (currentUser) {
+                document.getElementById('authGroup').style.display = 'none';
+                document.getElementById('userWelcome').style.display = 'block';
+                document.getElementById('welcomeName').innerText = currentUser.name + ' (' + currentUser.role + ')';
+            } else {
+                document.getElementById('authGroup').style.display = 'flex';
+                document.getElementById('userWelcome').style.display = 'none';
+            }
+        }
+
+        function openModal(id) { closeAllModals(); document.getElementById(id).style.display = 'flex'; }
+        function closeAllModals() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
+
+        /* VIEW MANAGER LOGIC */
+        function switchView(viewId) {
+            document.getElementById('view-pinyin').style.display = 'none';
+            document.getElementById('view-course').style.display = 'none';
+            document.getElementById('view-songs').style.display = 'none';
+            document.getElementById(viewId).style.display = 'block';
+        }
+
+        function handleLogin(type) {
+            const acc = type === 'vip' ? document.getElementById('vipAccount').value : document.getElementById('guestAccount').value;
+            const pwd = type === 'vip' ? document.getElementById('vipPassword').value : document.getElementById('guestPassword').value;
+            const rem = type === 'vip' ? document.getElementById('remVip').checked : document.getElementById('remGuest').checked;
+
+            if (type === 'vip') {
+                if ((acc === 'nihaoplayfun' || acc === 'nihaofunplay') && pwd === '888888') { } 
+                else { alert("Error / خطأ"); return; }
+            } else {
+                if (pwd !== '123456') { alert("Error / خطأ"); return; }
+            }
+
+            currentUser = { role: type, name: acc };
+            if (rem) { localStorage.setItem('role', type); localStorage.setItem('name', acc); }
+            closeAllModals(); updateUI();
+            
+            if (type === 'vip') switchView('view-course');
+        }
+
+        function handleLogout() { currentUser = null; localStorage.removeItem('role'); localStorage.removeItem('name'); location.reload(); }
+
+        /* BUTTON CLICK MANAGERS */
+        function handlePinyinBtnClick() {
+            if (!currentUser) { openModal('guestLoginModal'); return; }
+            switchView('view-pinyin');
+        }
+        function handleBookTrialClick() {
+            if (currentUser?.role === 'vip') { alert("Please click VIP Course / الرجاء النقر على دورة VIP"); return; }
+            if (localStorage.getItem('booked')) { alert("Already Booked / تم الحجز مسبقاً"); return; }
+            localStorage.setItem('booked', 'true'); alert("Redirecting / جاري التحويل");
+        }
+        function handleVipCourseClick() {
+            if (currentUser?.role !== 'vip') { alert("VIP Only / خاص للمشتركين"); return; }
+            switchView('view-course');
+        }
+        function handleSongClick() {
+            if (currentUser?.role !== 'vip') { alert("VIP Only / خاص للمشتركين"); return; }
+            switchView('view-songs');
+        }
+
+        /* MEDIA LOGIC */
+        function submitGuestApplication() {
+            const n = document.getElementById('applyName').value;
+            window.open(`https://wa.me/962771128288?text=Apply:${n}`, '_blank'); closeAllModals();
+        }
         function speakGreeting(character, element, event) {
-            if (event) event.stopPropagation();
-            
-            let fileKey = character === 'baby' ? 'baobao' : character;
-            
-            // 优先从内存里秒播
-            if (uiAudioCache[fileKey]) {
-                uiAudioCache[fileKey].currentTime = 0; 
-                uiAudioCache[fileKey].play().catch(e => console.log("音频播放失败", e));
-            } else {
-                // 兜底方案
-                const t = new Date().getTime(); 
-                new Audio(`audio/${fileKey}.mp3?t=${t}`).play().catch(e => console.log("音频播放失败", e));
-            }
-            
-            element.classList.remove('idle-anim'); element.classList.add('cheer-anim');
-            setTimeout(() => { element.classList.remove('cheer-anim'); element.classList.add('idle-anim'); }, 800);
+            if (!currentUser) { openModal('guestLoginModal'); return; }
+            // Sound play logic...
+            element.style.transform = 'translateY(-20px)'; setTimeout(()=> element.style.transform = 'none', 300);
         }
-
-        function playXinXin(element, event) {
-            if (event) event.stopPropagation();
-
-            const allAudios = document.querySelectorAll('audio');
-            allAudios.forEach(audio => {
-                audio.pause();
-                spinIcon(audio, false); 
-            });
-
-            let fileKey = 'song/新新宝宝';
-            if (uiAudioCache[fileKey]) {
-                uiAudioCache[fileKey].currentTime = 0;
-                uiAudioCache[fileKey].play().catch(e => console.log("音频播放失败", e));
-            } else {
-                new Audio(`audio/${fileKey}.mp3`).play().catch(e => console.log("音频播放失败", e));
-            }
-
-            element.classList.add('excited-swing');
-            setTimeout(() => {
-                element.classList.remove('excited-swing');
-            }, 500);
+        function toggleAudio(el) {
+            const audio = el.querySelector('audio');
+            document.querySelectorAll('audio').forEach(a => { if(a !== audio) a.pause(); });
+            audio.paused ? audio.play() : audio.pause();
         }
-
-        // ✨ 重点：新增了点击标题播放/暂停音频的功能 ✨
-        function toggleAudio(element) {
-            // 找到包含这个标题的卡片里的 audio 元素
-            const card = element.closest('.song-card');
-            const audio = card.querySelector('audio');
-            
-            if (audio) {
-                if (audio.paused) {
-                    audio.play().catch(e => console.log("播放失败", e));
-                } else {
-                    audio.pause();
-                }
-            }
-        }
-
-        function spinIcon(audioElement, isPlaying) {
-            const icon = audioElement.parentElement.querySelector('.song-icon');
-            if (icon) {
-                if (isPlaying) {
-                    icon.classList.add('rotating');
-                } else {
-                    icon.classList.remove('rotating');
-                }
-            }
-        }
-
-        document.addEventListener('play', function(e) {
-            if (e.target.tagName === 'AUDIO') {
-                const allAudios = document.querySelectorAll('audio');
-                allAudios.forEach(audio => {
-                    if (audio !== e.target) {
-                        audio.pause();
-                    }
-                });
-            }
-        }, true);
-
-        function handleWhatsAppClick(event) {
-            if (window.innerWidth <= 850) {
-                const textBubble = document.querySelector('.whatsapp-text');
-                if (!textBubble.classList.contains('show-mobile-bubble')) {
-                    event.preventDefault(); 
-                    textBubble.classList.add('show-mobile-bubble'); 
-                }
-            }
-        }
-
-        document.addEventListener('click', function(e) {
-            if (window.innerWidth <= 850) {
-                const container = document.querySelector('.whatsapp-float-container');
-                const textBubble = document.querySelector('.whatsapp-text');
-                if (container && textBubble && !container.contains(e.target) && textBubble.classList.contains('show-mobile-bubble')) {
-                    textBubble.classList.remove('show-mobile-bubble');
-                }
-            }
-        });
     </script>
 </body>
 </html>
+
+```

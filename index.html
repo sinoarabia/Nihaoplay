@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="referrer" content="no-referrer">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>NihaoPlay - Learn Chinese!</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -148,7 +148,7 @@
         }
         .wa-prompt-close:hover { transform: scale(1.1); background: #e53e3e; }
 
-        /* --- 【防盗新增】内嵌视频弹窗播放器 --- */
+        /* --- 内嵌视频弹窗播放器 --- */
         .video-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 4000; }
         .video-modal-content { position: relative; width: 90%; max-width: 900px; aspect-ratio: 16/9; background: #000; border-radius: 15px; box-shadow: 0 15px 40px rgba(0,0,0,0.5); animation: popIn 0.3s ease-out; }
         .video-iframe { width: 100%; height: 100%; border: none; border-radius: 15px; }
@@ -517,6 +517,19 @@
     <div class="whatsapp-float" onclick="handleWaClick(event)"><i class="fab fa-whatsapp"></i></div>
     
 <script>
+    // --- 【防盗新增】禁用常见开发者快捷键 (F12, Ctrl+Shift+I, Ctrl+U等) ---
+    document.addEventListener('keydown', function(e) {
+        if(e.keyCode === 123) { // F12
+            e.preventDefault(); return false;
+        }
+        if(e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) { // Ctrl+Shift+I/J
+            e.preventDefault(); return false;
+        }
+        if(e.ctrlKey && e.keyCode === 85) { // Ctrl+U
+            e.preventDefault(); return false;
+        }
+    });
+
     let currentUser = null; 
     const CACHE_VERSION = new Date().getTime(); 
 
@@ -568,7 +581,6 @@
             const videoId = videoUrl.split('watch?v=')[1].split('&')[0];
             finalUrl = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
         } else if (videoUrl.includes('youtube.com/embed/')) {
-            // 如果已经在表格里填了正确的 embed 链接，直接拼接参数
             finalUrl = videoUrl + (videoUrl.includes('?') ? '&' : '?') + 'autoplay=1&rel=0';
         }
         
@@ -615,7 +627,6 @@
             if (savedRole === 'vip') { 
                 document.getElementById('vipAccount').value = savedName; document.getElementById('rememberVip').checked = true; 
                 
-                // 解决刷新时卡在 "Loading" 的关键修复：
                 try {
                     const response = await fetch(`${SHEETDB_API_URL}/search?Account=${savedName}`);
                     const data = await response.json();

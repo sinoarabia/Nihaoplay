@@ -427,8 +427,7 @@
     </div>
 
     <a href="https://wa.me/962771128288" target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
-
-   <script>
+<script>
     let currentUser = null; 
 
     window.onload = function() {
@@ -510,7 +509,7 @@
         const email = document.getElementById('applyEmail').value;
         if(!name || !age || !gender || !level || !email) { alert("Please fill in all fields.\nيرجى تعبئة جميع الحقول."); return; }
         
-        // 核心修改 1：只要点击发送信息，即赋予本地浏览拼音发音的权限
+        // 只要点击发送信息，即赋予本地浏览拼音发音的权限
         localStorage.setItem('guestApplied', 'true');
         
         const msg = `Guest Account Application / طلب حساب زائر:\n\nName (الاسم): ${name}\nAge (العمر): ${age}\nGender (الجنس): ${gender}\nLevel (المستوى): ${level}\nEmail (البريد): ${email}\n\nPlease assign a guest password. (يرجى تخصيص كلمة مرور زائر)`;
@@ -537,12 +536,7 @@
     }
 
     function handleSongClick() {
-        // 核心修改 2：Guest 可以打开音乐面板，但不代表可以播放
-        if (!currentUser) { 
-            alert("Please login first.\nيرجى تسجيل الدخول أولاً."); 
-            openModal('guestLoginModal'); 
-            return; 
-        }
+        // 任何人（无论是否登录）都可以打开音乐面板浏览歌单
         switchView('view-songs');
     }
 
@@ -550,7 +544,7 @@
     function playXinXin(element, event) {
         if (event) event.stopPropagation();
         
-        // 核心修改 3：Xinxin宝宝 仅限 VIP 点击发声
+        // Xinxin宝宝 仅限 VIP 点击发声
         if (currentUser?.role !== 'vip') {
             alert("Only VIP customers have permission to play. Please contact customer service via WhatsApp to activate VIP service.\nعذراً، هذه الميزة لعملاء VIP فقط. يرجى التواصل عبر واتساب لتفعيل خدمة VIP.");
             window.open('https://wa.me/962771128288', '_blank');
@@ -572,7 +566,7 @@
     function speakGreeting(character, element, event) {
         if (event) event.stopPropagation();
         
-        // 核心修改 4：移除 currentUser 限制，任何人都可以点击播放爸爸、妈妈、宝宝的音频
+        // 任何人都可以点击播放爸爸、妈妈、宝宝的音频
         
         let audioUrl = ""; const t = new Date().getTime(); 
         if (character === 'baba') audioUrl = `audio/baba.mp3?t=${t}`; 
@@ -587,7 +581,7 @@
     function speakPinyin(letter, event) {
         if (event) event.stopPropagation();
         
-        // 核心修改 5：检测是否已登录 或 是否已提交过Guest申请
+        // 检测是否已登录 或 是否已提交过Guest申请
         const hasGuestAccess = localStorage.getItem('guestApplied') === 'true';
         if (!currentUser && !hasGuestAccess) { 
             alert("Please apply for a Guest account to play sounds.\nيرجى النقر على زر الزائر للحصول على صلاحية الاستماع.");
@@ -622,7 +616,7 @@
     }
 
     function toggleAudio(cardElement) {
-        // 核心修改 6：Guest点击音乐弹窗提示拦截，并引流到 WhatsApp
+        // 非VIP点击音乐弹窗提示拦截，并引流到 WhatsApp
         if (currentUser?.role !== 'vip') {
             alert("Only VIP customers have permission to play. Please contact customer service via WhatsApp to activate VIP service.\nعذراً، هذه الميزة لعملاء VIP فقط. يرجى التواصل عبر واتساب لتفعيل خدمة VIP.");
             window.open('https://wa.me/962771128288', '_blank');

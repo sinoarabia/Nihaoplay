@@ -429,8 +429,20 @@
     <a href="https://wa.me/962771128288" target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
 <script>
     let currentUser = null; 
+    // 生成页面加载时的唯一时间戳作为版本号，用于强制刷新音频缓存
+    const CACHE_VERSION = new Date().getTime(); 
 
     window.onload = function() {
+        // --- 解决儿歌音频缓存问题 ---
+        // 自动给所有写在 HTML 里的 audio 标签源添加版本号后缀
+        document.querySelectorAll('audio').forEach(a => {
+            let src = a.getAttribute('src');
+            if (src && !src.includes('?v=')) {
+                a.setAttribute('src', src + '?v=' + CACHE_VERSION);
+            }
+        });
+        // -----------------------------
+
         const savedRole = localStorage.getItem('autoLoginRole');
         const savedName = localStorage.getItem('autoLoginName');
         if (savedRole && savedName) {
@@ -481,7 +493,7 @@
             if ((acc === 'nihaoplayfun' || acc === 'nihaofunplay') && pwd === '888888') { } 
             else { alert("Incorrect VIP account or password!\nحساب أو كلمة مرور VIP غير صحيحة!\nVIP账号或密码错误！"); return; }
         } else {
-            // 这里修改了访客密码的判断逻辑：只要密码是 www.nihaoplay.com 即可登录
+            // Guest 通用密码逻辑：不管账号填什么，只要密码是 www.nihaoplay.com 即可登录
             if (pwd !== 'www.nihaoplay.com') { alert("Incorrect Guest password!\nكلمة مرور الزائر غير صحيحة!\nGuest密码错误！"); return; }
         }
 
@@ -552,7 +564,8 @@
             if(icon) icon.classList.remove('rotating');
         });
 
-        new Audio(`audio/song/新新宝宝.mp3`).play().catch(e => console.log("Audio failed"));
+        // 动态添加防缓存版本号
+        new Audio(`audio/song/新新宝宝.mp3?v=${CACHE_VERSION}`).play().catch(e => console.log("Audio failed"));
 
         element.classList.add('excited-swing');
         setTimeout(() => { element.classList.remove('excited-swing'); }, 500);
@@ -561,10 +574,11 @@
     function speakGreeting(character, element, event) {
         if (event) event.stopPropagation();
         
-        let audioUrl = ""; const t = new Date().getTime(); 
-        if (character === 'baba') audioUrl = `audio/baba.mp3?t=${t}`; 
-        else if (character === 'mama') audioUrl = `audio/mama.mp3?t=${t}`; 
-        else if (character === 'baby') audioUrl = `audio/baobao.mp3?t=${t}`; 
+        let audioUrl = ""; 
+        // 动态添加防缓存版本号
+        if (character === 'baba') audioUrl = `audio/baba.mp3?v=${CACHE_VERSION}`; 
+        else if (character === 'mama') audioUrl = `audio/mama.mp3?v=${CACHE_VERSION}`; 
+        else if (character === 'baby') audioUrl = `audio/baobao.mp3?v=${CACHE_VERSION}`; 
         
         new Audio(audioUrl).play().catch(e => console.log("Audio failed"));
         element.classList.add('cheer-anim');
@@ -591,7 +605,8 @@
             'un': 'wen1', 'ün': 'yun1', 'ang': 'ang1', 'eng': 'eng1', 'ing': 'ying1', 'ong': 'weng1'
         }; 
         
-        if (map[letter]) new Audio(`audio/${map[letter]}.mp3`).play().catch(e => console.log("Audio failed"));
+        // 动态添加防缓存版本号
+        if (map[letter]) new Audio(`audio/${map[letter]}.mp3?v=${CACHE_VERSION}`).play().catch(e => console.log("Audio failed"));
         
         document.querySelectorAll('.character').forEach(char => { 
             char.classList.add('cheer-anim'); 

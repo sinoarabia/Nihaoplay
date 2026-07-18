@@ -1,1 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VVIP Theatre - NihaoPlay</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #0f172a; /* 深邃夜空黑 */
+            color: #f3f4f6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
 
+        /* 顶部黑金导航栏 */
+        .header {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-bottom: 2px solid #d4af37;
+            padding: 20px 15px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            top: 25px;
+            color: #d4af37;
+            text-decoration: none;
+            font-weight: bold;
+            background: rgba(212, 175, 55, 0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: 0.2s;
+            border: 1px solid #d4af37;
+        }
+
+        .back-btn:hover { background: rgba(212, 175, 55, 0.3); }
+
+        /* 视频流容器 */
+        .feed-container {
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 0 15px;
+        }
+
+        /* 独立的视频卡片 */
+        .video-card {
+            background: #1e293b;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+            border: 1px solid #334155;
+            transition: transform 0.3s ease;
+        }
+
+        .video-card:hover { border-color: #d4af37; }
+
+        .video-header {
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #0f172a;
+        }
+
+        .video-title {
+            color: #fef08a;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        /* 播放器设置比例 16:9 */
+        .video-player {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background-color: #000;
+            display: block;
+        }
+
+        /* 视频下方的单词与剧情解析区 */
+        .video-info { padding: 20px; }
+
+        .desc-text {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .vocab-box {
+            background: #0f172a;
+            padding: 15px;
+            border-radius: 12px;
+            border-left: 4px solid #d4af37;
+        }
+
+        .vocab-title {
+            color: #d4af37;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .vocab-tag {
+            display: inline-block;
+            background: #334155;
+            color: #f8fafc;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            margin: 0 8px 8px 0;
+            border: 1px solid #475569;
+        }
+
+        /* 自定义字幕样式 (对部分浏览器有效) */
+        video::cue {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fef08a;
+            font-size: 1.2rem;
+            font-family: Arial, sans-serif;
+        }
+
+        @media (max-width: 600px) {
+            .header { padding-top: 60px; }
+            .back-btn { top: 15px; left: 50%; transform: translateX(-50%); }
+            .video-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .video-title[dir="rtl"] { align-self: flex-end; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <a href="index.html" class="back-btn"><i class="fas fa-home"></i> Home</a>
+        <h1 style="margin: 0; color: #d4af37; font-size: 1.8rem; letter-spacing: 1px;">👑 VVIP Theatre</h1>
+        <p style="margin: 5px 0 0; color: #94a3b8; font-size: 0.9rem;" dir="rtl">مسلسلات صينية قصيرة للأعمال</p>
+    </div>
+
+    <div class="feed-container">
+        
+        <!-- ================= 视频卡片 1 ================= -->
+        <div class="video-card">
+            <div class="video-header">
+                <div class="video-title">Ep 1: Custom Clearance</div>
+                <div class="video-title" dir="rtl">الحلقة 1: التخليص الجمركي</div>
+            </div>
+            
+            <!-- controlsList="nodownload" 用于隐藏下载按钮 -->
+            <video class="video-player" controls preload="metadata" controlsList="nodownload" poster="cover1.jpg">
+                <source src="video1.mp4" type="video/mp4">
+                <!-- 挂载阿拉伯语/中文字幕文件 -->
+                <track label="CN & AR Subtitles" kind="subtitles" srclang="zh" src="subs1.vtt" default>
+                Your browser does not support the video tag.
+            </video>
+            
+            <div class="video-info">
+                <div class="desc-text">
+                    <strong>Scene / المشهد:</strong> Explaining equipment shipping status and customs delays to a client. (شرح حالة شحن المعدات والتأخيرات الجمركية للعميل).
+                </div>
+                <div class="vocab-box">
+                    <div class="vocab-title">Key Vocabulary / الكلمات الرئيسية</div>
+                    <span class="vocab-tag">物流 (Logistics / لوجستيات)</span>
+                    <span class="vocab-tag">海关 (Customs / جمارك)</span>
+                    <span class="vocab-tag">延迟 (Delay / تأخير)</span>
+                    <span class="vocab-tag">签收 (Sign / توقيع)</span>
+                    <span class="vocab-tag">运费 (Shipping Fee / رسوم الشحن)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= 视频卡片 2 (备用占位，您有新视频复制这段即可) ================= -->
+        <div class="video-card">
+            <div class="video-header">
+                <div class="video-title">Ep 2: Factory Inspection</div>
+                <div class="video-title" dir="rtl">الحلقة 2: فحص المصنع</div>
+            </div>
+            <video class="video-player" controls preload="metadata" controlsList="nodownload">
+                <!-- 换成真实的视频链接 -->
+                <source src="video2.mp4" type="video/mp4">
+                <track label="CN & AR Subtitles" kind="subtitles" srclang="zh" src="subs2.vtt" default>
+            </video>
+            <div class="video-info">
+                <div class="desc-text">
+                    <strong>Scene / المشهد:</strong> Conducting a virtual tour of the factory production line. (إجراء جولة افتراضية في خط إنتاج المصنع).
+                </div>
+                <div class="vocab-box">
+                    <div class="vocab-title">Key Vocabulary / الكلمات الرئيسية</div>
+                    <span class="vocab-tag">工厂 (Factory / مصنع)</span>
+                    <span class="vocab-tag">质量 (Quality / جودة)</span>
+                    <span class="vocab-tag">包装 (Package / تغليف)</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -6,7 +6,7 @@
     <meta name="referrer" content="no-referrer">
     <title>NihaoPlay - Learn Full Pinyin!</title>
     
-    <!-- 引入 FontAwesome 图标库 (用于显示 WhatsApp 及 导航的图标) -->
+    <!-- 引入 FontAwesome 图标库 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
@@ -50,7 +50,7 @@
 
         /* --- 导航区域与按钮 --- */
         .middle-section { display: flex; align-items: center; justify-content: center; gap: 30px; width: 100%; max-width: 1000px; margin: 20px 0; }
-        .right-nav-group { display: flex; flex-direction: column; gap: 15px; } 
+        .right-nav-group, .left-nav-group { display: flex; flex-direction: column; gap: 15px; } 
         
         .side-nav-btn { background: #ffffff; border: 4px solid #333; border-radius: 20px; padding: 12px 20px; font-size: 1.1rem; font-weight: bold; color: #333; text-decoration: none; box-shadow: 0 6px 0px #333; transition: all 0.15s; display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 160px; text-align: center; cursor: pointer; position: relative; }
         .side-nav-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 0px #333; background: #f7f9fc; }
@@ -67,6 +67,11 @@
         .trial-btn .hot-tag { background: #ff6b6b; color: white; font-size: 0.75rem; padding: 3px 8px; border-radius: 12px; position: absolute; top: -12px; right: -10px; animation: pulseTag 1.5s infinite; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         @keyframes pulseTag { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
 
+        /* ✨ 新增：VIP 专属约课按钮样式 ✨ */
+        .vip-book-btn { border-color: #ab47bc; }
+        .vip-book-btn i { color: #ab47bc !important; }
+        .vip-book-btn:hover { box-shadow: 0 8px 0px #ab47bc !important; background: #fdf3ff; }
+
         /* --- 拼音棋盘 --- */
         .board-container { width: 100%; max-width: 900px; background: #8d6e63; padding: 15px 25px 30px 25px; border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.15), inset 0 -5px 0px rgba(0,0,0,0.2); border: 8px solid #a1887f; margin-bottom: 30px; }
         .category-wrapper { margin-bottom: 25px; }
@@ -80,7 +85,7 @@
         .bubble { position: absolute; background: rgba(255, 255, 255, 0.9); border: 3px solid #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: bold; pointer-events: none; z-index: 100; box-shadow: 0 4px 10px rgba(0,0,0,0.1); animation: floatUp 1.2s cubic-bezier(0.1, 0.8, 0.3, 1) forwards; }
         @keyframes floatUp { 0% { transform: translate(-50%, 0) scale(0.5); opacity: 1; } 100% { transform: translate(-50%, -150px) scale(1.2); opacity: 0; } }
 
-        /* --- ✨ VIP 学生专属面板样式 ✨ --- */
+        /* --- VIP 学生专属面板样式 --- */
         .vip-dashboard { display: none; width: 100%; max-width: 900px; background: #ffffff; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 4px solid #4ecdc4; margin-bottom: 30px; text-align: left; animation: popIn 0.4s ease-out;}
         .vip-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px dashed #edf2f7; padding-bottom: 15px; margin-bottom: 20px; }
         .vip-header h2 { color: #2d3748; font-size: 1.8rem; }
@@ -97,7 +102,7 @@
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px); display: none; justify-content: center; align-items: center; z-index: 2000; }
         .modal-content { background: #fff; padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; text-align: center; border: 5px solid var(--primary-color); box-shadow: 0 10px 25px rgba(0,0,0,0.2); animation: popIn 0.3s ease-out; }
         @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-        .modal-input { width: 100%; padding: 12px 15px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 1rem; margin-bottom: 15px; outline: none; }
+        .modal-input { width: 100%; padding: 12px 15px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 1rem; margin-bottom: 15px; outline: none; background: #fff;}
         .modal-input:focus { border-color: var(--board-color); }
         .modal-btn { background: var(--primary-color); color: white; border: none; padding: 12px 25px; font-size: 1.1rem; font-weight: bold; border-radius: 12px; cursor: pointer; width: 100%; box-shadow: 0 4px 0px #d85a5a; transition: all 0.1s;}
         .modal-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0px #d85a5a; }
@@ -121,11 +126,16 @@
             .login-top-btn { top: 0; right: auto; left: 50%; transform: translateX(-50%); font-size: 0.85rem; padding: 6px 12px; border-width: 1.5px; }
             .middle-section { flex-direction: column; gap: 20px; margin: 10px 0; }
             .stage { order: -1; margin-bottom: 0; transform: scale(0.9); }
-            .right-nav-group { flex-direction: row; width: 100%; justify-content: center; gap: 10px; }
+            
+            /* 保证左侧和右侧按钮组在手机端完美并排展示 */
+            .right-nav-group, .left-nav-group { flex-direction: row; width: 100%; justify-content: center; gap: 10px; }
             .side-nav-btn { flex-direction: row; min-width: auto; padding: 10px 15px; font-size: 1rem; width: 45%; justify-content: center; }
             .side-nav-btn i { font-size: 1.3rem; }
             .side-nav-btn > span { display: none; } 
-            .trial-btn span:last-child { display: inline-block; font-size: 0.9rem; } 
+            
+            /* 特定需要保留文字的按钮 */
+            .trial-btn span:last-child, .vip-book-btn span:last-child { display: inline-block; font-size: 0.9rem; } 
+            
             .vip-dashboard { padding: 20px 15px; margin-top: 10px; }
             .vip-header { flex-direction: column; text-align: center; gap: 15px; }
             .vip-grid { grid-template-columns: 1fr; }
@@ -143,11 +153,18 @@
     
     <!-- 导航与人物区域组合 -->
     <div class="middle-section" id="publicNavSection">
-        <!-- 左侧：拼音按钮 -->
-        <a href="index.html" class="side-nav-btn active-nav">
-            <i class="fas fa-language"></i>
-            <span>Chinese PinYin</span>
-        </a>
+        
+        <!-- ✨ 左侧：拼音按钮 + 新增的 VIP 约课按钮 ✨ -->
+        <div class="left-nav-group">
+            <a href="index.html" class="side-nav-btn active-nav">
+                <i class="fas fa-language"></i>
+                <span>Chinese PinYin</span>
+            </a>
+            <a href="#" class="side-nav-btn vip-book-btn" onclick="handleVipBooking(event)">
+                <i class="fas fa-calendar-check"></i>
+                <span>VIP Booking</span>
+            </a>
+        </div>
 
         <!-- 中间：人物点击区域 -->
         <div class="stage">
@@ -180,7 +197,7 @@
         </div>
     </div>
 
-    <!-- ✨ VIP 学生专属学习区 (默认隐藏) ✨ -->
+    <!-- VIP 学生专属学习区 (默认隐藏) -->
     <div class="vip-dashboard" id="vipDashboard">
         <div class="vip-header">
             <h2>🎓 Welcome back, <span id="vipNameDisplay">Student</span>!</h2>
@@ -222,7 +239,6 @@
         </div></div>
     </div>
     
-    <!-- 优化后的高级多语言底部提示框 -->
     <div class="browser-tip" id="browserTip" style="background: white; border: 2px dashed #bae6fd; border-radius: 16px; padding: 15px 20px; margin: 20px auto 15px; max-width: 900px; width: 90%; box-shadow: 0 8px 15px rgba(0,0,0,0.03); display: flex; flex-direction: column; gap: 8px;">
         <div class="tip-line" style="display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.85rem; color: #64748b; font-weight: 500;"><i class="fas fa-info-circle" style="color: #ff6b6b; font-size: 1.1rem;"></i> 如果网页加载缓慢，请点击右上角 "..." 选择 "在浏览器中打开"</div>
         <div class="tip-line" style="display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.85rem; color: #64748b; font-weight: 500;"><i class="fas fa-globe" style="color: #4ecdc4; font-size: 1.1rem;"></i> If the page loads slowly, please click "..." in the top right corner and choose "Open in Browser"</div>
@@ -231,7 +247,7 @@
 
     <footer id="mainFooter" style="margin-top: 10px; margin-bottom: 20px; font-size: 0.9rem; color: #a0aec0;">&copy; 2026 nihaoplay.com - All Rights Reserved.</footer>
 
-    <!-- ✨ 登录弹窗 ✨ -->
+    <!-- ✨ 修改：登录弹窗 (新增注册入口) ✨ -->
     <div class="modal-overlay" id="loginModal">
         <div class="modal-content">
             <h2 style="color: var(--text-color); margin-bottom: 10px; font-size: 1.8rem;">🔒 VIP Login</h2>
@@ -239,7 +255,40 @@
             <input type="text" id="studentAccount" class="modal-input" placeholder="Name or Email">
             <input type="password" id="studentPassword" class="modal-input" placeholder="Password (Test: 123456)">
             <button class="modal-btn" onclick="handleLogin()">Enter Classroom</button>
-            <div style="margin-top: 15px; color: #a0aec0; font-size: 0.9rem; cursor: pointer; text-decoration: underline;" onclick="document.getElementById('loginModal').style.display='none'">Cancel</div>
+            <div style="margin-top: 15px; font-size: 0.9rem;">
+                <span style="color: #a0aec0; cursor: pointer; text-decoration: underline;" onclick="document.getElementById('loginModal').style.display='none'">Cancel</span>
+                <span style="margin: 0 10px; color: #cbd5e0;">|</span>
+                <span style="color: var(--primary-color); cursor: pointer; font-weight: bold; text-decoration: underline;" onclick="openApplyModal()">No Account? Apply Here</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ✨ 新增：注册/申请账号弹窗 ✨ -->
+    <div class="modal-overlay" id="applyModal">
+        <div class="modal-content">
+            <h2 style="color: var(--text-color); margin-bottom: 10px; font-size: 1.5rem;">📝 Apply for Trial/Class</h2>
+            <p style="color: #718096; margin-bottom: 15px; font-size: 0.85rem; line-height: 1.4;">
+                Please fill in the child's details. The system will match a teacher and contact you via email.<br>
+                <span style="color:var(--primary-color);">后台会根据这些信息匹配对应老师主动联系回复邮件。</span>
+            </p>
+
+            <select id="applyGender" class="modal-input">
+                <option value="" disabled selected>Child's Gender / 孩子性别</option>
+                <option value="Boy">Boy / 男孩</option>
+                <option value="Girl">Girl / 女孩</option>
+            </select>
+            <input type="number" id="applyAge" class="modal-input" placeholder="Child's Age / 孩子年龄">
+            <select id="applyLevel" class="modal-input">
+                <option value="" disabled selected>Chinese Level / 中文程度</option>
+                <option value="Zero">Zero Basics / 零基础</option>
+                <option value="Beginner">Beginner / 初级</option>
+                <option value="Intermediate">Intermediate / 中级</option>
+                <option value="Advanced">Advanced / 高级</option>
+            </select>
+            <input type="email" id="applyEmail" class="modal-input" placeholder="Contact Email / 常用邮箱">
+
+            <button class="modal-btn" onclick="submitApplication()">Submit Application</button>
+            <div style="margin-top: 15px; color: #a0aec0; font-size: 0.9rem; cursor: pointer; text-decoration: underline;" onclick="document.getElementById('applyModal').style.display='none'">Cancel</div>
         </div>
     </div>
 
@@ -264,7 +313,50 @@
             }
         };
 
+        // 登录弹窗控制
         function showLoginModal() { document.getElementById('loginModal').style.display = 'flex'; }
+        
+        // ✨ 新增：切换到申请注册弹窗
+        function openApplyModal() {
+            document.getElementById('loginModal').style.display = 'none';
+            document.getElementById('applyModal').style.display = 'flex';
+        }
+
+        // ✨ 新增：提交申请邮件逻辑
+        function submitApplication() {
+            const gender = document.getElementById('applyGender').value;
+            const age = document.getElementById('applyAge').value;
+            const level = document.getElementById('applyLevel').value;
+            const email = document.getElementById('applyEmail').value;
+
+            if(!gender || !age || !level || !email) {
+                alert("Please fill in all fields. / 请填写完整所有信息。");
+                return;
+            }
+
+            // 👇 重要：将这里的邮箱地址换成你自己的真实工作邮箱
+            const mailToAddress = "nihaoplay@gmail.com"; 
+            const subject = encodeURIComponent("New Student Application - NihaoPlay");
+            const bodyText = `New Student Registration Info (新生注册信息):\n\nGender (性别): ${gender}\nAge (年龄): ${age}\nChinese Level (中文程度): ${level}\nContact Email (常用邮箱): ${email}\n\nPlease reply to this email to assign a password. (请回复此邮件分配登录密码)`;
+            
+            // 唤起本地邮箱客户端发送邮件
+            window.location.href = `mailto:${mailToAddress}?subject=${subject}&body=${encodeURIComponent(bodyText)}`;
+
+            alert("Redirecting to your email app... We will reply with your password soon!\n(正在跳转发送邮件...我们将很快回复您的专属密码！)");
+            document.getElementById('applyModal').style.display = 'none';
+        }
+
+        // ✨ 新增：VIP 约课按钮权限拦截逻辑
+        function handleVipBooking(event) {
+            event.preventDefault();
+            if (localStorage.getItem('isVipStudent') === 'true') {
+                alert('Welcome VIP! Redirecting to your booking calendar...\n欢迎VIP同学！正在跳转到您的专属约课页面...');
+                // 真正使用时，取消下一行的注释并填入你的日历链接
+                // window.open('YOUR_CALENDLY_LINK', '_blank');
+            } else {
+                alert("هذا الرابط هو رابط حصري لحجز الدروس للطلاب المسجلين.\nThis link is an exclusive class booking link for signed students.");
+            }
+        }
 
         function handleLogin() {
             const acc = document.getElementById('studentAccount').value.trim();

@@ -428,199 +428,228 @@
 
     <a href="https://wa.me/962771128288" target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
 
-    <!-- ================= SCRIPTS ================= -->
-    <script>
-        let currentUser = null; 
+   <script>
+    let currentUser = null; 
 
-        window.onload = function() {
-            const savedRole = localStorage.getItem('autoLoginRole');
-            const savedName = localStorage.getItem('autoLoginName');
-            if (savedRole && savedName) {
-                currentUser = { role: savedRole, name: savedName };
-                if (savedRole === 'guest') { document.getElementById('guestAccount').value = savedName; document.getElementById('rememberGuest').checked = true; }
-                if (savedRole === 'vip') { document.getElementById('vipAccount').value = savedName; document.getElementById('rememberVip').checked = true; }
-            }
-            updateUI();
-            if (currentUser?.role === 'vip') switchView('view-course');
-            else switchView('view-pinyin');
-        };
+    window.onload = function() {
+        const savedRole = localStorage.getItem('autoLoginRole');
+        const savedName = localStorage.getItem('autoLoginName');
+        if (savedRole && savedName) {
+            currentUser = { role: savedRole, name: savedName };
+            if (savedRole === 'guest') { document.getElementById('guestAccount').value = savedName; document.getElementById('rememberGuest').checked = true; }
+            if (savedRole === 'vip') { document.getElementById('vipAccount').value = savedName; document.getElementById('rememberVip').checked = true; }
+        }
+        updateUI();
+        if (currentUser?.role === 'vip') switchView('view-course');
+        else switchView('view-pinyin');
+    };
 
-        function updateUI() {
-            if (currentUser) {
-                document.getElementById('authGroup').style.display = 'none';
-                document.getElementById('userWelcome').style.display = 'block';
-                document.getElementById('welcomeName').innerText = currentUser.name + ' (' + currentUser.role.toUpperCase() + ')';
-            } else {
-                document.getElementById('authGroup').style.display = 'flex';
-                document.getElementById('userWelcome').style.display = 'none';
-            }
+    function updateUI() {
+        if (currentUser) {
+            document.getElementById('authGroup').style.display = 'none';
+            document.getElementById('userWelcome').style.display = 'block';
+            document.getElementById('welcomeName').innerText = currentUser.name + ' (' + currentUser.role.toUpperCase() + ')';
+        } else {
+            document.getElementById('authGroup').style.display = 'flex';
+            document.getElementById('userWelcome').style.display = 'none';
+        }
+    }
+
+    function switchView(viewId) {
+        document.getElementById('view-pinyin').style.display = 'none';
+        document.getElementById('view-course').style.display = 'none';
+        document.getElementById('view-songs').style.display = 'none';
+        
+        const targetView = document.getElementById(viewId);
+        targetView.style.display = 'block';
+        targetView.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        
+        document.querySelectorAll('audio').forEach(a => { a.pause(); a.currentTime = 0; });
+        document.querySelectorAll('.song-icon').forEach(icon => icon.classList.remove('rotating'));
+    }
+
+    function openModal(id) { closeAllModals(); document.getElementById(id).style.display = 'flex'; }
+    function closeAllModals() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
+
+    function handleLogin(type) {
+        const acc = type === 'vip' ? document.getElementById('vipAccount').value.trim() : document.getElementById('guestAccount').value.trim();
+        const pwd = type === 'vip' ? document.getElementById('vipPassword').value : document.getElementById('guestPassword').value;
+        const rem = type === 'vip' ? document.getElementById('rememberVip').checked : document.getElementById('rememberGuest').checked;
+
+        if (!acc || !pwd) { alert("Please enter account and password.\nيرجى إدخال الحساب وكلمة المرور."); return; }
+
+        if (type === 'vip') {
+            if ((acc === 'nihaoplayfun' || acc === 'nihaofunplay') && pwd === '888888') { } 
+            else { alert("Incorrect VIP account or password!\nحساب أو كلمة مرور VIP غير صحيحة!"); return; }
+        } else {
+            if (pwd !== '123456') { alert("Incorrect Guest password!\nكلمة مرور الزائر غير صحيحة!"); return; }
         }
 
-        function switchView(viewId) {
-            document.getElementById('view-pinyin').style.display = 'none';
-            document.getElementById('view-course').style.display = 'none';
-            document.getElementById('view-songs').style.display = 'none';
-            
-            const targetView = document.getElementById(viewId);
-            targetView.style.display = 'block';
-            targetView.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            
-            document.querySelectorAll('audio').forEach(a => { a.pause(); a.currentTime = 0; });
-            document.querySelectorAll('.song-icon').forEach(icon => icon.classList.remove('rotating'));
+        currentUser = { role: type, name: acc };
+        if (rem) { localStorage.setItem('autoLoginRole', type); localStorage.setItem('autoLoginName', acc); }
+        else { localStorage.removeItem('autoLoginRole'); localStorage.removeItem('autoLoginName'); }
+
+        closeAllModals(); 
+        updateUI();
+        if (type === 'vip') switchView('view-course');
+        else switchView('view-pinyin');
+    }
+
+    function handleLogout() {
+        currentUser = null;
+        localStorage.removeItem('autoLoginRole');
+        localStorage.removeItem('autoLoginName');
+        location.reload(); 
+    }
+
+    function submitGuestApplication() {
+        const name = document.getElementById('applyName').value;
+        const age = document.getElementById('applyAge').value;
+        const gender = document.getElementById('applyGender').value;
+        const level = document.getElementById('applyLevel').value;
+        const email = document.getElementById('applyEmail').value;
+        if(!name || !age || !gender || !level || !email) { alert("Please fill in all fields.\nيرجى تعبئة جميع الحقول."); return; }
+        
+        // 核心修改 1：只要点击发送信息，即赋予本地浏览拼音发音的权限
+        localStorage.setItem('guestApplied', 'true');
+        
+        const msg = `Guest Account Application / طلب حساب زائر:\n\nName (الاسم): ${name}\nAge (العمر): ${age}\nGender (الجنس): ${gender}\nLevel (المستوى): ${level}\nEmail (البريد): ${email}\n\nPlease assign a guest password. (يرجى تخصيص كلمة مرور زائر)`;
+        window.open(`https://wa.me/962771128288?text=${encodeURIComponent(msg)}`, '_blank');
+        closeAllModals();
+    }
+
+    function handlePinyinBtnClick() {
+        // 任何人都可以打开拼音面板，听音权限在点击具体音符时判定
+        switchView('view-pinyin');
+    }
+
+    function handleBookTrialClick() {
+        if (currentUser?.role === 'vip') { alert("You are already a VIP student, please click the VIP Course button.\nأنت طالب VIP بالفعل، يرجى النقر على زر دورة VIP."); return; }
+        if (localStorage.getItem('booked1on1') === 'true') { alert("You have already booked a trial class using this device.\nلقد قمت بحجز درس تجريبي بالفعل باستخدام هذا الجهاز."); return; }
+        localStorage.setItem('booked1on1', 'true');
+        alert("Redirecting to booking schedule...\nجاري التوجيه لجدول المواعيد...");
+        // window.open('YOUR_CALENDLY_LINK', '_blank');
+    }
+
+    function handleVipCourseClick() {
+        if (currentUser?.role !== 'vip') { alert("This feature is for VIP students only.\nهذه الميزة لطلاب VIP فقط."); return; }
+        switchView('view-course');
+    }
+
+    function handleSongClick() {
+        // 核心修改 2：Guest 可以打开音乐面板，但不代表可以播放
+        if (!currentUser) { 
+            alert("Please login first.\nيرجى تسجيل الدخول أولاً."); 
+            openModal('guestLoginModal'); 
+            return; 
+        }
+        switchView('view-songs');
+    }
+
+    // --- Xinxin Baby Logic ---
+    function playXinXin(element, event) {
+        if (event) event.stopPropagation();
+        
+        // 核心修改 3：Xinxin宝宝 仅限 VIP 点击发声
+        if (currentUser?.role !== 'vip') {
+            alert("Only VIP customers have permission to play. Please contact customer service via WhatsApp to activate VIP service.\nعذراً، هذه الميزة لعملاء VIP فقط. يرجى التواصل عبر واتساب لتفعيل خدمة VIP.");
+            window.open('https://wa.me/962771128288', '_blank');
+            return;
+        }
+        
+        document.querySelectorAll('audio').forEach(a => {
+            a.pause();
+            const icon = a.parentElement.querySelector('.song-icon');
+            if(icon) icon.classList.remove('rotating');
+        });
+
+        new Audio(`audio/song/新新宝宝.mp3`).play().catch(e => console.log("Audio failed"));
+
+        element.classList.add('excited-swing');
+        setTimeout(() => { element.classList.remove('excited-swing'); }, 500);
+    }
+
+    function speakGreeting(character, element, event) {
+        if (event) event.stopPropagation();
+        
+        // 核心修改 4：移除 currentUser 限制，任何人都可以点击播放爸爸、妈妈、宝宝的音频
+        
+        let audioUrl = ""; const t = new Date().getTime(); 
+        if (character === 'baba') audioUrl = `audio/baba.mp3?t=${t}`; 
+        else if (character === 'mama') audioUrl = `audio/mama.mp3?t=${t}`; 
+        else if (character === 'baby') audioUrl = `audio/baobao.mp3?t=${t}`; 
+        
+        new Audio(audioUrl).play().catch(e => console.log("Audio failed"));
+        element.classList.add('cheer-anim');
+        setTimeout(() => element.classList.remove('cheer-anim'), 800);
+    }
+
+    function speakPinyin(letter, event) {
+        if (event) event.stopPropagation();
+        
+        // 核心修改 5：检测是否已登录 或 是否已提交过Guest申请
+        const hasGuestAccess = localStorage.getItem('guestApplied') === 'true';
+        if (!currentUser && !hasGuestAccess) { 
+            alert("Please apply for a Guest account to play sounds.\nيرجى النقر على زر الزائر للحصول على صلاحية الاستماع.");
+            openModal('guestApplyModal');
+            return; 
         }
 
-        function openModal(id) { closeAllModals(); document.getElementById(id).style.display = 'flex'; }
-        function closeAllModals() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
+        const map = {
+            'ā': 'a1', 'ō': 'o1', 'ē': 'e1', 'ī': 'yi1', 'ū': 'wu1', 'ǖ': 'yu1',
+            'b': 'bo1', 'p': 'po1', 'm': 'mo1', 'f': 'fo1', 'd': 'de1', 't': 'te1', 'n': 'ne1', 'l': 'le1',
+            'g': 'ge1', 'k': 'ke1', 'h': 'he1', 'j': 'ji1', 'q': 'qi1', 'x': 'xi1',
+            'zh': 'zhi1', 'ch': 'chi1', 'sh': 'shi1', 'r': 'ri1', 'z': 'zi1', 'c': 'ci1', 's': 'si1',
+            'y': 'yi1', 'w': 'wu1', 'ai': 'ai1', 'ei': 'ei1', 'ui': 'wei1', 'ao': 'ao1', 'ou': 'ou1', 
+            'iu': 'you1', 'ie': 'ye1', 'üe': 'yue1', 'er': 'er2', 'an': 'an1', 'en': 'en1', 'in': 'yin1', 
+            'un': 'wen1', 'ün': 'yun1', 'ang': 'ang1', 'eng': 'eng1', 'ing': 'ying1', 'ong': 'weng1'
+        }; 
+        
+        if (map[letter]) new Audio(`audio/${map[letter]}.mp3`).play().catch(e => console.log("Audio failed"));
+        
+        document.querySelectorAll('.character').forEach(char => { 
+            char.classList.add('cheer-anim'); 
+            setTimeout(() => char.classList.remove('cheer-anim'), 800); 
+        });
+        
+        if (event && event.clientX) {
+            const colors = ['#ff6b6b', '#4ecdc4', '#ffe0b2', '#ec407a', '#29b6f6', '#ab47bc'];
+            const bubble = document.createElement('div'); bubble.className = 'bubble'; bubble.innerText = letter;
+            bubble.style.left = event.clientX + 'px'; bubble.style.top = event.clientY + 'px'; 
+            bubble.style.borderColor = colors[Math.floor(Math.random() * colors.length)];
+            document.body.appendChild(bubble); bubble.addEventListener('animationend', () => bubble.remove());
+        }
+    }
 
-        function handleLogin(type) {
-            const acc = type === 'vip' ? document.getElementById('vipAccount').value.trim() : document.getElementById('guestAccount').value.trim();
-            const pwd = type === 'vip' ? document.getElementById('vipPassword').value : document.getElementById('guestPassword').value;
-            const rem = type === 'vip' ? document.getElementById('rememberVip').checked : document.getElementById('rememberGuest').checked;
-
-            if (!acc || !pwd) { alert("Please enter account and password.\nيرجى إدخال الحساب وكلمة المرور."); return; }
-
-            if (type === 'vip') {
-                if ((acc === 'nihaoplayfun' || acc === 'nihaofunplay') && pwd === '888888') { } 
-                else { alert("Incorrect VIP account or password!\nحساب أو كلمة مرور VIP غير صحيحة!"); return; }
-            } else {
-                if (pwd !== '123456') { alert("Incorrect Guest password!\nكلمة مرور الزائر غير صحيحة!"); return; }
-            }
-
-            currentUser = { role: type, name: acc };
-            if (rem) { localStorage.setItem('autoLoginRole', type); localStorage.setItem('autoLoginName', acc); }
-            else { localStorage.removeItem('autoLoginRole'); localStorage.removeItem('autoLoginName'); }
-
-            closeAllModals(); 
-            updateUI();
-            if (type === 'vip') switchView('view-course');
-            else switchView('view-pinyin');
+    function toggleAudio(cardElement) {
+        // 核心修改 6：Guest点击音乐弹窗提示拦截，并引流到 WhatsApp
+        if (currentUser?.role !== 'vip') {
+            alert("Only VIP customers have permission to play. Please contact customer service via WhatsApp to activate VIP service.\nعذراً، هذه الميزة لعملاء VIP فقط. يرجى التواصل عبر واتساب لتفعيل خدمة VIP.");
+            window.open('https://wa.me/962771128288', '_blank');
+            return;
         }
 
-        function handleLogout() {
-            currentUser = null;
-            localStorage.removeItem('autoLoginRole');
-            localStorage.removeItem('autoLoginName');
-            location.reload(); 
-        }
-
-        function submitGuestApplication() {
-            const name = document.getElementById('applyName').value;
-            const age = document.getElementById('applyAge').value;
-            const gender = document.getElementById('applyGender').value;
-            const level = document.getElementById('applyLevel').value;
-            const email = document.getElementById('applyEmail').value;
-            if(!name || !age || !gender || !level || !email) { alert("Please fill in all fields.\nيرجى تعبئة جميع الحقول."); return; }
-            const msg = `Guest Account Application / طلب حساب زائر:\n\nName (الاسم): ${name}\nAge (العمر): ${age}\nGender (الجنس): ${gender}\nLevel (المستوى): ${level}\nEmail (البريد): ${email}\n\nPlease assign a guest password. (يرجى تخصيص كلمة مرور زائر)`;
-            window.open(`https://wa.me/962771128288?text=${encodeURIComponent(msg)}`, '_blank');
-            closeAllModals();
-        }
-
-        function handlePinyinBtnClick() {
-            if (!currentUser) { alert("Please login as a Guest or VIP first.\nيرجى تسجيل الدخول كزائر أو VIP أولاً."); openModal('guestApplyModal'); return; }
-            switchView('view-pinyin');
-        }
-
-        function handleBookTrialClick() {
-            if (currentUser?.role === 'vip') { alert("You are already a VIP student, please click the VIP Course button.\nأنت طالب VIP بالفعل، يرجى النقر على زر دورة VIP."); return; }
-            if (localStorage.getItem('booked1on1') === 'true') { alert("You have already booked a trial class using this device.\nلقد قمت بحجز درس تجريبي بالفعل باستخدام هذا الجهاز."); return; }
-            localStorage.setItem('booked1on1', 'true');
-            alert("Redirecting to booking schedule...\nجاري التوجيه لجدول المواعيد...");
-            // window.open('YOUR_CALENDLY_LINK', '_blank');
-        }
-
-        function handleVipCourseClick() {
-            if (currentUser?.role !== 'vip') { alert("This feature is for VIP students only.\nهذه الميزة لطلاب VIP فقط."); return; }
-            switchView('view-course');
-        }
-
-        function handleSongClick() {
-            if (currentUser?.role !== 'vip') { alert("This feature is for VIP students only.\nهذه الميزة لطلاب VIP فقط."); return; }
-            switchView('view-songs');
-        }
-
-        // --- Xinxin Baby Logic ---
-        function playXinXin(element, event) {
-            if (event) event.stopPropagation();
-            if (!currentUser) { alert("Please login first.\nيرجى تسجيل الدخول أولاً."); return; }
-            
-            document.querySelectorAll('audio').forEach(a => {
+        const audio = cardElement.querySelector('audio');
+        const icon = cardElement.querySelector('.song-icon');
+        
+        document.querySelectorAll('audio').forEach(a => {
+            if (a !== audio) {
                 a.pause();
-                const icon = a.parentElement.querySelector('.song-icon');
-                if(icon) icon.classList.remove('rotating');
-            });
-
-            new Audio(`audio/song/新新宝宝.mp3`).play().catch(e => console.log("Audio failed"));
-
-            element.classList.add('excited-swing');
-            setTimeout(() => { element.classList.remove('excited-swing'); }, 500);
-        }
-
-        function speakGreeting(character, element, event) {
-            if (event) event.stopPropagation();
-            if (!currentUser) { alert("Please login first.\nيرجى تسجيل الدخول أولاً."); openModal('guestLoginModal'); return; }
-            
-            let audioUrl = ""; const t = new Date().getTime(); 
-            if (character === 'baba') audioUrl = `audio/baba.mp3?t=${t}`; 
-            else if (character === 'mama') audioUrl = `audio/mama.mp3?t=${t}`; 
-            else if (character === 'baby') audioUrl = `audio/baobao.mp3?t=${t}`; 
-            
-            new Audio(audioUrl).play().catch(e => console.log("Audio failed"));
-            element.classList.add('cheer-anim');
-            setTimeout(() => element.classList.remove('cheer-anim'), 800);
-        }
-
-        function speakPinyin(letter, event) {
-            if (event) event.stopPropagation();
-            if (!currentUser) { alert("Please login to play sounds.\nيرجى تسجيل الدخول لتشغيل الأصوات."); return; }
-
-            const map = {
-                'ā': 'a1', 'ō': 'o1', 'ē': 'e1', 'ī': 'yi1', 'ū': 'wu1', 'ǖ': 'yu1',
-                'b': 'bo1', 'p': 'po1', 'm': 'mo1', 'f': 'fo1', 'd': 'de1', 't': 'te1', 'n': 'ne1', 'l': 'le1',
-                'g': 'ge1', 'k': 'ke1', 'h': 'he1', 'j': 'ji1', 'q': 'qi1', 'x': 'xi1',
-                'zh': 'zhi1', 'ch': 'chi1', 'sh': 'shi1', 'r': 'ri1', 'z': 'zi1', 'c': 'ci1', 's': 'si1',
-                'y': 'yi1', 'w': 'wu1', 'ai': 'ai1', 'ei': 'ei1', 'ui': 'wei1', 'ao': 'ao1', 'ou': 'ou1', 
-                'iu': 'you1', 'ie': 'ye1', 'üe': 'yue1', 'er': 'er2', 'an': 'an1', 'en': 'en1', 'in': 'yin1', 
-                'un': 'wen1', 'ün': 'yun1', 'ang': 'ang1', 'eng': 'eng1', 'ing': 'ying1', 'ong': 'weng1'
-            }; 
-            
-            if (map[letter]) new Audio(`audio/${map[letter]}.mp3`).play().catch(e => console.log("Audio failed"));
-            
-            document.querySelectorAll('.character').forEach(char => { 
-                char.classList.add('cheer-anim'); 
-                setTimeout(() => char.classList.remove('cheer-anim'), 800); 
-            });
-            
-            if (event && event.clientX) {
-                const colors = ['#ff6b6b', '#4ecdc4', '#ffe0b2', '#ec407a', '#29b6f6', '#ab47bc'];
-                const bubble = document.createElement('div'); bubble.className = 'bubble'; bubble.innerText = letter;
-                bubble.style.left = event.clientX + 'px'; bubble.style.top = event.clientY + 'px'; 
-                bubble.style.borderColor = colors[Math.floor(Math.random() * colors.length)];
-                document.body.appendChild(bubble); bubble.addEventListener('animationend', () => bubble.remove());
+                const aIcon = a.parentElement.querySelector('.song-icon');
+                if(aIcon) aIcon.classList.remove('rotating');
             }
-        }
+        });
 
-        function toggleAudio(cardElement) {
-            const audio = cardElement.querySelector('audio');
-            const icon = cardElement.querySelector('.song-icon');
-            
-            document.querySelectorAll('audio').forEach(a => {
-                if (a !== audio) {
-                    a.pause();
-                    const aIcon = a.parentElement.querySelector('.song-icon');
-                    if(aIcon) aIcon.classList.remove('rotating');
-                }
-            });
-
-            if (audio.paused) {
-                audio.play();
-                icon.classList.add('rotating');
-            } else {
-                audio.pause();
-                icon.classList.remove('rotating');
-            }
-            
-            audio.onended = function() { icon.classList.remove('rotating'); };
+        if (audio.paused) {
+            audio.play();
+            icon.classList.add('rotating');
+        } else {
+            audio.pause();
+            icon.classList.remove('rotating');
         }
-    </script>
+        
+        audio.onended = function() { icon.classList.remove('rotating'); };
+    }
+</script>
 </body>
 </html>

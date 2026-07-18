@@ -35,13 +35,12 @@
         .nav-group { display: flex; flex-direction: column; gap: 20px; } 
         .nav-btn-wrapper { position: relative; width: 100%; }
         
-        /* 【优化】：所有标签移到右上角，避免遮挡图标，并且全部带有呼吸闪烁动画 */
+        /* Tags */
         .top-tag { position: absolute; top: -14px; right: -10px; color: white; font-size: 0.65rem; font-weight: bold; padding: 4px 10px; border-radius: 12px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2); animation: pulseTag 1.5s infinite; }
         .tag-free { background: #ff6b6b; }
         .tag-vip { background: #ab47bc; } 
         @keyframes pulseTag { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
 
-        /* 【优化】：取消了固定死的高度，改为 height: auto 和 min-height，让文字自然撑开，绝不裁切 */
         .side-nav-btn { background: #ffffff; border: 4px solid #333; border-radius: 20px; padding: 15px 15px; font-weight: bold; color: #333; box-shadow: 0 6px 0px #333; transition: all 0.1s; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; min-width: 170px; min-height: 90px; height: auto; cursor: pointer; }
         .side-nav-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 0px #333; background: #f7f9fc; }
         .side-nav-btn:active { transform: translateY(6px); box-shadow: 0 0px 0px #333; }
@@ -167,7 +166,6 @@
             .side-nav-btn { min-width: auto; width: 100%; min-height: 85px; padding: 12px 10px; font-size: 0.85rem; }
             .side-nav-btn i { font-size: 1.4rem; }
             
-            /* 手机端同步右上角 */
             .top-tag { font-size: 0.6rem; padding: 3px 8px; top: -12px; right: -5px; }
             
             .whatsapp-float { width: 50px; height: 50px; font-size: 28px; bottom: 15px; right: 15px; }
@@ -187,8 +185,7 @@
             }
         }
     </style>
-</head>
-<body><header>
+</head><body><header>
         <div class="top-auth-group" id="authGroup">
             <button class="login-top-btn vip-btn" onclick="openModal('vipLoginModal')">VIP Login / دخول VIP</button>
             <button class="login-top-btn guest-btn" onclick="openModal('guestApplyModal')">Guest Login / تسجيل الزوار</button>
@@ -208,7 +205,6 @@
                 <div class="top-tag tag-free">免费 / FREE / مجاني</div>
                 <div class="side-nav-btn" style="border-color: #ff6b6b; color: #ff6b6b;" onclick="handlePinyinBtnClick()">
                     <i class="fas fa-language"></i>
-                    <!-- 【优化】：删除了中文，释放空间。保留英和阿，绝对不裁切 -->
                     <span style="font-size: 1.1rem; font-weight: 900; letter-spacing: 1px;">Chinese PinYin</span>
                     <span dir="rtl" style="font-size: 0.85rem; font-weight: bold;">بينيين الصينية</span>
                 </div>
@@ -217,7 +213,6 @@
                 <div class="top-tag tag-free">免费 / FREE / مجاني</div>
                 <div class="side-nav-btn" style="border-color: #f5af19; color: #f5af19;" onclick="handleBookTrialClick()">
                     <i class="fas fa-calendar-alt"></i>
-                    <!-- 【优化】：删除了中文，释放空间。保留英和阿，绝对不裁切 -->
                     <span style="font-size: 1.1rem; font-weight: 900; letter-spacing: 1px;">Book 1-on-1</span>
                     <span dir="rtl" style="font-size: 0.85rem; font-weight: bold;">حجز درس تجريبي</span>
                 </div>
@@ -246,7 +241,6 @@
                 <div class="top-tag tag-vip">仅限VIP / VIP ONLY / خاص</div>
                 <div class="side-nav-btn" style="border-color: #ab47bc; color: #ab47bc;" onclick="handleVipCourseClick()">
                     <i class="fas fa-chalkboard-teacher"></i>
-                    <!-- 【优化】：删除了中文，释放空间。保留英和阿，绝对不裁切 -->
                     <span style="font-size: 1.1rem; font-weight: 900; letter-spacing: 1px;">VIP Course</span>
                     <span dir="rtl" style="font-size: 0.85rem; font-weight: bold;">دورة VIP</span>
                 </div>
@@ -255,7 +249,6 @@
                 <div class="top-tag tag-vip">仅限VIP / VIP ONLY / خاص</div>
                 <div class="side-nav-btn" style="border-color: #4ecdc4; color: #4ecdc4;" onclick="handleSongClick()">
                     <i class="fas fa-music"></i>
-                    <!-- 【优化】：删除了中文，释放空间。保留英和阿，绝对不裁切 -->
                     <span style="font-size: 1.1rem; font-weight: 900; letter-spacing: 1px;">Song of CN/EN</span>
                     <span dir="rtl" style="font-size: 0.85rem; font-weight: bold;">أغاني</span>
                 </div>
@@ -285,15 +278,13 @@
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
             <div class="vip-card">
                 <h3><i class="fas fa-clock"></i> Next Class / الدرس القادم</h3>
-                <p style="margin: 5px 0;"><strong>Every Mon & Fri</strong></p>
-                <p><strong>8:00 PM</strong> (Local Time)</p>
-                <a href="#" target="_blank" class="zoom-btn"><i class="fas fa-video"></i> Join Zoom / انضمام لزوم</a>
+                <p style="margin: 10px 0; font-size: 1.1rem; color: #d53f8c;" id="dynamic-next-time"><strong>Loading...</strong></p>
+                <a href="#" target="_blank" class="zoom-btn" id="dynamic-zoom-link"><i class="fas fa-video"></i> Join Zoom / انضمام لزوم</a>
             </div>
             <div class="vip-card">
                 <h3><i class="fas fa-play-circle"></i> Replays / التسجيلات</h3>
-                <ul style="margin-top: 10px; padding-left: 20px; line-height: 1.8;">
-                    <li><a href="#" style="color: #ab47bc; font-weight: bold;">Lesson 1: Basics 🔒</a></li>
-                    <li><a href="#" style="color: #ab47bc; font-weight: bold;">Lesson 2: Greetings 🔒</a></li>
+                <ul id="dynamic-replay-list" style="margin-top: 10px; padding-left: 20px; line-height: 1.8;">
+                    <li>Loading replays...</li>
                 </ul>
             </div>
         </div>
@@ -434,7 +425,9 @@
         </div>
     </div>
 
-    <footer style="margin-top: 10px; font-size: 0.85rem; color: #a0aec0;">&copy; 2026 nihaoplay.com - All Rights Reserved.</footer><!-- ================= MODALS & WHATSAPP ================= -->
+    <footer style="margin-top: 10px; font-size: 0.85rem; color: #a0aec0;">&copy; 2026 nihaoplay.com - All Rights Reserved.</footer>
+
+    <!-- ================= MODALS & WHATSAPP ================= -->
     <div class="modal-overlay" id="guestApplyModal">
         <div class="modal-content" style="border-color: #4ecdc4;">
             <h2 style="color: #4ecdc4; margin-bottom: 10px; font-size: 1.4rem;">🌐 Guest Application<br><span dir="rtl" style="font-size: 1.1rem;">طلب حساب زائر</span></h2>
@@ -497,7 +490,6 @@
     <!-- --- WhatsApp 智能提示气泡 --- -->
     <div class="wa-prompt" id="waPrompt" onclick="goToWa(event)">
         <div class="wa-prompt-close" onclick="closeWaPrompt(event)"><i class="fas fa-times"></i></div>
-        <!-- 中英阿顺序排版 -->
         <div class="wa-prompt-text" style="color:#e53e3e;">点击我开始真人视频一对一快速学会中文对话！</div>
         <div class="wa-prompt-text">Click me to start a 1-on-1 live video and learn Chinese conversation quickly!</div>
         <div class="wa-prompt-text" dir="rtl" style="color:#059669;">انقر هنا لبدء فيديو مباشر لتعلم المحادثة الصينية بسرعة!</div>
@@ -509,6 +501,9 @@
 <script>
     let currentUser = null; 
     const CACHE_VERSION = new Date().getTime(); 
+
+    // 【核心接入点】：您的 SheetDB API 接口
+    const SHEETDB_API_URL = 'https://sheetdb.io/api/v1/bena8ngdwl2by';
 
     document.addEventListener('click', function(e) {
         const prompt = document.getElementById('waPrompt');
@@ -591,7 +586,8 @@
     function openModal(id) { closeAllModals(); document.getElementById(id).style.display = 'flex'; }
     function closeAllModals() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
 
-    function handleLogin(type) {
+    // --- 重点升级：集成 SheetDB 接口进行 VIP 登录校验与动态渲染 ---
+    async function handleLogin(type) {
         const acc = type === 'vip' ? document.getElementById('vipAccount').value.trim() : document.getElementById('guestAccount').value.trim();
         const pwd = type === 'vip' ? document.getElementById('vipPassword').value : document.getElementById('guestPassword').value;
         const rem = type === 'vip' ? document.getElementById('rememberVip').checked : document.getElementById('rememberGuest').checked;
@@ -599,20 +595,64 @@
         if (!acc || !pwd) { alert("请输入账号和密码。\nPlease enter account and password.\nيرجى إدخال الحساب وكلمة المرور."); return; }
 
         if (type === 'vip') {
-            if ((acc === 'nihaoplayfun' || acc === 'nihaofunplay') && pwd === '888888') { } 
-            else { alert("VIP账号或密码错误！\nIncorrect VIP account or password!\nحساب أو كلمة مرور VIP غير صحيحة!"); return; }
+            // 生成炫酷的加载动画
+            const toast = document.createElement('div');
+            toast.className = 'toast-overlay';
+            toast.innerHTML = `<div class="toast-content"><i class="fas fa-spinner fa-spin" style="color:#ab47bc; font-size:2.5rem; margin-bottom:15px;"></i><div style="font-size: 1.1rem; font-weight: bold;">Verifying VIP account...</div></div>`;
+            document.body.appendChild(toast);
+
+            try {
+                // 通过 API 在表格中搜索输入的账号
+                const response = await fetch(`${SHEETDB_API_URL}/search?Account=${acc}`);
+                const data = await response.json();
+
+                // 校验账号密码是否正确
+                if (data.length === 0 || data[0].Password !== pwd) {
+                    document.body.removeChild(toast);
+                    alert("VIP账号或密码错误！\nIncorrect VIP account or password!\nحساب أو كلمة مرور VIP غير صحيحة!");
+                    return;
+                }
+
+                const vipData = data[0]; 
+                
+                // 将表格数据渲染到 VIP 看板上
+                document.getElementById('dynamic-next-time').innerHTML = `<strong>${vipData.NextTime || 'No class scheduled'}</strong>`;
+                document.getElementById('dynamic-zoom-link').href = vipData.ZoomLink || '#';
+                
+                let replayHTML = '';
+                if (vipData.ReplayTitle1 && vipData.ReplayLink1) {
+                    replayHTML += `<li><a href="${vipData.ReplayLink1}" target="_blank" style="color: #ab47bc; font-weight: bold;">${vipData.ReplayTitle1} 🔓</a></li>`;
+                }
+                if (vipData.ReplayTitle2 && vipData.ReplayLink2) {
+                    replayHTML += `<li><a href="${vipData.ReplayLink2}" target="_blank" style="color: #ab47bc; font-weight: bold;">${vipData.ReplayTitle2} 🔓</a></li>`;
+                }
+                if(replayHTML === '') replayHTML = '<li>No replays available yet.</li>';
+                document.getElementById('dynamic-replay-list').innerHTML = replayHTML;
+
+                // 移除加载框，完成登录缓存
+                document.body.removeChild(toast);
+                currentUser = { role: type, name: acc };
+                if (rem) { localStorage.setItem('autoLoginRole', type); localStorage.setItem('autoLoginName', acc); }
+                
+                closeAllModals(); 
+                updateUI();
+                switchView('view-course');
+
+            } catch (error) {
+                document.body.removeChild(toast);
+                alert("Network error, please try again.\n网络错误，请重试。");
+                console.error(error);
+            }
+
         } else {
+            // Guest 访客登录逻辑保持原样
             if (pwd !== 'www.nihaoplay.com') { alert("Guest密码错误！\nIncorrect Guest password!\nكلمة مرور الزائر غير صحيحة!"); return; }
+            currentUser = { role: type, name: acc };
+            if (rem) { localStorage.setItem('autoLoginRole', type); localStorage.setItem('autoLoginName', acc); }
+            closeAllModals(); 
+            updateUI();
+            switchView('view-pinyin');
         }
-
-        currentUser = { role: type, name: acc };
-        if (rem) { localStorage.setItem('autoLoginRole', type); localStorage.setItem('autoLoginName', acc); }
-        else { localStorage.removeItem('autoLoginRole'); localStorage.removeItem('autoLoginName'); }
-
-        closeAllModals(); 
-        updateUI();
-        if (type === 'vip') switchView('view-course');
-        else switchView('view-pinyin');
     }
 
     function handleLogout() {

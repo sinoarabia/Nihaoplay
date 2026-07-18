@@ -261,9 +261,7 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- ================= VIEW 1: PINYIN BOARD ================= -->
+    </div><!-- ================= VIEW 1: PINYIN BOARD ================= -->
     <div id="view-pinyin" class="view-container">
         <div class="category-wrapper"><div class="category-title">🎈 Single Vowels / الحروف الصوتية الفردية</div><div class="board">
             <button class="pinyin-btn" onclick="speakPinyin('ā', event)">ā<span class="base-letter">a</span></button><button class="pinyin-btn" onclick="speakPinyin('ō', event)">ō<span class="base-letter">o</span></button><button class="pinyin-btn" onclick="speakPinyin('ē', event)">ē<span class="base-letter">e</span></button><button class="pinyin-btn" onclick="speakPinyin('ī', event)">ī<span class="base-letter">i</span></button><button class="pinyin-btn" onclick="speakPinyin('ū', event)">ū<span class="base-letter">u</span></button><button class="pinyin-btn" onclick="speakPinyin('ǖ', event)">ǖ<span class="base-letter">ü</span></button>
@@ -431,6 +429,88 @@
         </div>
         <div class="song-card" onclick="toggleAudio(this)">
             <i class="fas fa-compact-disc song-icon"></i><div class="title-text"><div class="main-title">Please and Thank You</div><div class="sub-title">请和谢谢礼貌歌</div></div><audio src="audio/song/Please and Thank You.mp3"></audio>
+        </div>
+    </div><!-- ================= REDIRECT TO VIP SHORT DRAMA ================= -->
+    <style>
+        .arab-premium-banner {
+            background: linear-gradient(135deg, #111827 0%, #1f2937 50%, #374151 100%);
+            padding: 35px 20px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            border: 2px solid #d4af37; /* Metallic Gold */
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        /* 背景奢华暗纹装饰 */
+        .arab-premium-banner::before {
+            content: '👑';
+            position: absolute;
+            top: -20px;
+            left: -10px;
+            font-size: 7rem;
+            opacity: 0.05;
+            transform: rotate(-20deg);
+        }
+
+        .btn-golden-arab {
+            background: linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+            color: #111827;
+            text-decoration: none;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 45px;
+            border-radius: 50px;
+            font-weight: 900;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.6), 0 6px 0px #8b6914;
+            transition: all 0.2s;
+            border: none;
+            z-index: 1;
+            cursor: pointer;
+            line-height: 1.4;
+            min-width: 280px;
+            animation: goldenPulse 2s infinite;
+        }
+
+        .btn-golden-arab:active {
+            transform: translateY(6px);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.4), 0 0px 0px #8b6914;
+        }
+
+        @keyframes goldenPulse {
+            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.8), 0 6px 0px #8b6914; }
+            70% { box-shadow: 0 0 0 25px rgba(212, 175, 55, 0), 0 6px 0px #8b6914; }
+            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0), 0 6px 0px #8b6914; }
+        }
+    </style>
+
+    <div style="text-align: center; margin: 40px auto 50px auto; width: 100%; max-width: 900px; padding: 0 15px;">
+        <div class="arab-premium-banner">
+            <!-- 阿拉伯语主标题：独家：商业中文短剧 -->
+            <h3 dir="rtl" style="color: #fcf6ba; margin-bottom: 8px; font-size: 1.7rem; font-weight: 900; z-index: 1; text-shadow: 0 2px 4px rgba(0,0,0,0.8);">
+                🔥 حصرياً: مسلسلات صينية قصيرة للأعمال
+            </h3>
+            <!-- 英文副标题 -->
+            <h3 style="color: #9ca3af; margin-bottom: 25px; font-size: 1.05rem; font-weight: bold; z-index: 1; letter-spacing: 0.5px;">
+                Exclusive: Business Chinese Short Dramas
+            </h3>
+            <!-- 发光跳转按钮 -->
+            <a href="videos.html" class="btn-golden-arab">
+                <!-- 阿拉伯语：立即观看 (VIP) -->
+                <span dir="rtl" style="font-size: 1.4rem; margin-bottom: 5px;">شاهد الآن (VIP) 🎬</span>
+                <span style="font-size: 0.95rem; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Unlock Premium Videos</span>
+            </a>
+            <!-- 底部保障提示：阿拉伯语中文字幕 -->
+            <p dir="rtl" style="color: #fbbf24; margin-top: 22px; font-size: 0.95rem; font-weight: bold; z-index: 1; letter-spacing: 0.5px;">
+                ⭐ مترجم باللغتين العربية والصينية ⭐
+            </p>
         </div>
     </div>
 

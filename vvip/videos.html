@@ -1,1 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VVIP Theatre - NihaoPlay</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #0f172a; color: #f3f4f6; font-family: sans-serif; margin: 0; }
+        .header { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-bottom: 2px solid #d4af37; padding: 20px; text-align: center; }
+        .back-btn { position: absolute; left: 20px; top: 25px; color: #d4af37; text-decoration: none; background: rgba(212, 175, 55, 0.1); padding: 8px 16px; border-radius: 20px; border: 1px solid #d4af37; }
+        .feed-container { max-width: 700px; margin: 40px auto; padding: 0 15px; }
+        .video-card { background: #1e293b; border-radius: 16px; overflow: hidden; margin-bottom: 40px; border: 1px solid #334155; }
+        .video-player { width: 100%; aspect-ratio: 16 / 9; background: #000; }
+        .video-header { padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #0f172a; color: #fef08a; }
+        .video-info { padding: 20px; color: #cbd5e1; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <!-- 注意这里修改为返回上一级目录 -->
+        <a href="../index.html" class="back-btn"><i class="fas fa-home"></i> Home</a>
+        <h1 style="margin: 0; color: #d4af37; font-size: 1.8rem;">👑 VVIP Theatre</h1>
+    </div>
 
+    <div class="feed-container">
+        <div class="video-card">
+            <div class="video-header">
+                <div class="video-title">Ep 1: Custom Clearance</div>
+                <div class="video-title" dir="rtl">الحلقة 1: التخليص الجمركي</div>
+            </div>
+            <!-- 只要字幕文件和这个html在同一个文件夹，src 这样写就是对的 -->
+            <video class="video-player" controls preload="metadata" controlsList="nodownload">
+                <source src="video1.mp4" type="video/mp4">
+                <track label="CN & AR Subtitles" kind="subtitles" srclang="zh" src="subs1.vtt" default>
+            </video>
+            <div class="video-info">
+                <p>Scene: Explaining customs delay.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

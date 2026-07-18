@@ -6,7 +6,7 @@
     <meta name="referrer" content="no-referrer">
     <title>NihaoPlay - Learn Full Pinyin!</title>
     
-    <!-- FontAwesome -->
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
@@ -108,14 +108,12 @@
         @media (max-width: 850px) {
             header { padding-top: 50px; margin-bottom: 0; }
             h1 { font-size: 2rem; }
-            /* Center auth buttons on mobile top */
             .top-auth-group { top: 0; left: 50%; transform: translateX(-50%); flex-direction: row; width: 100%; justify-content: center; }
             .user-welcome { top: 0; left: 50%; transform: translateX(-50%); right: auto; width: max-content; }
             
             .middle-section { flex-direction: column; gap: 20px; margin: 10px 0; }
             .stage { order: -1; margin-bottom: 0; transform: scale(0.9); height: 180px;}
             
-            /* 2x2 Grid for the 4 buttons on mobile */
             .nav-group { flex-direction: row; width: 100%; justify-content: center; gap: 15px; }
             .nav-btn-wrapper { width: 45%; }
             .side-nav-btn { min-width: auto; height: 95px; padding: 10px; font-size: 0.9rem; }
@@ -394,8 +392,22 @@
                 return;
             }
 
-            // Simple demo validation (in reality, connect to a database)
-            // Any password works for demo, but we assign role based on the modal used.
+            // Authentication core logic
+            if (type === 'vip') {
+                if ((acc === 'nihaoplayfun' || acc === 'nihaofunplay') && pwd === '888888') {
+                    // Valid
+                } else {
+                    alert("Incorrect VIP account or password!\nحساب أو كلمة مرور VIP غير صحيحة!");
+                    return; 
+                }
+            } else if (type === 'guest') {
+                if (pwd !== '123456') {
+                    alert("Incorrect Guest password!\nكلمة مرور الزائر غير صحيحة!");
+                    return; 
+                }
+            }
+
+            // Login Success
             currentUser = { role: type, name: acc };
             
             if (rememberCheckbox.checked) {
@@ -409,7 +421,6 @@
             closeAllModals();
             updateUI();
             
-            // Auto-redirect VIP to dashboard
             if (type === 'vip') {
                 document.getElementById('publicBoard').style.display = 'none';
                 document.getElementById('vipDashboard').style.display = 'block';
@@ -451,7 +462,6 @@
                 openModal('guestApplyModal');
                 return;
             }
-            // Smooth scroll to board
             document.getElementById('publicBoard').scrollIntoView({ behavior: 'smooth' });
         }
 
@@ -465,7 +475,6 @@
                 return;
             }
             
-            // Limit 1 per IP (Simulated via localStorage)
             localStorage.setItem('booked1on1', 'true');
             alert("Redirecting to booking schedule...\nجاري التوجيه لجدول المواعيد...");
             // window.open('YOUR_CALENDLY_LINK', '_blank');

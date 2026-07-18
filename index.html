@@ -489,10 +489,10 @@
         </div>
     </div>
 
-    <!-- --- WhatsApp 智能提示气泡 --- -->
+    <!-- --- 优化：WhatsApp 智能提示气泡 --- -->
     <div class="wa-prompt" id="waPrompt" onclick="goToWa(event)">
         <div class="wa-prompt-close" onclick="closeWaPrompt(event)"><i class="fas fa-times"></i></div>
-        <!-- 严格按照中英阿排序 -->
+        <!-- 中英阿顺序排版 -->
         <div class="wa-prompt-text" style="color:#e53e3e;">点击我开始真人视频一对一快速学会中文对话！</div>
         <div class="wa-prompt-text">Click me to start a 1-on-1 live video and learn Chinese conversation quickly!</div>
         <div class="wa-prompt-text" dir="rtl" style="color:#059669;">انقر هنا لبدء فيديو مباشر لتعلم المحادثة الصينية بسرعة!</div>
@@ -642,7 +642,14 @@
     // --- 丝滑0.5秒跳转逻辑 ---
     function handleBookTrialClick() {
         if (currentUser?.role === 'vip') { alert("您已经是VIP学生，请点击VIP课程。\nYou are already a VIP student, please click the VIP Course button.\nأنت طالب VIP بالفعل، يرجى النقر على زر دورة VIP."); return; }
-        if (localStorage.getItem('booked1on1') === 'true') { alert("您已使用此设备预约过体验课。\nYou have already booked a trial class using this device.\nلقد قمت بحجز درس تجريبي بالفعل باستخدام هذا الجهاز."); return; }
+        
+        // --- 核心修改：已预约客户的弹窗提示优化 ---
+        if (localStorage.getItem('booked1on1') === 'true') { 
+            alert("您已使用此设备预约过体验课，请点击Whatsapp订阅特价中文课程，所有老师均可选择。\nYou have already booked a trial class using this device. Please click WhatsApp to subscribe to special offer Chinese courses. All teachers are available for selection.\nلقد قمت بحجز درس تجريبي بالفعل باستخدام هذا الجهاز. يرجى النقر على واتساب للاشتراك في دورات اللغة الصينية ذات العرض الخاص، جميع المعلمين متاحون للاختيار."); 
+            // 自动跳转到客服，提升转化率
+            window.open('https://wa.me/962771128288', '_blank');
+            return; 
+        }
         
         localStorage.setItem('booked1on1', 'true');
         

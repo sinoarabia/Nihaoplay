@@ -148,6 +148,14 @@
         }
         .wa-prompt-close:hover { transform: scale(1.1); background: #e53e3e; }
 
+        /* --- 【防盗新增】内嵌视频弹窗播放器 --- */
+        .video-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 4000; }
+        .video-modal-content { position: relative; width: 90%; max-width: 900px; aspect-ratio: 16/9; background: #000; border-radius: 15px; box-shadow: 0 15px 40px rgba(0,0,0,0.5); animation: popIn 0.3s ease-out; }
+        .video-iframe { width: 100%; height: 100%; border: none; border-radius: 15px; }
+        /* 屏蔽 iframe 层右键的高级遮罩层（如果需要极致防盗可开启，但会屏蔽暂停播放键，故用外层限制） */
+        .video-close-btn { position: absolute; top: -15px; right: -15px; background: #ff6b6b; color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer; border: 3px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 10; transition: 0.2s; }
+        .video-close-btn:hover { transform: scale(1.1); background: #e53e3e; }
+
         @keyframes floatPrompt {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-8px); }
@@ -288,7 +296,9 @@
                 </ul>
             </div>
         </div>
-    </div><!-- ================= VIEW 3: SONGS ================= -->
+    </div>
+
+    <!-- ================= VIEW 3: SONGS ================= -->
     <div id="view-songs" class="view-container">
         <!-- Xinxin Baby Swing -->
         <div class="xinxin-swing" onclick="playXinXin(this, event)" title="Play / تشغيل">
@@ -425,9 +435,17 @@
         </div>
     </div>
 
-    <footer style="margin-top: 10px; font-size: 0.85rem; color: #a0aec0;">&copy; 2026 nihaoplay.com - All Rights Reserved.</footer>
+    <footer style="margin-top: 10px; font-size: 0.85rem; color: #a0aec0;">&copy; 2026 nihaoplay.com - All Rights Reserved.</footer><!-- ================= MODALS & WHATSAPP ================= -->
+    
+    <!-- 【防盗新增】内嵌视频播放弹窗 -->
+    <!-- 整个区域添加 oncontextmenu="return false;" 禁用右键 -->
+    <div class="video-modal-overlay" id="videoModal" oncontextmenu="return false;">
+        <div class="video-modal-content">
+            <div class="video-close-btn" onclick="closeVideoModal()"><i class="fas fa-times"></i></div>
+            <iframe id="videoIframe" class="video-iframe" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+        </div>
+    </div>
 
-    <!-- ================= MODALS & WHATSAPP ================= -->
     <div class="modal-overlay" id="guestApplyModal">
         <div class="modal-content" style="border-color: #4ecdc4;">
             <h2 style="color: #4ecdc4; margin-bottom: 10px; font-size: 1.4rem;">🌐 Guest Application<br><span dir="rtl" style="font-size: 1.1rem;">طلب حساب زائر</span></h2>
@@ -502,7 +520,7 @@
     let currentUser = null; 
     const CACHE_VERSION = new Date().getTime(); 
 
-    // 【核心接入点】：您的 SheetDB API 接口
+    // 【您的 SheetDB API 接口】
     const SHEETDB_API_URL = 'https://sheetdb.io/api/v1/bena8ngdwl2by';
 
     document.addEventListener('click', function(e) {
@@ -536,6 +554,26 @@
             window.open('https://wa.me/962771128288', '_blank');
             document.getElementById('waPrompt').style.display = 'none';
         }
+    }
+
+    // --- 【防盗新增】内嵌视频弹窗控制逻辑 ---
+    function openVideoModal(videoUrl) {
+        let finalUrl = videoUrl;
+        // 如果是普通的 YouTube 链接，自动智能转换为嵌入(Embed)模式，去除多余广告与控制栏
+        if (videoUrl.includes('youtu.be/')) {
+            finalUrl = videoUrl.replace('youtu.be/', 'www.youtube.com/embed/') + '?rel=0&modestbranding=1';
+        } else if (videoUrl.includes('youtube.com/watch?v=')) {
+            finalUrl = videoUrl.replace('youtube.com/watch?v=', 'www.youtube.com/embed/') + '&rel=0&modestbranding=1';
+        }
+        
+        document.getElementById('videoIframe').src = finalUrl;
+        document.getElementById('videoModal').style.display = 'flex';
+    }
+
+    function closeVideoModal() {
+        document.getElementById('videoModal').style.display = 'none';
+        // 将 iframe 的 src 清空，立即停止视频播放与声音
+        document.getElementById('videoIframe').src = ''; 
     }
 
     window.onload = function() {
@@ -586,7 +624,7 @@
     function openModal(id) { closeAllModals(); document.getElementById(id).style.display = 'flex'; }
     function closeAllModals() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
 
-    // --- 重点升级：集成 SheetDB 接口进行 VIP 登录校验与动态渲染 ---
+    // --- 动态请求 SheetDB 接口，并在点击回放时调用 openVideoModal 弹窗 ---
     async function handleLogin(type) {
         const acc = type === 'vip' ? document.getElementById('vipAccount').value.trim() : document.getElementById('guestAccount').value.trim();
         const pwd = type === 'vip' ? document.getElementById('vipPassword').value : document.getElementById('guestPassword').value;
@@ -595,18 +633,15 @@
         if (!acc || !pwd) { alert("请输入账号和密码。\nPlease enter account and password.\nيرجى إدخال الحساب وكلمة المرور."); return; }
 
         if (type === 'vip') {
-            // 生成炫酷的加载动画
             const toast = document.createElement('div');
             toast.className = 'toast-overlay';
             toast.innerHTML = `<div class="toast-content"><i class="fas fa-spinner fa-spin" style="color:#ab47bc; font-size:2.5rem; margin-bottom:15px;"></i><div style="font-size: 1.1rem; font-weight: bold;">Verifying VIP account...</div></div>`;
             document.body.appendChild(toast);
 
             try {
-                // 通过 API 在表格中搜索输入的账号
                 const response = await fetch(`${SHEETDB_API_URL}/search?Account=${acc}`);
                 const data = await response.json();
 
-                // 校验账号密码是否正确
                 if (data.length === 0 || data[0].Password !== pwd) {
                     document.body.removeChild(toast);
                     alert("VIP账号或密码错误！\nIncorrect VIP account or password!\nحساب أو كلمة مرور VIP غير صحيحة!");
@@ -615,21 +650,20 @@
 
                 const vipData = data[0]; 
                 
-                // 将表格数据渲染到 VIP 看板上
                 document.getElementById('dynamic-next-time').innerHTML = `<strong>${vipData.NextTime || 'No class scheduled'}</strong>`;
                 document.getElementById('dynamic-zoom-link').href = vipData.ZoomLink || '#';
                 
                 let replayHTML = '';
+                // 重点升级：将之前的 target="_blank" 替换为防盗版的 onclick="openVideoModal('...')"
                 if (vipData.ReplayTitle1 && vipData.ReplayLink1) {
-                    replayHTML += `<li><a href="${vipData.ReplayLink1}" target="_blank" style="color: #ab47bc; font-weight: bold;">${vipData.ReplayTitle1} 🔓</a></li>`;
+                    replayHTML += `<li><a href="javascript:void(0)" onclick="openVideoModal('${vipData.ReplayLink1}')" style="color: #ab47bc; font-weight: bold;">${vipData.ReplayTitle1} 🔓</a></li>`;
                 }
                 if (vipData.ReplayTitle2 && vipData.ReplayLink2) {
-                    replayHTML += `<li><a href="${vipData.ReplayLink2}" target="_blank" style="color: #ab47bc; font-weight: bold;">${vipData.ReplayTitle2} 🔓</a></li>`;
+                    replayHTML += `<li><a href="javascript:void(0)" onclick="openVideoModal('${vipData.ReplayLink2}')" style="color: #ab47bc; font-weight: bold;">${vipData.ReplayTitle2} 🔓</a></li>`;
                 }
                 if(replayHTML === '') replayHTML = '<li>No replays available yet.</li>';
                 document.getElementById('dynamic-replay-list').innerHTML = replayHTML;
 
-                // 移除加载框，完成登录缓存
                 document.body.removeChild(toast);
                 currentUser = { role: type, name: acc };
                 if (rem) { localStorage.setItem('autoLoginRole', type); localStorage.setItem('autoLoginName', acc); }
@@ -645,7 +679,6 @@
             }
 
         } else {
-            // Guest 访客登录逻辑保持原样
             if (pwd !== 'www.nihaoplay.com') { alert("Guest密码错误！\nIncorrect Guest password!\nكلمة مرور الزائر غير صحيحة!"); return; }
             currentUser = { role: type, name: acc };
             if (rem) { localStorage.setItem('autoLoginRole', type); localStorage.setItem('autoLoginName', acc); }

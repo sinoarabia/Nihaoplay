@@ -514,7 +514,9 @@
         </div>
     </div>
 
-    <footer style="margin-top: 10px; font-size: 0.85rem; color: #a0aec0;">&copy; 2026 nihaoplay.com - All Rights Reserved.</footer><!-- ================= MODALS & WHATSAPP ================= -->
+    <footer style="margin-top: 10px; font-size: 0.85rem; color: #a0aec0;">&copy; 2026 nihaoplay.com - All Rights Reserved.</footer>
+
+    <!-- ================= MODALS & WHATSAPP ================= -->
     
     <!-- 【防盗新增】内嵌视频播放弹窗 -->
     <!-- 整个区域添加 oncontextmenu="return false;" 禁用右键 -->
@@ -523,6 +525,46 @@
             <div class="video-close-btn" onclick="closeVideoModal()"><i class="fas fa-times"></i></div>
             <!-- 【重点修复】：加入了 allow 权限参数，防止出现 153 错误 -->
             <iframe id="videoIframe" class="video-iframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <!-- 新增：非VIP点击歌曲时的专属套餐提示弹窗 -->
+    <div class="modal-overlay" id="vipPromoModal">
+        <div class="modal-content" style="border-color: #f5af19; max-width: 450px; padding: 20px; overflow-y: auto; max-height: 90vh;">
+            <h2 style="color: #f5af19; margin-bottom: 15px; font-size: 1.3rem;">⭐ VIP Subscription<br><span dir="rtl" style="font-size: 1.1rem;">اشتراك VIP</span></h2>
+
+            <div style="text-align: left; font-size: 0.85rem; line-height: 1.6; color: #4a5568; margin-bottom: 15px; background: #fffbeb; padding: 15px; border-radius: 12px;">
+                <p style="font-weight: bold; color: #c05621; margin-bottom: 5px;">Students interested in Chinese are encouraged to activate the VIP service.</p>
+                <p dir="rtl" style="font-weight: bold; color: #c05621; margin-bottom: 15px;">يوصى الطلاب المهتمون باللغة الصينية بإعطاء الأولوية لتفعيل خدمة VIP.</p>
+
+                <h4 style="color: #2d3748; margin-top: 10px;">💎 10JD Value Package / باقة التوفير 10JD:</h4>
+                <ul style="margin-left: 20px; margin-bottom: 10px; margin-top: 5px;">
+                    <li>30-min 1-on-1 live video Chinese lesson (Beginners can expect to learn 5-10 words).</li>
+                    <li dir="rtl">درس فيديو مباشر 1 لـ 1 لمدة 30 دقيقة (يتوقع للمبتدئين تعلم 5-10 كلمات).</li>
+                    <li style="margin-top: 5px;">Unlimited song listening (Cultivates musical and language sense).</li>
+                    <li dir="rtl">استماع غير محدود للأغاني (ينمي الحس الموسيقي واللغوي).</li>
+                </ul>
+
+                <h4 style="color: #2d3748; margin-top: 15px;">💎 20JD Value Package / باقة التوفير 20JD:</h4>
+                <ul style="margin-left: 20px; margin-bottom: 15px; margin-top: 5px;">
+                    <li>30-min 1-on-1 live video Chinese lesson (Students with basic knowledge can expect to learn 10-20 words).</li>
+                    <li dir="rtl">درس فيديو مباشر 1 لـ 1 لمدة 30 دقيقة (يتوقع للطلاب ذوي الأساسيات تعلم 10-20 كلمة).</li>
+                    <li style="margin-top: 5px;">30-min 1-on-1 live CN/EN chat to learn Chinese culture.</li>
+                    <li dir="rtl">دردشة حية باللغتين الصينية والإنجليزية لمدة 30 دقيقة للتعرف على الثقافة الصينية.</li>
+                    <li style="margin-top: 5px;">Can answer 10-20 questions about China.</li>
+                    <li dir="rtl">الإجابة على 10-20 سؤالاً حول الصين.</li>
+                    <li style="margin-top: 5px;">Unlimited song listening.</li>
+                    <li dir="rtl">استماع غير محدود للأغاني.</li>
+                </ul>
+                
+                <p style="font-weight: bold; color: #2d3748; margin-bottom: 5px; text-align: center;">Contact live customer service on WhatsApp to complete payment and subscription.</p>
+                <p dir="rtl" style="font-weight: bold; color: #2d3748; text-align: center;">تواصل مع خدمة العملاء المباشرة عبر واتساب لإكمال الدفع والاشتراك.</p>
+            </div>
+
+            <button class="modal-btn" style="background:#25d366; box-shadow:0 4px 0px #1da851; display: flex; align-items: center; justify-content: center; gap: 10px;" onclick="window.open('https://wa.me/962771128288', '_blank')">
+                <i class="fab fa-whatsapp" style="font-size: 1.2rem;"></i> Subscribe via WhatsApp
+            </button>
+            <span class="modal-link" style="display:block; text-align:center; color: #a0aec0; margin-top: 15px; font-size: 0.9rem; cursor: pointer; text-decoration: underline;" onclick="closeAllModals()">Close / إغلاق</span>
         </div>
     </div>
 
@@ -594,9 +636,7 @@
         <div class="wa-prompt-arrow"></div>
     </div>
 
-    <div class="whatsapp-float" onclick="handleWaClick(event)"><i class="fab fa-whatsapp"></i></div>
-    
-<script>
+    <div class="whatsapp-float" onclick="handleWaClick(event)"><i class="fab fa-whatsapp"></i></div><script>
     // --- 【防盗新增】禁用常见开发者快捷键 (F12, Ctrl+Shift+I, Ctrl+U等) ---
     document.addEventListener('keydown', function(e) {
         if(e.keyCode === 123) { // F12
@@ -864,8 +904,7 @@
         if (event) event.stopPropagation();
         
         if (currentUser?.role !== 'vip') {
-            alert("仅限VIP客户播放，请点击Whatsapp联系客服开通VIP服务。\nOnly VIP customers have permission to play. Please contact customer service via WhatsApp to activate VIP service.\nعذراً، هذه الميزة لعملاء VIP فقط. يرجى التواصل عبر واتساب لتفعيل خدمة VIP.");
-            window.open('https://wa.me/962771128288', '_blank');
+            openModal('vipPromoModal');
             return;
         }
         
@@ -917,8 +956,8 @@
 
     function toggleAudio(cardElement) {
         if (currentUser?.role !== 'vip') {
-            alert("仅限VIP客户播放，请点击Whatsapp联系客服开通VIP服务。\nOnly VIP customers have permission to play. Please contact customer service via WhatsApp to activate VIP service.\nعذراً، هذه الميزة لعملاء VIP فقط. يرجى التواصل عبر واتساب لتفعيل خدمة VIP.");
-            window.open('https://wa.me/962771128288', '_blank'); return;
+            openModal('vipPromoModal'); 
+            return;
         }
 
         const audio = cardElement.querySelector('audio');

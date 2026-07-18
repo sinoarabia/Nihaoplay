@@ -434,11 +434,11 @@
 
     window.onload = function() {
         // --- 解决儿歌音频缓存问题 ---
-        // 自动给所有写在 HTML 里的 audio 标签源添加版本号后缀
         document.querySelectorAll('audio').forEach(a => {
             let src = a.getAttribute('src');
             if (src && !src.includes('?v=')) {
                 a.setAttribute('src', src + '?v=' + CACHE_VERSION);
+                a.load(); 
             }
         });
         // -----------------------------
@@ -536,8 +536,12 @@
     function handleBookTrialClick() {
         if (currentUser?.role === 'vip') { alert("You are already a VIP student, please click the VIP Course button.\nأنت طالب VIP بالفعل، يرجى النقر على زر دورة VIP.\n您已经是VIP学生，请点击VIP课程。"); return; }
         if (localStorage.getItem('booked1on1') === 'true') { alert("You have already booked a trial class using this device.\nلقد قمت بحجز درس تجريبي بالفعل باستخدام هذا الجهاز.\n您已使用此设备预约过体验课。"); return; }
+        
         localStorage.setItem('booked1on1', 'true');
         alert("Redirecting to booking schedule...\nجاري التوجيه لجدول المواعيد...\n正在跳转至预约界面...");
+        
+        // 已经为您填入了专属的 Calendly 预约链接
+        window.open('https://calendly.com/nihaoplay/mutual-understanding', '_blank'); 
     }
 
     function handleVipCourseClick() {
@@ -564,7 +568,6 @@
             if(icon) icon.classList.remove('rotating');
         });
 
-        // 动态添加防缓存版本号
         new Audio(`audio/song/新新宝宝.mp3?v=${CACHE_VERSION}`).play().catch(e => console.log("Audio failed"));
 
         element.classList.add('excited-swing');
@@ -575,7 +578,6 @@
         if (event) event.stopPropagation();
         
         let audioUrl = ""; 
-        // 动态添加防缓存版本号
         if (character === 'baba') audioUrl = `audio/baba.mp3?v=${CACHE_VERSION}`; 
         else if (character === 'mama') audioUrl = `audio/mama.mp3?v=${CACHE_VERSION}`; 
         else if (character === 'baby') audioUrl = `audio/baobao.mp3?v=${CACHE_VERSION}`; 
@@ -605,7 +607,6 @@
             'un': 'wen1', 'ün': 'yun1', 'ang': 'ang1', 'eng': 'eng1', 'ing': 'ying1', 'ong': 'weng1'
         }; 
         
-        // 动态添加防缓存版本号
         if (map[letter]) new Audio(`audio/${map[letter]}.mp3?v=${CACHE_VERSION}`).play().catch(e => console.log("Audio failed"));
         
         document.querySelectorAll('.character').forEach(char => { 
@@ -641,8 +642,15 @@
         });
 
         if (audio.paused) {
-            audio.play();
-            icon.classList.add('rotating');
+            let playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    icon.classList.add('rotating');
+                }).catch(error => {
+                    console.log("Audio play failed:", error);
+                    alert("Audio file not found! Please make sure the filename exactly matches the uploaded file.\n找不到音频文件！请确认代码中填写的名字和上传的文件名大小写/标点完全一致。");
+                });
+            }
         } else {
             audio.pause();
             icon.classList.remove('rotating');

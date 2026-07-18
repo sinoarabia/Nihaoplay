@@ -35,16 +35,17 @@
         .nav-group { display: flex; flex-direction: column; gap: 20px; } 
         .nav-btn-wrapper { position: relative; width: 100%; }
         
-        /* Tags (Free blinks, VIP stays static) */
-        .top-tag { position: absolute; top: -10px; right: -5px; color: white; font-size: 0.65rem; font-weight: bold; padding: 3px 8px; border-radius: 12px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .tag-free { background: #ff6b6b; animation: pulseTag 1.5s infinite; }
+        /* 【优化】：所有标签全部放到左上角，并全部添加一闪一闪动画 */
+        .top-tag { position: absolute; top: -12px; left: -10px; color: white; font-size: 0.65rem; font-weight: bold; padding: 4px 10px; border-radius: 12px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2); animation: pulseTag 1.5s infinite; }
+        .tag-free { background: #ff6b6b; }
         .tag-vip { background: #ab47bc; } 
         @keyframes pulseTag { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
 
-        .side-nav-btn { background: #ffffff; border: 4px solid #333; border-radius: 20px; padding: 10px 15px; font-weight: bold; color: #333; box-shadow: 0 6px 0px #333; transition: all 0.1s; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; min-width: 160px; height: 95px; cursor: pointer; }
+        /* 【优化】：增加按钮高度，减小文字间距，使排版更精美 */
+        .side-nav-btn { background: #ffffff; border: 4px solid #333; border-radius: 20px; padding: 10px 15px; font-weight: bold; color: #333; box-shadow: 0 6px 0px #333; transition: all 0.1s; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; min-width: 160px; height: 100px; cursor: pointer; }
         .side-nav-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 0px #333; background: #f7f9fc; }
         .side-nav-btn:active { transform: translateY(6px); box-shadow: 0 0px 0px #333; }
-        .side-nav-btn i { font-size: 1.6rem; }
+        .side-nav-btn i { font-size: 1.6rem; margin-bottom: 2px; }
         
         .stage { display: flex; justify-content: center; align-items: flex-end; gap: 30px; transform: scale(0.9); height: 180px; }
         .character { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: 0.2s; }
@@ -164,7 +165,10 @@
             .nav-btn-wrapper { width: 45%; }
             .side-nav-btn { min-width: auto; width: 100%; height: 85px; padding: 10px; font-size: 0.85rem; }
             .side-nav-btn i { font-size: 1.4rem; }
-            .top-tag { font-size: 0.6rem; padding: 2px 6px; top: -8px; right: -5px; }
+            
+            /* 手机端同步修复标签位置到左上角 */
+            .top-tag { font-size: 0.6rem; padding: 3px 8px; top: -10px; left: -5px; right: auto; }
+            
             .whatsapp-float { width: 50px; height: 50px; font-size: 28px; bottom: 15px; right: 15px; }
             .xinxin-swing { top: 15px; right: 15px; }
             .swing-img { width: 50px; border-width: 2px; }
@@ -185,8 +189,9 @@
 </head>
 <body><header>
         <div class="top-auth-group" id="authGroup">
-            <button class="login-top-btn guest-btn" onclick="openModal('guestApplyModal')">Guest Login / تسجيل الزوار</button>
+            <!-- 【优化】：VIP 和 Guest 按钮顺序颠倒 -->
             <button class="login-top-btn vip-btn" onclick="openModal('vipLoginModal')">VIP Login / دخول VIP</button>
+            <button class="login-top-btn guest-btn" onclick="openModal('guestApplyModal')">Guest Login / تسجيل الزوار</button>
         </div>
         <div class="user-welcome" id="userWelcome">
             <span id="welcomeName"></span>
@@ -202,19 +207,20 @@
             <div class="nav-btn-wrapper">
                 <div class="top-tag tag-free">免费 / FREE / مجاني</div>
                 <div class="side-nav-btn" style="border-color: #ff6b6b; color: #ff6b6b;" onclick="handlePinyinBtnClick()">
+                    <!-- 【优化】：按钮内部字体层级排版优化，突出中文 -->
                     <i class="fas fa-language"></i>
-                    <span style="font-size: 1.05rem;">汉语拼音</span>
-                    <span style="font-size: 0.85rem;">Chinese PinYin</span>
-                    <span dir="rtl" style="font-size: 0.75rem;">بينيين الصينية</span>
+                    <span style="font-size: 1.15rem; font-weight: 900; letter-spacing: 1px;">汉语拼音</span>
+                    <span style="font-size: 0.85rem; font-weight: 600;">Chinese PinYin</span>
+                    <span dir="rtl" style="font-size: 0.8rem; font-weight: bold;">بينيين الصينية</span>
                 </div>
             </div>
             <div class="nav-btn-wrapper">
                 <div class="top-tag tag-free">免费 / FREE / مجاني</div>
                 <div class="side-nav-btn" style="border-color: #f5af19; color: #f5af19;" onclick="handleBookTrialClick()">
                     <i class="fas fa-calendar-alt"></i>
-                    <span style="font-size: 1.05rem;">预约试听</span>
-                    <span style="font-size: 0.85rem;">Book 1-on-1</span>
-                    <span dir="rtl" style="font-size: 0.75rem;">حجز درس تجريبي</span>
+                    <span style="font-size: 1.15rem; font-weight: 900; letter-spacing: 1px;">预约试听</span>
+                    <span style="font-size: 0.85rem; font-weight: 600;">Book 1-on-1</span>
+                    <span dir="rtl" style="font-size: 0.8rem; font-weight: bold;">حجز درس تجريبي</span>
                 </div>
             </div>
         </div>
@@ -241,18 +247,18 @@
                 <div class="top-tag tag-vip">仅限VIP / VIP ONLY / خاص</div>
                 <div class="side-nav-btn" style="border-color: #ab47bc; color: #ab47bc;" onclick="handleVipCourseClick()">
                     <i class="fas fa-chalkboard-teacher"></i>
-                    <span style="font-size: 1.05rem;">VIP 课程</span>
-                    <span style="font-size: 0.85rem;">VIP Course</span>
-                    <span dir="rtl" style="font-size: 0.75rem;">دورة VIP</span>
+                    <span style="font-size: 1.15rem; font-weight: 900; letter-spacing: 1px;">VIP 课程</span>
+                    <span style="font-size: 0.85rem; font-weight: 600;">VIP Course</span>
+                    <span dir="rtl" style="font-size: 0.8rem; font-weight: bold;">دورة VIP</span>
                 </div>
             </div>
             <div class="nav-btn-wrapper">
                 <div class="top-tag tag-vip">仅限VIP / VIP ONLY / خاص</div>
                 <div class="side-nav-btn" style="border-color: #4ecdc4; color: #4ecdc4;" onclick="handleSongClick()">
                     <i class="fas fa-music"></i>
-                    <span style="font-size: 1.05rem;">中英儿歌</span>
-                    <span style="font-size: 0.85rem;">Song of CN/EN</span>
-                    <span dir="rtl" style="font-size: 0.75rem;">أغاني</span>
+                    <span style="font-size: 1.15rem; font-weight: 900; letter-spacing: 1px;">中英儿歌</span>
+                    <span style="font-size: 0.85rem; font-weight: 600;">Song of CN/EN</span>
+                    <span dir="rtl" style="font-size: 0.8rem; font-weight: bold;">أغاني</span>
                 </div>
             </div>
         </div>
@@ -489,17 +495,16 @@
         </div>
     </div>
 
-    <!-- --- 优化：WhatsApp 智能提示气泡 --- -->
+    <!-- --- WhatsApp 智能提示气泡 --- -->
     <div class="wa-prompt" id="waPrompt" onclick="goToWa(event)">
         <div class="wa-prompt-close" onclick="closeWaPrompt(event)"><i class="fas fa-times"></i></div>
-        <!-- 中英阿顺序排版 -->
+        <!-- 严格按照中英阿排序 -->
         <div class="wa-prompt-text" style="color:#e53e3e;">点击我开始真人视频一对一快速学会中文对话！</div>
         <div class="wa-prompt-text">Click me to start a 1-on-1 live video and learn Chinese conversation quickly!</div>
         <div class="wa-prompt-text" dir="rtl" style="color:#059669;">انقر هنا لبدء فيديو مباشر لتعلم المحادثة الصينية بسرعة!</div>
         <div class="wa-prompt-arrow"></div>
     </div>
 
-    <!-- 将纯超链接修改为通过 JS 控制的 div 按钮 -->
     <div class="whatsapp-float" onclick="handleWaClick(event)"><i class="fab fa-whatsapp"></i></div>
     
 <script>
@@ -518,14 +523,12 @@
 
     // --- 绿泡泡两步交互逻辑 ---
     function handleWaClick(event) {
-        event.stopPropagation(); // 阻止点击事件冒泡到 document
+        event.stopPropagation(); 
         const prompt = document.getElementById('waPrompt');
         if (prompt.style.display === 'block') {
-            // 如果提示框已经显示，再点击就直接进入聊天
             window.open('https://wa.me/962771128288', '_blank');
             prompt.style.display = 'none';
         } else {
-            // 第一次点击，弹出提示框
             prompt.style.display = 'block';
         }
     }
@@ -536,7 +539,7 @@
     }
 
     function goToWa(event) {
-        event.stopPropagation(); // 阻止冒泡
+        event.stopPropagation(); 
         if(!event.target.closest('.wa-prompt-close')){
             window.open('https://wa.me/962771128288', '_blank');
             document.getElementById('waPrompt').style.display = 'none';
@@ -646,7 +649,6 @@
         // --- 核心修改：已预约客户的弹窗提示优化 ---
         if (localStorage.getItem('booked1on1') === 'true') { 
             alert("您已使用此设备预约过体验课，请点击Whatsapp订阅特价中文课程，所有老师均可选择。\nYou have already booked a trial class using this device. Please click WhatsApp to subscribe to special offer Chinese courses. All teachers are available for selection.\nلقد قمت بحجز درس تجريبي بالفعل باستخدام هذا الجهاز. يرجى النقر على واتساب للاشتراك في دورات اللغة الصينية ذات العرض الخاص، جميع المعلمين متاحون للاختيار."); 
-            // 自动跳转到客服，提升转化率
             window.open('https://wa.me/962771128288', '_blank');
             return; 
         }
